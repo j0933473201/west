@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.restaurant_transaction_list.model.RES_transaction_listDAO;
-import com.restaurant_transaction_list.model.RES_transaction_listVO;
+import com.restaurant_transaction_list.model.RES_Transaction_ListDAO;
+import com.restaurant_transaction_list.model.RES_Transaction_ListVO;
 
 public class Reservation_Table_NumberDAO implements Reservation_Table_NumberDAO_interface {
 	

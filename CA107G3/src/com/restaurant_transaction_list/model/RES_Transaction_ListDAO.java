@@ -13,7 +13,7 @@ import java.util.Map;
 
 
 
-public  class RES_transaction_listDAO implements RES_transaction_listDAO_interface {
+public  class RES_Transaction_ListDAO implements RES_Transaction_ListDAO_Interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "WEST";
@@ -34,7 +34,7 @@ public  class RES_transaction_listDAO implements RES_transaction_listDAO_interfa
 	private static final String UPDATE = 
 			"UPDATE res_transaction_list set vendor_no=?, amount=?,	pay_date=?,	ord_no=?, v_wallet=? where trst_no=?";
 	@Override
-	public void insert(RES_transaction_listVO res_transaction_listVO) {
+	public void insert(RES_Transaction_ListVO res_transaction_listVO) {
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
 //		
@@ -80,7 +80,7 @@ public  class RES_transaction_listDAO implements RES_transaction_listDAO_interfa
 	}
 
 	@Override
-	public void update(RES_transaction_listVO res_transaction_listVO) {
+	public void update(RES_Transaction_ListVO res_transaction_listVO) {
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
 //
@@ -174,10 +174,10 @@ public  class RES_transaction_listDAO implements RES_transaction_listDAO_interfa
 	}
 
 	@Override
-	public RES_transaction_listVO findByPrimaryKey(String trst_no) {
+	public RES_Transaction_ListVO findByPrimaryKey(String trst_no) {
 		
 
-		RES_transaction_listVO res_transaction_listVO = null;
+		RES_Transaction_ListVO res_transaction_listVO = null;
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -194,7 +194,7 @@ public  class RES_transaction_listDAO implements RES_transaction_listDAO_interfa
 
 				while (rs.next()) {
 					// empVo �]�٬� Domain objects
-					res_transaction_listVO = new RES_transaction_listVO();
+					res_transaction_listVO = new RES_Transaction_ListVO();
 					res_transaction_listVO.setTrst_no(rs.getString("trst_no"));
 					res_transaction_listVO.setVendor_no(rs.getString("vendor_no"));
 					res_transaction_listVO.setAmount(rs. getDouble("amount"));
@@ -241,9 +241,9 @@ public  class RES_transaction_listDAO implements RES_transaction_listDAO_interfa
 	}
 
 	@Override
-	public List<RES_transaction_listVO> getAll() {
-		List<RES_transaction_listVO> list = new ArrayList<RES_transaction_listVO>();
-		RES_transaction_listVO resVO = null;
+	public List<RES_Transaction_ListVO> getAll() {
+		List<RES_Transaction_ListVO> list = new ArrayList<RES_Transaction_ListVO>();
+		RES_Transaction_ListVO resVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -259,7 +259,7 @@ public  class RES_transaction_listDAO implements RES_transaction_listDAO_interfa
 			while (rs.next()) {
 				
 				
-				resVO = new RES_transaction_listVO();
+				resVO = new RES_Transaction_ListVO();
 				resVO.setTrst_no(rs.getString("trst_no"));
 				resVO.setVendor_no(rs.getString("vendor_no"));
 				resVO.setAmount(rs. getDouble("amount"));
@@ -306,13 +306,13 @@ public  class RES_transaction_listDAO implements RES_transaction_listDAO_interfa
 	}
 
 	@Override
-	public List<RES_transaction_listVO> getAll(Map<String, String[]> map) {
+	public List<RES_Transaction_ListVO> getAll(Map<String, String[]> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public static void main(String[] args) {
-		RES_transaction_listDAO dao = new RES_transaction_listDAO();
+		RES_Transaction_ListDAO dao = new RES_Transaction_ListDAO();
 //		RES_transaction_listVO resVO1 = new RES_transaction_listVO();
 		
 		//insert
@@ -353,8 +353,8 @@ public  class RES_transaction_listDAO implements RES_transaction_listDAO_interfa
 		
 		//findAll
 		
-		List<RES_transaction_listVO> list = dao.getAll();
-		for (RES_transaction_listVO res : list) {
+		List<RES_Transaction_ListVO> list = dao.getAll();
+		for (RES_Transaction_ListVO res : list) {
 			System.out.print(res.getTrst_no() + ",");
 			System.out.print(res.getVendor_no() + ",");
 			System.out.print(res.getAmount() + ",");

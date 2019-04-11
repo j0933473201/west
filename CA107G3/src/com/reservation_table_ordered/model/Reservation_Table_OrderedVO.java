@@ -40,7 +40,7 @@ public class Reservation_Table_OrderedVO implements java.io.Serializable{
 	public String getBooking_time() {
 		return booking_time;
 	}
-	public void setBooking_time(String bookingtime) {
+	public void setBooking_time(String booking_time) {
 		this.booking_time = booking_time;
 	}
 	public Integer getTbl_o_num1() {

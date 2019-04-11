@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.restaurant_transaction_list.model.RES_transaction_listVO;
+import com.restaurant_transaction_list.model.RES_Transaction_ListVO;
 
 
 

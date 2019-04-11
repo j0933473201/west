@@ -2,7 +2,7 @@ package com.exception_date.model;
 
 import java.sql.Date;
 
-public class Exception_dateVO implements java.io.Serializable{
+public class Exception_DateVO implements java.io.Serializable{
 	
 		private String exc_no;
 		private String vendor_no;

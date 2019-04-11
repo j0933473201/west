@@ -1,4 +1,4 @@
-package com.reservation_time.model;
+package com.exception_date.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,33 +9,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.restaurant_transaction_list.model.RES_transaction_listDAO;
-import com.restaurant_transaction_list.model.RES_transaction_listVO;
+import com.restaurant_transaction_list.model.RES_Transaction_ListDAO;
+import com.restaurant_transaction_list.model.RES_Transaction_ListVO;
 
-public class Reservation_timeDAO implements Reservation_timeDAO_interface {
+public class Exception_DateDAO implements Exception_DateDAO_Interface {
 
+	
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "WEST";
 	String passwd = "800627";
 	
-	
-	private static final String INSERT_STMT = "INSERT INTO RESERVATION_TIME VALUES('RT'||LPAD(to_char(RESERVATION_T_SEQ.NEXTVAL), 8, '0'),?,?)";
+	private static final String INSERT_STMT = "INSERT INTO EXCEPTION_DATE VALUES ('ED'||LPAD(to_char(EXCEPTION_DATE_SEQ.NEXTVAL), 8, '0'),?,?)";
 	
 	private static final String GET_ALL_STMT = 
-			"SELECT RT_NO, VENDOR_NO, R_TIME FROM RESERVATION_TIME ORDER by RT_NO";
+			"SELECT EXC_NO, VENDOR_NO, EXC_DATE FROM EXCEPTION_DATE ORDER by EXC_NO";
 	
 	private static final String GET_ONE_STMT = 
-			"SELECT RT_NO, VENDOR_NO, R_TIME FROM RESERVATION_TIME WHERE RT_NO =?";
+			"SELECT EXC_NO, VENDOR_NO, EXC_DATE FROM EXCEPTION_DATE WHERE EXC_NO =?";
 	
 	private static final String DELETE = 
-			"DELETE FROM RESERVATION_TIME WHERE RT_NO = ?";
+			"DELETE FROM EXCEPTION_DATE WHERE EXC_NO = ?";
 	private static final String UPDATE = 
-			"UPDATE RESERVATION_TIME SET VENDOR_NO=?, R_TIME=? where RT_NO=?";
+			"UPDATE EXCEPTION_DATE SET VENDOR_NO=?, EXC_DATE=? where EXC_NO=?";
+	
+	
 	
 	@Override
-	public void insert(Reservation_TimeVO reservation_timeVO) {
-		
+	public void insert(Exception_DateVO exception_dateVO) {
+//		
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
 //		
@@ -45,8 +47,8 @@ public class Reservation_timeDAO implements Reservation_timeDAO_interface {
 //			con = DriverManager.getConnection(url, userid, passwd);
 //			pstmt = con.prepareStatement(INSERT_STMT);
 //
-//			pstmt.setString(1, reservation_timeVO.getVendor_no());
-//			pstmt.setString(2, reservation_timeVO.getR_time());
+//			pstmt.setString(1, exception_dateVO.getVendor_no());
+//			pstmt.setDate(2, exception_dateVO.getExc_date());
 //			
 //
 //			pstmt.executeUpdate();
@@ -77,12 +79,10 @@ public class Reservation_timeDAO implements Reservation_timeDAO_interface {
 //			}
 //		}
 
-
 	}
 
 	@Override
-	public void update(Reservation_TimeVO reservation_timeVO) {
-		
+	public void update(Exception_DateVO exception_dateVO) {
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
 //
@@ -92,10 +92,10 @@ public class Reservation_timeDAO implements Reservation_timeDAO_interface {
 //			con = DriverManager.getConnection(url, userid, passwd);
 //			pstmt = con.prepareStatement(UPDATE);
 //
-//			pstmt.setString(1, reservation_timeVO.getVendor_no() );
-//			pstmt.setString(2, reservation_timeVO.getR_time() );
-//			pstmt.setString(3, reservation_timeVO.getRt_no() );
-//			
+//			pstmt.setString(1, exception_dateVO.getVendor_no() );
+//			pstmt.setDate(2, exception_dateVO.getExc_date() );
+//			pstmt.setString(3, exception_dateVO.getExc_no());
+//
 //			pstmt.executeUpdate();
 //
 //			// Handle any driver errors
@@ -128,7 +128,7 @@ public class Reservation_timeDAO implements Reservation_timeDAO_interface {
 	}
 
 	@Override
-	public void delete(String rt_no) {
+	public void delete(String exc_no) {
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
 //
@@ -138,7 +138,7 @@ public class Reservation_timeDAO implements Reservation_timeDAO_interface {
 //			con = DriverManager.getConnection(url, userid, passwd);
 //			pstmt = con.prepareStatement(DELETE);
 //
-//			pstmt.setString(1, rt_no);
+//			pstmt.setString(1, exc_no);
 //
 //			pstmt.executeUpdate();
 //				System.out.println("OKOK");
@@ -169,14 +169,11 @@ public class Reservation_timeDAO implements Reservation_timeDAO_interface {
 //		}
 
 
-	
-
-
 	}
 
 	@Override
-	public Reservation_TimeVO findByPrimaryKey(String rt_no) {
-		Reservation_TimeVO reservation_timeVO = null;
+	public Exception_DateVO findByPrimaryKey(String exc_no) {
+		Exception_DateVO exception_dateVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -187,16 +184,16 @@ public class Reservation_timeDAO implements Reservation_timeDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setString(1, rt_no);
+			pstmt.setString(1, exc_no);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				// empVo �]�٬� Domain objects
-				reservation_timeVO = new Reservation_TimeVO();
-				reservation_timeVO.setRt_no(rs.getString("rt_no"));
-				reservation_timeVO.setVendor_no(rs.getString("vendor_no"));
-				reservation_timeVO.setR_time(rs. getString("r_time"));
+				exception_dateVO = new Exception_DateVO();
+				exception_dateVO.setExc_no(rs.getString("exc_no"));
+				exception_dateVO.setVendor_no(rs.getString("vendor_no"));
+				exception_dateVO.setExc_date(rs. getDate("exc_date"));
 				
 				
 			}
@@ -234,14 +231,13 @@ public class Reservation_timeDAO implements Reservation_timeDAO_interface {
 			}
 		}
 		
-	return reservation_timeVO;
-		
+	return exception_dateVO;
 	}
 
 	@Override
-	public List<Reservation_TimeVO> getAll() {
-		List<Reservation_TimeVO> list = new ArrayList<Reservation_TimeVO>();
-		Reservation_TimeVO resVO = null;
+	public List<Exception_DateVO> getAll() {
+		List<Exception_DateVO> list = new ArrayList<Exception_DateVO>();
+		Exception_DateVO edVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -257,13 +253,13 @@ public class Reservation_timeDAO implements Reservation_timeDAO_interface {
 			while (rs.next()) {
 				
 				
-				resVO = new Reservation_TimeVO();
-				resVO.setRt_no(rs.getString("rt_no"));
-				resVO.setVendor_no(rs.getString("vendor_no"));
-				resVO.setR_time(rs. getString("r_time"));
+				edVO = new Exception_DateVO();
+				edVO.setExc_no(rs.getString("exc_no"));
+				edVO.setVendor_no(rs.getString("vendor_no"));
+				edVO.setExc_date(rs. getDate("exc_date"));
 				
 				
-				list.add(resVO); // Store the row in the list
+				list.add(edVO); // Store the row in the list
 			}
 
 			// Handle any driver errors
@@ -303,61 +299,62 @@ public class Reservation_timeDAO implements Reservation_timeDAO_interface {
 	}
 
 	@Override
-	public List<Reservation_TimeVO> getAll(Map<String, String[]> map) {
+	public List<Exception_DateVO> getAll(Map<String, String[]> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public static void main(String[] args) {
 		
-		Reservation_timeDAO dao = new Reservation_timeDAO();
-		
-		Reservation_TimeVO resVO1 = new Reservation_TimeVO();
+		Exception_DateDAO dao = new Exception_DateDAO();
+		Exception_DateVO edVO1 = new Exception_DateVO();
 		
 		//insert
 //		resVO1.setVendor_no("V000003");
-//		resVO1.setR_time("2100");
-//	
-//		dao.insert(resVO1);
-//		System.out.println(resVO1);
+//		resVO1.setExc_date(java.sql.Date.valueOf("2018-07-25"));
+//		
+//		
+//		System.out.println(edVO1);
+//		dao.insert(edVO1);
+//		System.out.println("OKK");
 		
 		
 		//update
-//		Reservation_TimeVO resVO2 = new Reservation_TimeVO();
-//		resVO2 .setRt_no("RT00000009");
+//		Exception_dateVO edVO2 = new Exception_dateVO();
+//		resVO2 .setExc_no("ED00000004");
 //		resVO2 .setVendor_no("V000004");
-//		resVO2.setR_time("1100");
+//		resVO2.setExc_date(java.sql.Date.valueOf("2018-07-25"));
 //		
-//		System.out.println(resVO2);
-//		dao.update(resVO2);
-//		System.out.println("OK");
-		
+//		System.out.println(edVO2);
+//		dao.update(edVO2);
 		
 		//delete
-//		dao.delete("RT00000007");
+//		dao.delete("ED00000007");
 //		System.out.println("OK");
-		
-		//findByPrimaryKey
-		
-//		Reservation_TimeVO resVO3 = dao.findByPrimaryKey("RT00000001");
-//		System.out.print(resVO3.getRt_no() + ",");
-//		System.out.print(resVO3.getVendor_no() + ",");
-//		System.out.print(resVO3.getR_time() + ",");
 //		
+//		//findByPrimaryKey
 //		
+//		Exception_dateVO edVO3 = dao.findByPrimaryKey("ED00000005");
+//		System.out.print(edVO3.getExc_no() + ",");
+//		System.out.print(edVO3.getVendor_no() + ",");
+//		System.out.print(edVO3.getExc_date() + ",");
+//		
+////		
 //		System.out.println("---------------------");
 		
 		//findAll
-		List<Reservation_TimeVO> list = dao.getAll();
-		for (Reservation_TimeVO res : list) {
-			System.out.print(res.getRt_no() + ",");
-			System.out.print(res.getVendor_no() + ",");
-			System.out.print(res.getR_time() + ",");
-			
-			
-			System.out.println("-------------------");
 		
-		}
+		List<Exception_DateVO> list = dao.getAll();
+			for (Exception_DateVO exc : list) {
+			System.out.print(exc.getExc_no() + ",");
+			System.out.print(exc.getVendor_no() + ",");
+			System.out.print(exc.getExc_date() + ",");
+			
+					
+			System.out.println("-------------------");
+				
+				}
+		
 	}
 
 }

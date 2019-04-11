@@ -2,7 +2,7 @@ package com.restaurant_transaction_list.model;
 
 import java.sql.Timestamp;
 
-public class RES_transaction_listVO implements java.io.Serializable{
+public class RES_Transaction_ListVO implements java.io.Serializable{
 
 	private String trst_no;
 	private String vendor_no;

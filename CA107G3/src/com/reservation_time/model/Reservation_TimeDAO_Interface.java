@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.vendor.model.VendorVO;
 
-public interface Reservation_timeDAO_interface {
+public interface Reservation_TimeDAO_Interface {
 	public void insert(Reservation_TimeVO reservation_timeVO );
     public void update(Reservation_TimeVO reservation_timeVO);
     public void delete(String rt_no);
