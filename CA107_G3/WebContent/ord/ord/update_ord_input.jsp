@@ -64,100 +64,100 @@
 		</c:forEach>
 	</ul>
 </c:if>
+<div class="row justify-content-center" style="margin-top: 100px">
 
-<FORM METHOD="get" ACTION="ord.do" name="form1">
+<FORM METHOD="get" ACTION="<%= request.getContextPath() %>/ord/ord.do" name="form1">
 <table>
 	<tr>
-		<td>訂單編號:<font color=red><b>*</b></font></td>
-		<td>${ordVO.ord_no}</td>
+		<td><font color=red><b>訂單編號:*</b></font>${ordVO.ord_no}</td>
+<%-- 		<td>${ordVO.ord_no}</td> --%>
+		<input type="hidden" name="ord_no" value="${ordVO.ord_no}"/>
 	</tr>
 	<tr>
-		<td>會員編號:</td>
-		<td><input type="TEXT"  readonly="readonly" name="mem_no" size="45" value="<%=ordVO.getMem_no()%>" /></td>
+<!-- 		<td>會員編號:</td> -->
+		<td>會員編號:<input type="TEXT"  readonly="readonly" name="mem_no" size="45" value="<%=ordVO.getMem_no()%>" /></td>
 	</tr>
 	<tr>
-		<td>廠商編號:</td>
-		<td><input type="TEXT" readonly="readonly" name="vendor_no" size="45"	value="<%=ordVO.getVendor_no()%>" /></td>
+<!-- 		<td>廠商編號:</td> -->
+		<td>廠商編號:<input type="TEXT" readonly="readonly" name="vendor_no" size="45"	value="<%=ordVO.getVendor_no()%>" /></td>
 	</tr>
 	<tr>
-		<td>卓號:</td>
-		<td><input type="TEXT" name="tbl_no" size="45"	value="<%=ordVO.getTbl_no()%>" /></td>
+<!-- 		<td>卓號:</td> -->
+		<td>卓號:<input type="TEXT" name="tbl_no" size="45" readonly="readonly"	value="<%=ordVO.getTbl_no()%>" /></td>
 	</tr>
 	<tr>
-		<td>付款好友1:</td>
-		<td><input type="TEXT" name="share_mem_no1" size="45"	value="<%=ordVO.getShare_mem_no1()%>" /></td>
+<!-- 		<td>付款好友1:</td> -->
+		<td>付款好友1:<input type="TEXT" name="share_mem_no1" size="45" readonly="readonly"	value="${ordVO.share_mem_no1}" /></td>
 	</tr>
 	<tr>
-		<td>付款好友2:</td>
-		<td><input type="TEXT" name="share_mem_no1" size="45"	value="<%=ordVO.getShare_mem_no2()%>" /></td>
+<!-- 		<td>付款好友2:</td> -->
+		<td>付款好友2:<input type="TEXT" name="share_mem_no1" size="45" readonly="readonly"	value="${ordVO.share_mem_no2}" /></td>
 	</tr>
 	<tr>
-		<td>付款金額:</td>
-		<td><input type="text" name="share_amount" size="45"	value="<%=ordVO.getShare_amount()%>" /></td>
+<!-- 		<td>付款金額:</td> -->
+		<td>付款金額:<input type="text" name="share_amount" size="45"	value="<%=ordVO.getShare_amount()%>" /></td>
 	</tr>
 	<tr>
-		<td>訂位時段:</td>
-		<td><input name="booking_time"  type="text"  value="<%=ordVO.getBooking_time()%>"></td>
+<!-- 		<td>訂位時段:</td> -->
+		<td>訂位時段:<input name="booking_time"  type="text"  value="<%=ordVO.getBooking_time()%>"></td>
 	</tr>
 	<tr>
-		<td>訂單時間:</td>
+<!-- 		<td>訂單時間:</td> -->
 <jsp:useBean id="now" scope="page" class="java.util.Date"/>
-<		
-		<td><input type="TEXT" name="ord_time" size="100"	readonly="readonly" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"/>	" />
+		
+		<td>訂單時間:<input type="TEXT" name="ord_time" size="100"	readonly="readonly" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"/>	" />
 		</td>
 	</tr>
 	<tr>
-		<td>總金額:</td>
-		<td><input type="TEXT" name="total" size="45"	value="<%=ordVO.getTotal()%>" /></td>
+<!-- 		<td>總金額:</td> -->
+		<td>總金額:<input type="TEXT" name="total" size="45"	value="<%=ordVO.getTotal()%>" /></td>
 	</tr>
 	<tr>
-		<td>到達時間:</td>
-		<td><input type="TEXT" name="arrival_time" size="45"	value="<%=ordVO.getArrival_time()%>" /></td>
+<!-- 		<td>到達時間:</td> -->
+		<td>到達時間:<input type="TEXT" name="arrival_time" size="45"	value="${ordVO.arrival_time}"/></td>
 	</tr>
 	<tr>
-		<td>結束時間:</td>
-		<td><input type="TEXT" name="fnish_time" size="45"	value="<%=ordVO.getFinish_time()%>" /></td>
+<!-- 		<td>結束時間:</td> -->
+		<td>結束時間:<input type="TEXT" name="fnish_time" size="45"	value="${ordVO.finish_time}" /></td>
 	</tr>
 	<tr>
-		<td>驗證碼:</td>
-		<td><input type="TEXT" name="verif_code" size="45"	value="<%=ordVO.getVerif_code()%>" /></td>
+<!-- 		<td>驗證碼:</td> -->
+		<td>驗證碼:<input type="TEXT" name="verif_code" size="45" readonly="readonly"	value="<%=ordVO.getVerif_code()%>" /></td>
 	</tr>
 	<tr>
-		<td>狀態碼:</td>
-		<td><input type="TEXT" name="status" size="45"	value="<%=ordVO.getStatus()%>" /></td>
+<!-- 		<td>狀態碼:</td> -->
+		<td>狀態碼:<input type="TEXT" name="status" size="45"	value="<%=ordVO.getStatus()%>" /></td>
 	</tr>
 	<tr>
-		<td>用餐日期:</td>
-		<td><input type="TEXT" name="booking_date"  id="f_date1" size="45"	value="${ordVO.booking_date}" /></td>
+<!-- 		<td>用餐日期:</td> -->
+		<td>用餐日期:<input type="TEXT" name="booking_date"  id="f_date1" size="45"	value="${ordVO.booking_date}" /></td>
 	</tr>
 	
-	<div class="row justify-content-center" style="margin-top: 50px">
-			<div class="col-md-9">
+	
+			
 					
 								
-							<jsp:useBean id="ordSvc" scope="page" class="com.ord.model.OrdService" />
+	<jsp:useBean id="ordSvc" scope="page" class="com.ord.model.OrdService"/>
 							
-									<div class="select1">
-										人數選擇 
-											<select class="custom-select my-1 mr-sm-4"
-											id="inlineFormCustomSelectPref" style="width: 500px;" name="party_size">
+									
+	人數選擇 :
+	<select  style="width: 500px" name="party_size">
 											
-											<option  name="2" value="2">二人</option>
-											<option  name="3" value="3">三人</option>
-											<option  name="4" value="4">四人</option>
-											<option  name="5" value="5">五人</option>
-											<option  name="6" value="6">六人</option>
-											<option  name="7" value="7">七人</option>
-											<option  name="8" value="8">八人</option>
-											<option  name="9" value="10">十人</option>
+		<option  name="2" value="2">二人</option>
+		<option  name="3" value="3">三人</option>
+		<option  name="4" value="4">四人</option>
+		<option  name="5" value="5">五人</option>
+		<option  name="6" value="6">六人</option>
+		<option  name="7" value="7">七人</option>
+		<option  name="8" value="8">八人</option>
+		<option  name="9" value="10">十人</option>
 											
-										</select>
-									</div>
-							</div>
-						</div>
+	</select>
+									
+							
+	</div>
 						<tr>
-								<td>備註:</td>
-								<td><input type="TEXT" name="notes" size="70"  
+								<td>備註:<input type="TEXT" name="notes" size="70"  
 										 value="" />
 								</td>
 						</tr>
@@ -168,7 +168,8 @@
 
 <br>
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="ord_no" value="<%=ordVO.getOrd_no()%>">
+
+</table>
 <input type="submit" value="送出修改"></FORM>
 </body>
 

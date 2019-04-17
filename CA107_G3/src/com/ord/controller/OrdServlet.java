@@ -27,95 +27,99 @@ public class OrdServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		
 		
-		if ("getOne_For_Display".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ğ¨D
+		if ("getOne_For_Display".equals(action)) { // ä¾†è‡ªselect_page.jspçš„è«‹æ±‚
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-//			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+			try {
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 				String str = req.getParameter("ord_no");
 				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("½Ğ¿é¤J­q³æ½s¸¹");
+					errorMsgs.add("Please insert ord_no");
+					System.out.println("13");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ord/select_page.jsp");
+							.getRequestDispatcher("/ord/ord/select_page.jsp");
+					
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					
+					return;//ç¨‹å¼ä¸­æ–·
 				}
 				
 				String ord_no = null;
 				try {
 					ord_no = new String(str);
 				} catch (Exception e) {
-					errorMsgs.add("­q³æ½s¸¹¤£¥¿½T");
+					errorMsgs.add("error ord_no");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ord/select_page.jsp");
+							.getRequestDispatcher("/ord/ord/select_page.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ç¨‹å¼ä¸­æ–·
 				}
 				
-				/***************************2.¶}©l¬d¸ß¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹æŸ¥è©¢è³‡æ–™*****************************************/
 				OrdService ordSvc = new OrdService();
 				OrdVO ordVO = ordSvc.getOneOrd(ord_no);
 				if (ordVO == null) {
-					errorMsgs.add("¬dµL¸ê®Æ");
+					errorMsgs.add("invaild ord_no");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ord/select_page.jsp");
+							.getRequestDispatcher("/ord/ord/select_page.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ç¨‹å¼ä¸­æ–·
 				}
 				
-				/***************************3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("ordVO", ordVO); // ¸ê®Æ®w¨ú¥XªºempVOª«¥ó,¦s¤Jreq
-				String url = "/ord/listOneOrd.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ¦¨¥\Âà¥æ listOneEmp.jsp
+				/***************************3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("ordVO", ordVO); // è³‡æ–™åº«å–å‡ºçš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/ord/ord/listOneOrd.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // æˆåŠŸè½‰äº¤ listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
-//			} catch (Exception e) {
-//				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/ord/select_page.jsp");
-//				failureView.forward(req, res);
-//			}
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("can not find ord_no detail:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/ord/ord/select_page.jsp");
+				failureView.forward(req, res);
+			}
 		}
 		
 		
-		if ("getOne_For_Update".equals(action)) { // ¨Ó¦ÛlistAllEmp.jspªº½Ğ¨D
+		if ("getOne_For_Update".equals(action)) { // ä¾†è‡ªlistAllEmp.jspçš„è«‹æ±‚
 
+				System.out.println("9999999999999999");
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 //			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ****************************************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸****************************************/
 				String ord_no = new String(req.getParameter("ord_no"));
 				
-				/***************************2.¶}©l¬d¸ß¸ê®Æ****************************************/
+				/***************************2.é–‹å§‹æŸ¥è©¢è³‡æ–™****************************************/
 				OrdService ordSvc = new OrdService();
 				OrdVO ordVO = ordSvc.getOneOrd(ord_no);
 								
-				/***************************3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)************/
-				req.setAttribute("ordVO", ordVO);         // ¸ê®Æ®w¨ú¥XªºempVOª«¥ó,¦s¤Jreq
-				String url = "/ord/update_ord_input.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// ¦¨¥\Âà¥æ update_emp_input.jsp
+				/***************************3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)************/
+				req.setAttribute("ordVO", ordVO);         // è³‡æ–™åº«å–å‡ºçš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/ord/ord/update_ord_input.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// æˆåŠŸè½‰äº¤ update_emp_input.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z**********************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†**********************************/
 //			} catch (Exception e) {
-//				errorMsgs.add("µLªk¨ú±o­n­×§ïªº¸ê®Æ:" + e.getMessage());
+//				errorMsgs.add("ç„¡æ³•å–å¾—è¦ä¿®æ”¹çš„è³‡æ–™:" + e.getMessage());
 //				RequestDispatcher failureView = req
 //						.getRequestDispatcher("/ord/listAllOrd.jsp");
 //				failureView.forward(req, res);
@@ -123,50 +127,85 @@ public class OrdServlet extends HttpServlet {
 		}
 		
 		
-		if ("update".equals(action)) { // ¨Ó¦Ûupdate_emp_input.jspªº½Ğ¨D
+		if ("update".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-		
+		System.out.println("upte");
 //			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 				String ord_no = new String(req.getParameter("ord_no").trim());
 				
 				String mem_no = req.getParameter("mem_no");
-				if (mem_no == null || mem_no.trim().length() == 0) {
-					errorMsgs.add("·|­û½s¸¹: ½Ğ¤ÅªÅ¥Õ");
-				} else if(!mem_no.trim().matches(mem_no)) { //¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-					errorMsgs.add("000");
-	            }
+				
 				String vendor_no  = req.getParameter("vendor_no");
-				String tbl_no =req.getParameter("tbl_no");
+				String tbl_no ="";
+				try {
+					tbl_no = new String(req.getParameter("tbl_no").trim());
+				} catch (Exception e) {
+					
+					errorMsgs.add("please insert tbl_no.");
+				}
 				Integer party_size =new Integer(req.getParameter("party_size"));
+				
+				
 				String share_mem_no1 =req.getParameter("share_mem_no1");
 				String share_mem_no2 =req.getParameter("share_mem_no2");
 				Integer share_amount =new Integer(req.getParameter("share_amount"));
 				java.sql.Timestamp ord_time =java.sql.Timestamp.valueOf(req.getParameter("ord_time"));
-				java.sql.Date booking_date=java.sql.Date.valueOf(req.getParameter("booking_date"));
-				String booking_time=req.getParameter("booking_time");
+				java.sql.Date booking_date=null;
+				try {
+					booking_date = java.sql.Date.valueOf(req.getParameter("booking_date").trim());
+				} catch (IllegalArgumentException e) {
+					booking_date=new java.sql.Date(System.currentTimeMillis());
+					errorMsgs.add("please choose date!");
+				}
+				String booking_time=new String(req.getParameter("booking_time").trim());
+				if (booking_time == null || booking_time.trim().length() == 0) {
+					errorMsgs.add("booking_time must be insert");
+				}
 				String notes=req.getParameter("notes");
-				Integer total=new Integer(req.getParameter("total"));
+				Integer total=null;
+				try {
+					total = new Integer(req.getParameter("total").trim());
+					} catch (NumberFormatException e) {
+						total = 0;
+						errorMsgs.add("please. insert right total");
+					}catch (NullPointerException b ) {
+					System.out.println("66666666");
+					total = 0;
+						errorMsgs.add("please insert total number");}
+				
 				String arrival_time=req.getParameter("arrival_time");
 				String finish_time=req.getParameter("finish_time");
 				String verif_code=req.getParameter("verif_code");
-				Integer status=new Integer(req.getParameter("status"));
+				
+				Integer status=null;
+				try {
+				status = new Integer(req.getParameter("status").trim());
+				} catch (NumberFormatException e) {
+				status = 0;
+					errorMsgs.add("please. insert right status number");
+				}catch (NullPointerException e) {
+				System.out.println("66666666");
+					status = 0;
+					errorMsgs.add("please insert  status number");
+				}
+//				Integer status=new Integer(req.getParameter("status"));
 				
 				
 //				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 //				if (ename == null || ename.trim().length() == 0) {
-//					errorMsgs.add("­û¤u©m¦W: ½Ğ¤ÅªÅ¥Õ");
-//				} else if(!ename.trim().matches(enameReg)) { //¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-//					errorMsgs.add("­û¤u©m¦W: ¥u¯à¬O¤¤¡B­^¤å¦r¥À¡B¼Æ¦r©M_ , ¥Bªø«×¥²»İ¦b2¨ì10¤§¶¡");
+//					errorMsgs.add("å“¡å·¥å§“å: è«‹å‹¿ç©ºç™½");
+//				} else if(!ename.trim().matches(enameReg)) { //ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
+//					errorMsgs.add("å“¡å·¥å§“å: åªèƒ½æ˜¯ä¸­ã€è‹±æ–‡å­—æ¯ã€æ•¸å­—å’Œ_ , ä¸”é•·åº¦å¿…éœ€åœ¨2åˆ°10ä¹‹é–“");
 //	            }
 //				
 //				String job = req.getParameter("job").trim();
 //				if (job == null || job.trim().length() == 0) {
-//					errorMsgs.add("Â¾¦ì½Ğ¤ÅªÅ¥Õ");
+//					errorMsgs.add("è·ä½è«‹å‹¿ç©ºç™½");
 //				}	
 //				
 //				java.sql.Date hiredate = null;
@@ -174,7 +213,7 @@ public class OrdServlet extends HttpServlet {
 //					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
 //				} catch (IllegalArgumentException e) {
 //					hiredate=new java.sql.Date(System.currentTimeMillis());
-//					errorMsgs.add("½Ğ¿é¤J¤é´Á!");
+//					errorMsgs.add("è«‹è¼¸å…¥æ—¥æœŸ!");
 //				}
 //
 //				Double sal = null;
@@ -182,7 +221,7 @@ public class OrdServlet extends HttpServlet {
 //					sal = new Double(req.getParameter("sal").trim());
 //				} catch (NumberFormatException e) {
 //					sal = 0.0;
-//					errorMsgs.add("Á~¤ô½Ğ¶ñ¼Æ¦r.");
+//					errorMsgs.add("è–ªæ°´è«‹å¡«æ•¸å­—.");
 //				}
 //
 //				Double comm = null;
@@ -190,7 +229,7 @@ public class OrdServlet extends HttpServlet {
 //					comm = new Double(req.getParameter("comm").trim());
 //				} catch (NumberFormatException e) {
 //					comm = 0.0;
-//					errorMsgs.add("¼úª÷½Ğ¶ñ¼Æ¦r.");
+//					errorMsgs.add("çé‡‘è«‹å¡«æ•¸å­—.");
 //				}
 
 				
@@ -217,41 +256,41 @@ public class OrdServlet extends HttpServlet {
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("ordVO", ordVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("ordVO", ordVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ord/update_ord_input.jsp");
+							.getRequestDispatcher("/ord/ord/update_ord_input.jsp");
 					failureView.forward(req, res);
-					return; //µ{¦¡¤¤Â_
+					return; //ç¨‹å¼ä¸­æ–·
 				}
 				
-				/***************************2.¶}©l­×§ï¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹ä¿®æ”¹è³‡æ–™*****************************************/
 				OrdService ordSvc = new OrdService();
 				ordVO = ordSvc.updateOrd(ord_no, mem_no, vendor_no, tbl_no, party_size, share_mem_no1, share_mem_no2, share_amount, ord_time, booking_date, booking_time, notes, total, arrival_time, finish_time, verif_code, status);
 				
-				/***************************3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("ordVO", ordVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºempVOª«¥ó,¦s¤Jreq
-				String url = "/ord/listOneOrd.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+				/***************************3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("ordVO", ordVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/ord/ord/listOneOrd.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
 				successView.forward(req, res);
 
-//				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+//				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 //			} catch (Exception e) {
-//				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:"+e.getMessage());
+//				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:"+e.getMessage());
 //				RequestDispatcher failureView = req
 //						.getRequestDispatcher("/ord/update_ord_input.jsp");
 //				failureView.forward(req, res);
 //			}
 		}
 
-        if ("insert".equals(action)) { // ¨Ó¦ÛaddEmp.jspªº½Ğ¨D  
+        if ("insert".equals(action)) { // ä¾†è‡ªaddEmp.jspçš„è«‹æ±‚  
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
+				System.out.println("insert");
 //			try {
-				/***********************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z*************************/
+				/***********************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†*************************/
 				String mem_no = req.getParameter("mem_no");
 				
 				String vendor_no  = req.getParameter("vendor_no");
@@ -261,10 +300,26 @@ public class OrdServlet extends HttpServlet {
 				String share_mem_no2 =req.getParameter("share_mem_no2");
 				Integer share_amount =new Integer(req.getParameter("share_amount"));
 				java.sql.Timestamp ord_time =java.sql.Timestamp.valueOf(req.getParameter("ord_time"));
-				java.sql.Date booking_date=java.sql.Date.valueOf(req.getParameter("booking_date"));
+				java.sql.Date booking_date=null;
+				try {
+					booking_date = java.sql.Date.valueOf(req.getParameter("booking_date").trim());
+				} catch (IllegalArgumentException e) {
+					booking_date=new java.sql.Date(System.currentTimeMillis());
+					errorMsgs.add("please choose date!");
+				}
 				String booking_time=req.getParameter("booking_time");
 				String notes=req.getParameter("notes");
-				Integer total=new Integer(req.getParameter("total"));
+				Integer total=null;
+				try {
+					total = new Integer(req.getParameter("total").trim());
+					} catch (NumberFormatException e) {
+						total = 0;
+						errorMsgs.add("please. insert right total");
+					}catch (NullPointerException b ) {
+					System.out.println("66666666");
+					total = 0;
+						errorMsgs.add("please insert total number");}
+				
 				String arrival_time=req.getParameter("arrival_time");
 				String finish_time=req.getParameter("finish_time");
 				String verif_code=req.getParameter("verif_code");
@@ -293,23 +348,23 @@ public class OrdServlet extends HttpServlet {
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("ordVO", ordVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("ordVO", ordVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ord/addOrd.jsp");
+							.getRequestDispatcher("/ord/ord/addOrd.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
-				/***************************2.¶}©l·s¼W¸ê®Æ***************************************/
+				/***************************2.é–‹å§‹æ–°å¢è³‡æ–™***************************************/
 				OrdService ordSvc = new OrdService();
 				ordVO = ordSvc.addOrd(mem_no, vendor_no, tbl_no, party_size, share_mem_no1, share_mem_no2, share_amount, ord_time, booking_date, booking_time, notes, total, arrival_time, finish_time, verif_code, status);
 				
-				/***************************3.·s¼W§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)***********/
-				String url = "/ord/listAllOrd.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ·s¼W¦¨¥\«áÂà¥ælistAllEmp.jsp
+				/***************************3.æ–°å¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)***********/
+				String url = "/ord/ord/listAllOrd.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // æ–°å¢æˆåŠŸå¾Œè½‰äº¤listAllEmp.jsp
 				successView.forward(req, res);				
 				
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z**********************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†**********************************/
 //			} catch (Exception e) {
 //				errorMsgs.add(e.getMessage());
 //				RequestDispatcher failureView = req
@@ -319,7 +374,7 @@ public class OrdServlet extends HttpServlet {
 		}
 		
 		
-		if ("delete".equals(action)) { // ¨Ó¦ÛlistAllEmp.jsp
+		if ("delete".equals(action)) { // ä¾†è‡ªlistAllEmp.jsp
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -327,23 +382,23 @@ public class OrdServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 	
 //			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ***************************************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸***************************************/
 				String ord_no = new String(req.getParameter("ord_no"));
 				
-				/***************************2.¶}©l§R°£¸ê®Æ***************************************/
+				/***************************2.é–‹å§‹åˆªé™¤è³‡æ–™***************************************/
 				OrdService ordSvc = new OrdService();
 				ordSvc.deleteOrd(ord_no);
 				
-				/***************************3.§R°£§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)***********/								
-				String url = "/ord/listAllOrd.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// §R°£¦¨¥\«á,Âà¥æ¦^°e¥X§R°£ªº¨Ó·½ºô­¶
+				/***************************3.åˆªé™¤å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)***********/								
+				String url = "/ord/ord/listAllOrd.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// åˆªé™¤æˆåŠŸå¾Œ,è½‰äº¤å›é€å‡ºåˆªé™¤çš„ä¾†æºç¶²é 
 				successView.forward(req, res);
 				
 				System.out.println("url="+url);
 				
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z**********************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†**********************************/
 //			} catch (Exception e) {
-//				errorMsgs.add("§R°£¸ê®Æ¥¢±Ñ:"+e.getMessage());
+//				errorMsgs.add("åˆªé™¤è³‡æ–™å¤±æ•—:"+e.getMessage());
 //				RequestDispatcher failureView = req
 //						.getRequestDispatcher("/ord/listAllOrd.jsp");
 //				failureView.forward(req, res);

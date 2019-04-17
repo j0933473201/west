@@ -32,13 +32,13 @@ OrdVO ordVO = (OrdVO) request.getAttribute("ordVO");
 
 <!-- 以下是 自訂的東西 -->
 <!-- 線條樣式 -->
-<link rel="stylesheet" href="css/simple-line-icons.css">
+<link rel="stylesheet" href="/ord/css/simple-line-icons.css">
 <!-- Icon資源池 -->
-<link rel="stylesheet" href="css/themify-icons.css">
+<link rel="stylesheet" href="/ord/css/themify-icons.css">
 <!-- 動態效果 -->
-<link rel="stylesheet" href="css/set1.css">
+<link rel="stylesheet" href="/ord/css/set1.css">
 <!-- 自訂 CSS主檔 -->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="/ord/css/style.css">
 
 
 <title>SeekFoodTable</title>
@@ -211,6 +211,82 @@ body {
 </style>
 <body>
 	<!--============================= HEADER =============================-->
+	<div class="nav-menu">
+		<div class="bg transition">
+			<div class="container-fluid fixed">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="navbar navbar-expand-lg navbar-light">
+							<img src="images/SeeKFoodA.png" id="logo"> <a
+								class="navbar-brand" href="#">SeekFoodTable</a>
+							<button class="navbar-toggler" type="button"
+								data-toggle="collapse" data-target="#navbarNavDropdown"
+								aria-controls="navbarNavDropdown" aria-expanded="false"
+								aria-label="Toggle navigation">
+								<span class="icon-menu"></span>
+							</button>
+							<div class="collapse navbar-collapse justify-content-end"
+								id="navbarNavDropdown">
+								<ul class="navbar-nav">
+									<li class="nav-item dropdown"><a class="nav-link" href="#"
+										id="navbarDropdownMenuLink" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false"> 城市美食 <span
+											class="icon-arrow-down"></span>
+									</a>
+										<div class="dropdown-menu"
+											aria-labelledby="navbarDropdownMenuLink">
+											<a class="dropdown-item" href="#">北部</a> <a
+												class="dropdown-item" href="#">中部</a> <a
+												class="dropdown-item" href="#">南部</a>
+										</div></li>
+									<li class="nav-item dropdown"><a class="nav-link" href="#"
+										id="navbarDropdownMenuLink1" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false"> 風格料理 <span
+											class="icon-arrow-down"></span>
+									</a>
+										<div class="dropdown-menu"
+											aria-labelledby="navbarDropdownMenuLink">
+											<a class="dropdown-item" href="#">中式料理</a> <a
+												class="dropdown-item" href="#">美式餐廳</a> <a
+												class="dropdown-item" href="#">日本料理</a> <a
+												class="dropdown-item" href="#">義式料理</a> <a
+												class="dropdown-item" href="#">東南亞風味</a>
+										</div></li>
+
+									<li class="nav-item active"><a class="nav-link" href="#">文章列表</a>
+									</li>
+									<li class="nav-item"><a class="nav-link" href="#">關於我們</a>
+									</li>
+									<li class="nav-item dropdown"><a class="nav-link" href="#"
+										id="navbarDropdownMenuLink2" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false"> 會員管理 <span
+											class="icon-arrow-down"></span>
+									</a>
+										<div class="dropdown-menu"
+											aria-labelledby="navbarDropdownMenuLink">
+											<a class="dropdown-item" href="#"><span class="icon-user"></span>編輯個人資訊</a>
+											<a class="dropdown-item" href="#"><span
+												class="icon-people"></span>好友列表</a> <a class="dropdown-item"
+												href="#"><span class="icon-people"></span>我的追蹤會員</a> <a
+												class="dropdown-item" href="#"><span class="icon-like"></span>我的收藏店家</a>
+											<a class="dropdown-item" href="#"><span class="icon-docs"></span>我的訂單</a>
+											<a class="dropdown-item" href="#"><span
+												class="icon-wallet"></span>我的錢包</a>
+										</div></li>
+									<li><a href="#" class="btn btn-outline-light top-btn"><span
+											class="icon-login"></span>登入</a></li>
+									<li><a href="#" class="btn btn-outline-light top-btn"><span
+											class="icon-logout"></span>登出</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--//END HEADER -->
+	<!--============================= HEADER =============================-->
 	${ordVO}
 	
 
@@ -315,7 +391,7 @@ body {
 		          </div>
 		      </div>
 
-	<div class="container">
+	
 		<div class="row justify-content-center">
 			<div class="col-md-6">
 
@@ -342,15 +418,15 @@ body {
 								<input type="hidden" name="mem_no" value="M000004">
 								<input type="hidden" name="vendor_no" value="V000004">
 								<input type="hidden" name="tbl_no" value="T000001">
-								<input type="hidden" name="share_mem_no1" value="">
-								<input type="hidden" name="share_mem_no2" value="">
+								<input type="hidden" name="share_mem_no1" value="${ordVO.share_mem_no1}">
+								<input type="hidden" name="share_mem_no2" value="${ordVO.share_mem_no2}">
 								<input type="hidden" name="share_amount" value="0">
 							 	<input type="hidden" name="booking_time" value="12:30">	 
 								<input type="hidden" name="ord_time" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"/>">	
 								
 								<input type="hidden" name="total" value="1000">
-								<input type="hidden" name="arrival_time" value="null">
-								<input type="hidden" name="finish_time" value="null">
+								<input type="hidden" name="arrival_time" value="${ordVO.arrival_time}">
+								<input type="hidden" name="finish_time" value="${ordVO.finish_time}">
 								<input type="hidden" name="verif_code" value="8JPXY6wQc5bvrN2y6h4h">
 								<input type="hidden" name="status" value="3">
 
@@ -423,7 +499,7 @@ body {
 						</tr>
 					</div>
 				</div>
-				</div>
+				
 				
 
 						<div class="row justify-content-center" style="margin-top: 50px">
@@ -457,9 +533,9 @@ body {
 								</div>
 							</div>
 						</div>
-
-
-					</div>
+						
+				</div>
+			</div>
 					<div class="tab-pane fade" id="profile" role="tabpanel"
 						aria-labelledby="profile-tab">
 						...
@@ -515,7 +591,7 @@ body {
 							</div>
 						</div>
 					</div>
-					</div>
+				</div>
 					<div class="tab-pane fade" id="contact" role="tabpanel"
 						aria-labelledby="contact-tab">
 						...
@@ -696,7 +772,25 @@ body {
 
 
 	<!--============================= FOOTER =============================-->
-		<!--//END FOOTER -->
+	<footer class="main-block dark-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="copyright">
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						<p>Copyright &copy; 2019 CA107G3. All rights reserved</p>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						<ul>
+							<li><a href="#"><span class="ti-email"></span></a></li>
+							<li><a href="#"><span class="ti-github"></span></a></li>
+							<li><a href="#"><span class="ti-android"></span></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--//END FOOTER -->
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -718,6 +812,44 @@ body {
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
+
+	<!-- //標題橘色 所有頁面適用 載入樣式 -->
+	<script>
+		$(window).ready(function() {
+			// 100 = The point you would like to fade the nav in.
+			$('.fixed').addClass('is-sticky');
+		});
+	</script>
+
+	<!-- 以下Script只有首頁要用 捲動時標題橘色-->
+	<!-- <script>
+        $(window).scroll(function() {
+            // 100 = The point you would like to fade the nav in.
+
+            if ($(window).scrollTop() > 10) {
+
+                $('.fixed').addClass('is-sticky');
+
+            } else {
+
+                $('.fixed').removeClass('is-sticky');
+
+            };
+        });
+    </script> -->
+	<!-- 貓頭鷹的自動捲動腳本 -->
+	<script>
+		var owl = $('.owl-carousel');
+		owl.owlCarousel({
+			items : 1,
+			loop : true,
+			margin : 10,
+			autoplay : true,
+			autoplayTimeout : 5000,
+			autoplayHoverPause : true
+		});
+	</script>
+
 	<!-- 日期的ＪＳ -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
@@ -728,8 +860,7 @@ body {
        theme: '',              //theme: 'dark',
        timepicker:false,       //timepicker:true,
        step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-       //format:'Y-m-d',         
-       format:'Y-m-d',
+       format:'Y-m-d',         //format:'Y-m-d H:i:s',
        value:   'new Date()',
     });
 	</script>
@@ -739,7 +870,6 @@ body {
 	
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="http://www.5imoban.net/download/jquery/jquery-1.8.3.min.js"></script>
 
 	<%--  window.onload=showStar(7);
             
@@ -758,7 +888,14 @@ body {
                 del_star.style.left=del_move+"px";
             }; --%>
 
-	
+
+
+
+
+
+
+	<script
+		src="http://www.5imoban.net/download/jquery/jquery-1.8.3.min.js"></script>
 	<script>
 		$(function() {
 			//评分
@@ -774,7 +911,18 @@ body {
 	</script>
 
 
-	
-	
+	<!-- <script>
+		var owl = $('.owl-carousel');
+		owl.owlCarousel({
+			items : 1,
+			loop : true,
+			margin : 10,
+			autoplay : true,
+			autoplayTimeout : 5000,
+			autoplayHoverPause : true
+		});
+	</script> -->
+	</div>
 </body>
+</html>
 </html>

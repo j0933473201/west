@@ -15,7 +15,7 @@ import com.restaurant_transaction_list.model.RES_Transaction_ListVO;
 public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 
 	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:49161:XE";
+	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "WEST";
 	String passwd = "800627";
 	
@@ -23,7 +23,7 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 	private static final String INSERT_STMT = "INSERT INTO RESERVATION_TIME VALUES('RT'||LPAD(to_char(RESERVATION_T_SEQ.NEXTVAL), 8, '0'),?,?)";
 	
 	private static final String GET_ALL_STMT = 
-			"SELECT RT_NO, VENDOR_NO, R_TIME FROM RESERVATION_TIME ORDER by RT_NO";
+			"SELECT R_TIME FROM RESERVATION_TIME WHERE Vendor_no =? ";
 	
 	private static final String GET_ONE_STMT = 
 			"SELECT RT_NO, VENDOR_NO, R_TIME FROM RESERVATION_TIME WHERE RT_NO =?";
@@ -239,7 +239,7 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 	}
 
 	@Override
-	public List<Reservation_TimeVO> getAll() {
+	public List<Reservation_TimeVO> getAll(String vendor_no) {
 		List<Reservation_TimeVO> list = new ArrayList<Reservation_TimeVO>();
 		Reservation_TimeVO resVO = null;
 
@@ -252,15 +252,21 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
+			
+			pstmt.setString(1, "vendor_no");
 			rs = pstmt.executeQuery();
-
 			while (rs.next()) {
 				
 				
 				resVO = new Reservation_TimeVO();
-				resVO.setRt_no(rs.getString("rt_no"));
-				resVO.setVendor_no(rs.getString("vendor_no"));
-				resVO.setR_time(rs. getString("r_time"));
+//				resVO.setRt_no(rs.getString("rt_no"));
+//				resVO.setVendor_no(rs.getString("vendor_no"));
+				resVO.setR_time(rs.getString("R_time"));
+				
+				//
+//							pstmt.setString(1, rt_no);
+				
+				
 				
 				
 				list.add(resVO); // Store the row in the list
@@ -348,8 +354,11 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 //		System.out.println("---------------------");
 		
 		//findAll
-		List<Reservation_TimeVO> list = dao.getAll();
+		List<Reservation_TimeVO> list = dao.getAll("V000001");
+		
+		
 		for (Reservation_TimeVO res : list) {
+			
 			System.out.print(res.getRt_no() + ",");
 			System.out.print(res.getVendor_no() + ",");
 			System.out.print(res.getR_time() + ",");
@@ -358,6 +367,12 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 			System.out.println("-------------------");
 		
 		}
+	}
+
+	@Override
+	public List<Reservation_TimeVO> getAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
