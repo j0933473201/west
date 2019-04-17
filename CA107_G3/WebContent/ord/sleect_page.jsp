@@ -37,6 +37,9 @@
 
 <h3>資料查詢:</h3>
 	
+<ul>
+  <li><a href='addOrd.jsp'>返回新增頁</a> </li>
+</ul>	
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>

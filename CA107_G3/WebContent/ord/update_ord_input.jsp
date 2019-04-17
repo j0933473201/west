@@ -120,7 +120,7 @@
 	</tr>
 	<tr>
 		<td>驗證碼:</td>
-		<td><input type="TEXT" name="veruf_code" size="45"	value="${ordVO.ordVeruf_code}" /></td>
+		<td><input type="TEXT" name="verif_code" size="45"	value="<%=ordVO.getVerif_code()%>" /></td>
 	</tr>
 	<tr>
 		<td>狀態碼:</td>

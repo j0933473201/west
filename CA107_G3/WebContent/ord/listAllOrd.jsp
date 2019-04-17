@@ -51,7 +51,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+ <li><a href='addOrd.jsp'>新增訂單</a> a new Emp.</li>
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>

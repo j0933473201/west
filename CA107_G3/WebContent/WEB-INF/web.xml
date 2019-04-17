@@ -9,7 +9,6 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet>
     <servlet-name>OrdServlet</servlet-name>
     <servlet-class>com.ord.controller.OrdServlet</servlet-class>
@@ -18,5 +17,4 @@
     <servlet-name>OrdServlet</servlet-name>
     <url-pattern>/ord/ord.do</url-pattern>
   </servlet-mapping>
-  
 </web-app>

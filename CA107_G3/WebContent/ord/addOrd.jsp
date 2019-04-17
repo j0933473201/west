@@ -339,7 +339,7 @@ body {
 						<FORM METHOD="get" ACTION="ord.do" name="form1">
 						<div class="row justify-content-center" style="margin-top: 50px">
 							<div class="col-md-6">
-								<input type="hidden" name="men_no" value="M000004">
+								<input type="hidden" name="mem_no" value="M000004">
 								<input type="hidden" name="vendor_no" value="V000004">
 								<input type="hidden" name="tbl_no" value="T000001">
 								<input type="hidden" name="share_mem_no1" value="">
@@ -351,7 +351,7 @@ body {
 								<input type="hidden" name="total" value="1000">
 								<input type="hidden" name="arrival_time" value="null">
 								<input type="hidden" name="finish_time" value="null">
-								<input type="hidden" name="veruf_code" value="8JPXY6wQc5bvrN2y6h4h">
+								<input type="hidden" name="verif_code" value="8JPXY6wQc5bvrN2y6h4h">
 								<input type="hidden" name="status" value="3">
 
 									<tr>

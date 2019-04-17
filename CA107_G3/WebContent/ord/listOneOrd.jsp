@@ -3,7 +3,8 @@
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%
-OrdVO ordVO = (OrdVO) request.getAttribute("ordVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+OrdService ordSvc = new OrdService();
+OrdVO ordVO = ordSvc.getOneOrd(request.getParameter("ord_no"));
 %>
 
 <html>
@@ -72,7 +73,7 @@ OrdVO ordVO = (OrdVO) request.getAttribute("ordVO"); //EmpServlet.java(Concrolle
 		<th>訂單狀態</th>
 	</tr>
 	<tr>
-		<td>${ordVO.ord_no}</td>
+		   <td>${ordVO.ord_no}</td>
 			<td>${ordVO.mem_no}</td>
 			<td>${ordVO.vendor_no}</td>
 			<td>${ordVO.tbl_no}</td>
