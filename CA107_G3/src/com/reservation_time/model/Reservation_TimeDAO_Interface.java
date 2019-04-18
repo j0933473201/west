@@ -10,8 +10,8 @@ public interface Reservation_TimeDAO_Interface {
     public void delete(String rt_no);
     public Reservation_TimeVO findByPrimaryKey(String rt_no);
     public List<Reservation_TimeVO> getAll();
-    public List<Reservation_TimeVO> getAll(Map<String, String[]> map);
-	List<Reservation_TimeVO> getAll(String vendor_no);
+   
+    public List<Reservation_TimeVO> getVendor(String xxxId);
 		
 		
 }

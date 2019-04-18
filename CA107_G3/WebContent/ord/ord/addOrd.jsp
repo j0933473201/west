@@ -340,7 +340,7 @@ body {
 						<div class="row justify-content-center" style="margin-top: 50px">
 							<div class="col-md-6">
 								<input type="hidden" name="mem_no" value="M000004">
-								<input type="hidden" name="vendor_no" value="V000004">
+<!-- 								<input type="hidden" name="vendor_no" value="V000004"> -->
 								<input type="hidden" name="tbl_no" value="T000001">
 								<input type="hidden" name="share_mem_no1" value="${ordVO.share_mem_no1}">
 								<input type="hidden" name="share_mem_no2" value="${ordVO.share_mem_no2}">
@@ -452,17 +452,8 @@ body {
 							</div>
 				<jsp:useBean id="rev_tSvc" scope="page" class="com.reservation_time.model.Reservation_TimeService" />
 				
-					<c:forEach var="reservation_TimeVO" items="${rev_tSvc.all}">
-				 	
-				 	
-				 								 															
-				 	 <input class="btn btn-primary" type="button"  name="booking_time" value='${(reservation_TimeVO.vendor_no==v000001)?reservation_TimeVO.r_time:''}' >
-				 	${(reservation_TimeVO.vendor_no==v000001)?reservation_TimeVO.r_time:''}
-<%-- 				 	 ${(reservation_TimeVO.vendor_no==v000001)} ${reservation_TimeVO.r_time} --%>
-				 	
-<%-- 				 	 ${(empVO.deptno==deptVO.deptno)?'selected':'' } --%>
-				 	 
-				 					 												
+					<c:forEach var="reservation_TimeVO" items="${rev_tSvc.getVendor(param.vendor_no)}">		 															
+				 	 <input class="btn btn-primary" type="button"  name="booking_time" value="${reservation_TimeVO.r_time}" >										
 				 	</c:forEach>
 							
 						</div>

@@ -23,7 +23,7 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 	private static final String INSERT_STMT = "INSERT INTO RESERVATION_TIME VALUES('RT'||LPAD(to_char(RESERVATION_T_SEQ.NEXTVAL), 8, '0'),?,?)";
 	
 	private static final String GET_ALL_STMT = 
-			"SELECT R_TIME FROM RESERVATION_TIME WHERE Vendor_no =? ";
+			"SELECT * FROM RESERVATION_TIME ";
 	
 	private static final String GET_ONE_STMT = 
 			"SELECT RT_NO, VENDOR_NO, R_TIME FROM RESERVATION_TIME WHERE RT_NO =?";
@@ -32,6 +32,8 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 			"DELETE FROM RESERVATION_TIME WHERE RT_NO = ?";
 	private static final String UPDATE = 
 			"UPDATE RESERVATION_TIME SET VENDOR_NO=?, R_TIME=? where RT_NO=?";
+	
+	private static final String CASE = "SELECT	* FROM RESERVATION_TIME where (case when VENDOR_NO=? then 1 else 0 end+ case when RT_NO=? then 1 else 0 end)>=1";
 	
 	@Override
 	public void insert(Reservation_TimeVO reservation_timeVO) {
@@ -168,12 +170,10 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 //			}
 //		}
 
-
-	
-
-
 	}
 
+
+	
 	@Override
 	public Reservation_TimeVO findByPrimaryKey(String rt_no) {
 		Reservation_TimeVO reservation_timeVO = null;
@@ -237,11 +237,11 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 	return reservation_timeVO;
 		
 	}
-
+	
 	@Override
-	public List<Reservation_TimeVO> getAll(String vendor_no) {
+	public List<Reservation_TimeVO> getAll() {
 		List<Reservation_TimeVO> list = new ArrayList<Reservation_TimeVO>();
-		Reservation_TimeVO resVO = null;
+		Reservation_TimeVO reservation_TimeVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -252,24 +252,78 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
-			
-			pstmt.setString(1, "vendor_no");
 			rs = pstmt.executeQuery();
+			
 			while (rs.next()) {
-				
-				
-				resVO = new Reservation_TimeVO();
-//				resVO.setRt_no(rs.getString("rt_no"));
-//				resVO.setVendor_no(rs.getString("vendor_no"));
-				resVO.setR_time(rs.getString("R_time"));
-				
-				//
-//							pstmt.setString(1, rt_no);
-				
-				
-				
-				
-				list.add(resVO); // Store the row in the list
+			reservation_TimeVO = new Reservation_TimeVO();
+			reservation_TimeVO.setR_time(rs.getString("R_time"));
+			list.add(reservation_TimeVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+
+
+	@Override
+	public List<Reservation_TimeVO> getVendor(String xxxId) {
+		List<Reservation_TimeVO> list = new ArrayList<Reservation_TimeVO>();
+		Reservation_TimeVO reservation_TimeVO = null;
+			System.out.println("come");
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(CASE);
+			pstmt.setString(1, xxxId);
+			pstmt.setString(2, xxxId);
+			rs = pstmt.executeQuery();
+	
+			System.out.println(rs.getRow());
+			
+			while (rs.next()==true) {
+			reservation_TimeVO = new Reservation_TimeVO();
+			reservation_TimeVO.setR_time(rs.getString("R_time"));
+			System.out.println("coming");
+			list.add(reservation_TimeVO); // Store the row in the list
+			System.out.println(list);
+			
 			}
 
 			// Handle any driver errors
@@ -308,17 +362,9 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 		
 	}
 
-	@Override
-	public List<Reservation_TimeVO> getAll(Map<String, String[]> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static void main(String[] args) {
 		
 		Reservation_TimeDAO dao = new Reservation_TimeDAO();
-		
-		Reservation_TimeVO resVO1 = new Reservation_TimeVO();
 		
 		//insert
 //		resVO1.setVendor_no("V000003");
@@ -354,25 +400,15 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 //		System.out.println("---------------------");
 		
 		//findAll
-		List<Reservation_TimeVO> list = dao.getAll("V000001");
-		
-		
-		for (Reservation_TimeVO res : list) {
-			
-			System.out.print(res.getRt_no() + ",");
-			System.out.print(res.getVendor_no() + ",");
-			System.out.print(res.getR_time() + ",");
-			
-			
-			System.out.println("-------------------");
-		
+		List<Reservation_TimeVO> list = dao.getVendor("V000001");
+		 for (Reservation_TimeVO res : list) {
+			System.out.print(res.getR_time());
+			System.out.println(list.size());
 		}
+	System.out.println(list.size());
+	
 	}
 
-	@Override
-	public List<Reservation_TimeVO> getAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 }

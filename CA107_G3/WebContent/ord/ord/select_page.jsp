@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page import="com.vendor.model.*" %>
 <html>
 <head>
 
@@ -29,6 +29,30 @@
 </head>
 <body bgcolor='white'>
 
+<h3>挑選一家廠商開始操作</h3>
+
+<%--   <jsp:useBean id="ordSvc" scope="page" class="com.OrdService" /> --%>
+  <jsp:useBean id="vSvc" scope="page" class="com.vendor.model.VendorService" />
+     <FORM METHOD="get" ACTION="<%=request.getContextPath()%>/ord/ord.do" >
+       <b>廠商編號:</b>
+       <select size="1" name="vendor_no">
+         <c:forEach var="vVO" items="${vSvc.all}" > 
+<%--           <option value="${vVO.vendor_no}">${vVO.vendor_no} --%>
+<!-- EL傳參數取值  -->
+          <option value="${vVO.vendor_no}">${vSvc.findByPK(vVO.vendor_no).v_name}
+         </c:forEach>   
+       </select>
+       <input type="hidden" name="action" value="selceted">
+<%--        <input type="hidden" name="vendor_no" value="${vVO.vendor_no}"> --%>
+       <input type="submit" value="送出">
+    </FORM>
+<br><br><br><br><br>
+
+
+
+
+
+
 <table id="table-1">
    
 </table>
@@ -55,7 +79,7 @@
   
   
   <li>
-    <FORM METHOD="get" ACTION="ord.do" >
+    <FORM METHOD="get" ACTION="<%= request.getContextPath() %>/ord/ord.do"" >
         <b>輸入訂單編號 </b>
         <input type="text" name="ord_no">
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -66,7 +90,7 @@
   <jsp:useBean id="ordSvc" scope="page" class="com.ord.model.OrdService" />
    
   <li>
-     <FORM METHOD="get" ACTION="ord.do" >
+     <FORM METHOD="get" ACTION="<%= request.getContextPath() %>/ord/ord.do" >
        <b>選擇訂單編號:</b>
        <select size="1" name="ord_no">
          <c:forEach var="ordVO" items="${ordSvc.all}" > 
@@ -96,7 +120,7 @@
 <h3>訂單管理</h3>
 
 <ul>
-  <li><a href='addOrd.jsp'>Add</a> a new Ord.</li>
+  <li><a href='<%= request.getContextPath() %>/ord/ord/addOrd.jsp'>Add</a> a new Ord.</li>
 </ul>
 
 </body>

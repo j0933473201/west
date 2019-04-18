@@ -43,7 +43,7 @@ public class Reservation_TimeService {
 		return dao.findByPrimaryKey(rt_no);
 	}
 
-	public List<Reservation_TimeVO> getAll() {
-		return dao.getAll();
+	public List<Reservation_TimeVO> getVendor(String xxxId){
+		return dao.getVendor(xxxId);
 	}
 }

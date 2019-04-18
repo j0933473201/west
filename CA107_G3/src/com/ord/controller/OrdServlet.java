@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ord.model.OrdService;
 import com.ord.model.OrdVO;
+import com.vendor.model.VendorService;
+import com.vendor.model.VendorVO;
 
 
 
@@ -373,6 +375,46 @@ public class OrdServlet extends HttpServlet {
 //			}
 		}
 		
+        
+        
+        if("selceted".equals(action)) {
+        	List<String> errorMsgs = new LinkedList<String>();
+        	req.setAttribute("errorMsgs", errorMsgs);
+        	
+        	String vendor_no = new String(req.getParameter("vendor_no"));
+        	
+        	VendorService VSvc = new VendorService();
+        	
+			List<VendorVO> vVO = VSvc.getAll();
+			if (vVO == null) {
+				errorMsgs.add("invaild ");
+			}
+			// Send the use back to the form, if there were errors
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/ord/ord/select_page.jsp");
+				failureView.forward(req, res);
+				return;//程式中斷
+			}
+			
+			/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+			req.setAttribute("vVO", vVO); // 資料庫取出的empVO物件,存入req
+			String url = "/ord/ord/addOrd.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+			successView.forward(req, res);
+
+			/***************************其他可能的錯誤處理*************************************/
+//		} catch (Exception e) {
+//			errorMsgs.add("can not find ord_no detail:" + e.getMessage());
+//			RequestDispatcher failureView = req
+//					.getRequestDispatcher("/ord/ord/select_page.jsp");
+//			failureView.forward(req, res);
+//		}
+        	
+        	
+        }
+        
+        
 		
 		if ("delete".equals(action)) { // 來自listAllEmp.jsp
 
