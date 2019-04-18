@@ -455,14 +455,14 @@ body {
 					<c:forEach var="reservation_TimeVO" items="${rev_tSvc.all}">
 				 	
 				 	
-				 																							
+				 								 															
 				 	 <input class="btn btn-primary" type="button"  name="booking_time" value='${(reservation_TimeVO.vendor_no==v000001)?reservation_TimeVO.r_time:''}' >
 				 	${(reservation_TimeVO.vendor_no==v000001)?reservation_TimeVO.r_time:''}
 <%-- 				 	 ${(reservation_TimeVO.vendor_no==v000001)} ${reservation_TimeVO.r_time} --%>
 				 	
 <%-- 				 	 ${(empVO.deptno==deptVO.deptno)?'selected':'' } --%>
 				 	 
-				 																	
+				 					 												
 				 	</c:forEach>
 							
 						</div>
