@@ -120,7 +120,7 @@
 <h3>­q³æºÞ²z</h3>
 
 <ul>
-  <li><a href='<%= request.getContextPath() %>/ord/ord/addOrd.jsp'>Add</a> a new Ord.</li>
+  <li><a href='<%= request.getContextPath() %>/ord/ord/addOrd2.jsp'>Add</a> a new Ord.</li>
 </ul>
 
 </body>

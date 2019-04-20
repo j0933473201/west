@@ -431,30 +431,30 @@ body {
 							<div class="col-md-12">
 								<div class=" btn-group-toggle" data-toggle="buttons"
 									style="text-align: center;">
-									<button class="btn btn-primary" type="button"
-									name="booking_time" value="11:00"
-										style="background-color: #dc8f33;">11:00</button> 	
-									<button class="btn btn-primary" type="button"
-									name="booking_time" value="14:00"
-										style="background-color: #dc8f33;">14:00</button>
-									<button class="btn btn-primary" type="button"
-									name="booking_time" value="18:00"
-										style="background-color: #dc8f33;">18:00</button>
-									<button class="btn btn-primary" type="button"
-									name="booking_time" value="19:00"
-										style="background-color: #dc8f33;">19:00</button>
-									<button class="btn btn-primary" type="button"
-									name="booking_time" value="11:00"
-										style="background-color: #dc8f33;">18:00</button>
-				
-										
-								</div>
-							</div>
-				<jsp:useBean id="rev_tSvc" scope="page" class="com.reservation_time.model.Reservation_TimeService" />
+<!-- 									<button class="btn btn-primary" type="button" -->
+<!-- 									name="booking_time" value="11:00" -->
+<!-- 										style="background-color: #dc8f33;">11:00</button> 	 -->
+<!-- 									<button class="btn btn-primary" type="button" -->
+<!-- 									name="booking_time" value="14:00" -->
+<!-- 										style="background-color: #dc8f33;">14:00</button> -->
+<!-- 									<button class="btn btn-primary" type="button" -->
+<!-- 									name="booking_time" value="18:00" -->
+<!-- 										style="background-color: #dc8f33;">18:00</button> -->
+<!-- 									<button class="btn btn-primary" type="button" -->
+<!-- 									name="booking_time" value="19:00" -->
+<!-- 										style="background-color: #dc8f33;">19:00</button> -->
+<!-- 									<button class="btn btn-primary" type="button" -->
+<!-- 									name="booking_time" value="11:00" -->
+<!-- 										style="background-color: #dc8f33;">18:00</button> -->
+									<jsp:useBean id="rev_tSvc" scope="page" class="com.reservation_time.model.Reservation_TimeService" />
 				
 					<c:forEach var="reservation_TimeVO" items="${rev_tSvc.getVendor(param.vendor_no)}">		 															
 				 	 <input class="btn btn-primary" type="button"  name="booking_time" value="${reservation_TimeVO.r_time}" >										
 				 	</c:forEach>
+										
+								</div>
+							</div>
+				
 							
 						</div>
 

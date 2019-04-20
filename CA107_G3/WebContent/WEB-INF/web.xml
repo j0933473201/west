@@ -17,4 +17,12 @@
     <servlet-name>OrdServlet</servlet-name>
     <url-pattern>/ord/ord.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>servletRes</servlet-name>
+    <servlet-class>com.ord.controller.servletRes</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>servletRes</servlet-name>
+    <url-pattern>/ord/servletRes.do</url-pattern>
+  </servlet-mapping>
 </web-app>

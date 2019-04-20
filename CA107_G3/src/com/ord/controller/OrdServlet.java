@@ -1,6 +1,7 @@
 package com.ord.controller;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -399,7 +400,7 @@ public class OrdServlet extends HttpServlet {
 			
 			/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 			req.setAttribute("vVO", vVO); // 資料庫取出的empVO物件,存入req
-			String url = "/ord/ord/addOrd.jsp";
+			String url = "/ord/ord/addOrd2.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
 
@@ -445,6 +446,49 @@ public class OrdServlet extends HttpServlet {
 //						.getRequestDispatcher("/ord/listAllOrd.jsp");
 //				failureView.forward(req, res);
 //			}
+		}
+		
+		
+		
+		if("updateDate".equals(action)){
+			System.out.println("有近來");
+
+	List<String> errorMsgs = new LinkedList<String>();
+	req.setAttribute("errorMsgs", errorMsgs);
+//	try {
+		java.sql.Date booking_date=null;
+		try {
+			booking_date=java.sql.Date.valueOf(req.getParameter("booking_date").trim());
+			
+		}catch (IllegalArgumentException e) {
+			booking_date=new java.sql.Date(System.currentTimeMillis());
+			errorMsgs.add("please choose date!");
+		}
+		
+		Calendar  cal =Calendar.getInstance();
+		cal.setTime(booking_date);
+		cal.add(Calendar.DAY_OF_YEAR,1);
+		System.out.println("471");
+		java.sql.Date sqlTomorrow = new java.sql.Date(cal.getTimeInMillis());
+		System.out.println("473");
+		String vendor_no = new String(req.getParameter("vendor_no"));
+		System.out.println("475");
+    	VendorService VSvc = new VendorService();
+    	
+		List<VendorVO> vVO = VSvc.getAll();
+		if (vVO == null) {
+			errorMsgs.add("invaild ");
+		}
+		req.setAttribute("vVO", vVO);
+		 // 資料庫取出的empVO物件,存入req
+		
+		String url = "/ord/ord/addOrd2.jsp";
+		RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+		successView.forward(req, res);
+		
+		
+//	}
+	
 		}
 		
 		
