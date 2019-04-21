@@ -17,7 +17,7 @@ public class Reservation_Table_OrderedDAO implements Reservation_Table_OrderedDA
 		
 	
 	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:49161:XE";
+	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "WEST";
 	String passwd = "800627";
 	

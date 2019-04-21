@@ -459,9 +459,11 @@ public class OrdServlet extends HttpServlet {
 		java.sql.Date booking_date=null;
 		try {
 			booking_date=java.sql.Date.valueOf(req.getParameter("booking_date").trim());
+			System.out.println(booking_date+"555");
 			
 		}catch (IllegalArgumentException e) {
 			booking_date=new java.sql.Date(System.currentTimeMillis());
+			System.out.println(booking_date+"6666");
 			errorMsgs.add("please choose date!");
 		}
 		
@@ -470,16 +472,21 @@ public class OrdServlet extends HttpServlet {
 		cal.add(Calendar.DAY_OF_YEAR,1);
 		System.out.println("471");
 		java.sql.Date sqlTomorrow = new java.sql.Date(cal.getTimeInMillis());
-		System.out.println("473");
+		System.out.println(sqlTomorrow);
 		String vendor_no = new String(req.getParameter("vendor_no"));
 		System.out.println("475");
     	VendorService VSvc = new VendorService();
-    	
+    
 		List<VendorVO> vVO = VSvc.getAll();
 		if (vVO == null) {
 			errorMsgs.add("invaild ");
 		}
 		req.setAttribute("vVO", vVO);
+		
+		OrdService OrdSvc = new OrdService();
+		List<OrdVO> ordVO = OrdSvc.getAll();
+		req.setAttribute("OrdVO", ordVO);
+		
 		 // 資料庫取出的empVO物件,存入req
 		
 		String url = "/ord/ord/addOrd2.jsp";
