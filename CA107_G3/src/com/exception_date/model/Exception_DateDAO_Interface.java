@@ -13,5 +13,6 @@ public interface Exception_DateDAO_Interface {
     public Exception_DateVO findByPrimaryKey(String exc_no);
     public List<Exception_DateVO> getAll();
     public List<Exception_DateVO> getAll(Map<String, String[]> map);
+    public List<Exception_DateVO> getdate(String vendor_no);
 	   
 } 

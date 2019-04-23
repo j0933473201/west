@@ -2,6 +2,8 @@ package com.exception_date.model;
 
 import java.util.List;
 
+import com.reservation_time.model.Reservation_TimeVO;
+
 
 
 public class Exception_DateService {
@@ -52,11 +54,9 @@ public class Exception_DateService {
 		return dao.getAll();
 	}
 
+	public List<Exception_DateVO> getdate(String vendor_no){
+		return dao.getdate(vendor_no);
+
 	
-
-	public static void main(String[] args) {
-		
-
 	}
-
 }

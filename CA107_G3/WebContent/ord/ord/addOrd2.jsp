@@ -14,7 +14,7 @@
 <!-- 提交FORM表單 -->
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#f_date1').change(function() {
+		$('.date #f_date1').blur(function() {
 			$('#form1').submit();
 		})
 		$('#inlineFormCustomSelectPref').change(function() {
@@ -308,18 +308,26 @@ body {
 
 		</div>
 	</section>
-	<ul class="nav nav-tabs justify-content-center" id="myTab"
-		role="tablist">
-		<li class="nav-item"><a class="nav-link active" id="home-tab"
-			data-toggle="tab" href="#home" role="tab" aria-controls="home"
-			aria-selected="true">訂位</a></li>
-		<li class="nav-item"><a class="nav-link" id="profile-tab"
-			data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-			aria-selected="false">資訊</a></li>
-		<li class="nav-item"><a class="nav-link" id="contact-tab"
-			data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-			aria-selected="false">評論</a></li>
-	</ul>
+	
+		
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<ul class="nav nav-tabs justify-content-center" id="myTab"
+					role="tablist">
+					<li class="nav-item"><a class="nav-link active" id="home-tab"
+						data-toggle="tab" href="#home" role="tab" aria-controls="home"
+						aria-selected="true">訂位</a></li>
+					<li class="nav-item"><a class="nav-link" id="profile-tab"
+						data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+						aria-selected="false">資訊</a></li>
+					<li class="nav-item"><a class="nav-link" id="contact-tab"
+						data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+						aria-selected="false">評論</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 
 	<div class="container" style="margin-top: 80px">
 		<div class="stepwizard">
@@ -339,146 +347,36 @@ body {
 			</div>
 		</div>
 	</div>
-
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-6">
-
-				<!-- 訂位流程 -->
+	
 				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active" id="home" role="tabpanel"
-						aria-labelledby="home-tab">
-						...
-						<!-- 錯誤表列 -->
-						<c:if test="${not empty errorMsgs}">
+				  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...
+				  	<c:if test="${not empty errorMsgs}">
 							<font style="color: red">請修正以下錯誤:</font>
 							<ul>
 								<c:forEach var="message" items="${errorMsgs}">
 									<li style="color: red">${message}</li>
 								</c:forEach>
 							</ul>
-						</c:if>
-
-
-
-
-						<!-- form表單開始 -->
-						
-						<FORM METHOD="get"
-							ACTION="<%=request.getContextPath()%>/ord/ord.do" name="form2">
-							<div class="row justify-content-center" style="margin-top: 50px">
-								<div class="col-md-6">
-									<input type="hidden" name="mem_no" value="M000004">
-									<!-- 								<input type="hidden" name="vendor_no" value="V000004"> -->
-									<input type="hidden" name="tbl_no" value="T000001"> 
-									<input type="hidden" name="share_mem_no1" value="${ordVO.share_mem_no1}"> 
-									<input type="hidden" name="share_mem_no2" value="${ordVO.share_mem_no2}">
-									<input type="hidden" name="share_amount" value="0">
-<!-- 									<input type="hidden" name="booking_time" value="12:30">	  -->
-									<input type="hidden" name="ord_time"
-										value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"/>">
-
-									<input type="hidden" name="total" value="1000"> 
-									<input type="hidden" name="arrival_time" value="${ordVO.arrival_time}"> 
-									<input type="hidden" name="finish_time" value="${ordVO.finish_time}"> 
-									<input type="hidden" name="verif_code" value="8JPXY6wQc5bvrN2y6h4h">
-									<input type="hidden" name="status" value="0"> 
-									<input type="hidden" name="vendor_no" value="${param.vendor_no}">
-									<td>
-										<input name="booking_date" id="f_date1" type="hidden"
-											value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/>"></td>
-									<tr>
-										 <td>用餐日期</td>
-										<td>
-										<input name="booking_date" id="f_date1" type="text"
-											value="${ordVO.booking_date}"></td>
-										</td>
-									</tr>
-
-								</div>
-							</div>
-
-							<div class="row justify-content-center" style="margin-top: 50px">
-								<div class="col-md-9">
-									<form class="form-inline">
-
-										
-
-										<div class="select1" type="hidden">
-											人數選擇 
-											<select  class="custom-select my-1 mr-sm-4"
-												id="inlineFormCustomSelectPref" style="width: 500px;"
-												name="party_size" id="party_sizeid">
-
-												<option name="2" value="2">二人</option>
-												<option name="3" value="3">三人</option>
-												<option name="4" value="4">四人</option>
-												<option name="5" value="5">五人</option>
-												<option name="6" value="6">六人</option>
-												<option name="7" value="7">七人</option>
-												<option name="8" value="8">八人</option>
-												<option name="9" value="10">十人</option>
-
-											</select>
-										</div>
-								</div>
-							</div>
-
-
-							<div class="note" style="margin-top: 50px">
-								<tr>
-									<td>備註:</td>
-									<td><input type="TEXT" name="notes" size="70" value="" />
-									</td>
-								</tr>
-							</div>
+						</c:if>	
+<!-- 					  自動提交FORM開頭 -->
+					<form id="form1" action="<%=request.getContextPath()%>/ord/ord.do"
+						method="get">
+						<input type="hidden" name="action" id="action" value="updateDate">
+						<input type="hidden" name="vendor_no" value="${param.vendor_no}">
+					<div class="date">	
+						<table>
+							<tr>
+								<td>用餐日期</td>
+								<td><input name="booking_date" id="f_date1" type="text"
+									value="${ordVO.booking_date}"></td>
+							</tr>	
+						</table>
 					</div>
-				</div>
-
-
-<!-- 					訂位時段 -->
-<!-- 				<div class="container" style="margin-top: 50px"> -->
-<!-- 					<div class="col-md-12"> -->
-<!-- 						<div class=" btn-group-toggle" data-toggle="buttons" -->
-<!-- 							style="text-align: center;"> -->
-<%-- 							<c:forEach var="reservation_TimeVO" --%>
-<%-- 								items="${rev_tSvc.getVendor(param.vendor_no)}"> --%>
-<!-- 								<input class="btn btn-primary" type="button" name="booking_time" -->
-<%-- 									value="${reservation_TimeVO.r_time}"> --%>
-<%-- 							</c:forEach> --%>
-
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-
-
-
-
-				<div class="row justify-content-center" style="margin-top: 50px">
-					<div class="col-md-4">
-						<div class="featured-btn-wrap">
-							<input type="hidden" name="action" value="insert"> <input
-								type="submit" value="送出新增">
-							</FORM>
-						</div>
-					</div>
-				</div>
-<!-- 						FORM結束 -->
-
-<!-- 					自動提交FORM開頭 -->
-				<form id="form1" action="<%=request.getContextPath()%>/ord/ord.do"
-					method="get">
-					<input type="hidden" name="action" id="action" value="updateDate">
-					<input type="hidden" name="vendor_no" value="${param.vendor_no}">
-
-					<tr>
-						<td>用餐日期</td>
-						<td><input name="booking_date" id="f_date1" type="hidden"
-							value="${ordVO.booking_date}"></td>
-					</tr>
-			
 					<div class="select1">
-						人數選擇 <select style=" display:none; class="custom-select my-1 mr-sm-4"
+						人數選擇 <select class="custom-select my-1 mr-sm-4"
 							id="inlineFormCustomSelectPref" style="width: 500px;"
 							name="party_size">
 
@@ -492,20 +390,49 @@ body {
 							<option name="9" value="10">十人</option>
 
 						</select>
-					</div>
+					</div>	
+					
+					
+					
+					
+					
+					
+					
+					
+					
+<%-- 					<c:out  value="${param.r_time}"/> --%>
 
-<!-- 					訂位時段 -->
+<!-- 				<div class=" btn-group-toggle" data-toggle="buttons" style="text-align: center;"> -->
+<!-- 					<select> -->
+<%-- 					<c:forEach var="r_time" items="${rVOlist}"> --%>
+					
+<%-- 				<input class="btn btn-primary" type="button"  name="booking_time" value="${r_time.getR_time()}" > --%>
+<%-- 					${r_time.getR_time()} --%>
+					
+<%-- 					<option value="${r_time.getR_time()}">${r_time.getR_time()}</option> --%>
+<%-- 					</c:forEach> --%>
+<!-- 					</select> -->
+<!-- 					</div> -->
+<%-- 					<c:if test="${param.booking_date != xxx.exc_date}" var="condition1" > --%>
+<%-- 							${reservation_TimeVO.r_time} --%>
+							
+							
+<%-- 						</c:if> --%>
+<%-- 					<c:out  value="${ccc}"/> --%>
+					
+<%-- 					<c:set var="ccc" value="${xxx.exc_date}"/> --%>
+<%-- 					<c:out  value="${ccc}"/> --%>
+<%-- 					${ccc} --%>
+<%-- 					${xxx.exc_date} --%>
+					
+					
 					<div class="container" style="margin-top: 50px">
 						<div class="col-md-12">
 							<div class=" btn-group-toggle" data-toggle="buttons"
 								style="text-align: center;">
 
-								
-
 <%-- 								<c:forEach var="reservation_TimeVO" --%>
 <%-- 									items="${rev_tSvc.getVendor(param.vendor_no)}"> --%>
-									
-									
 									
 <!-- 									<input class="btn btn-primary" type="button" -->
 <%-- 										name="booking_time" value="${reservation_TimeVO.r_time}"> --%>
@@ -514,7 +441,7 @@ body {
 <!-- 								將取出的所有已訂桌位數存在變數中,防止過度存取資料庫 -->
 								<c:set var="rtoVO" value="${res_tboSvc.all}"/>
 <!-- 								將取出的所有不開放日期存在變數中,防止過度存取資料庫 -->
-								<c:set var="excVO" value="${exc_dateSvc.all}"/>
+								<c:set var="excVO" value="${exc_dateSvc.getdate(param.vendor_no)}"/>
 <!-- 								將取出的所有開放訂位時間存在變數中,防止過度存取資料庫 -->
 								<c:set var="res_tVO" value="${rev_tSvc.getVendor(param.vendor_no)}"/>
 								
@@ -534,14 +461,14 @@ body {
 <!-- 											先判斷傳進來的廠商編號是否等於 -->
 											<c:if test="${Reservation_Table_OrderedVO.vendor_no == param.vendor_no}" var="condition" > 
 <!-- 												判斷傳進來的訂位日期是否不是不開放訂位日期 -->
-										    	<c:if test="${param.booking_date != exceptionVO.exc_date}" var="condition1" >
+<%-- 										    	<c:if test="${param.booking_date != exceptionVO.exc_date}" var="condition1" > --%>
 <!-- 										    		判斷可訂位時段不是空值 -->
 										    		<c:if test="${rev_tSvc.getVendor(param.vendor_no)!=null}" var="condition2" >
 <!-- 										    			取得所有可訂位時段並且以使用者選擇的人數來判斷當天對應到的桌型是否還有數量可以被預訂,如果不能預定就不顯示 -->
-										    		<c:forEach var="reservation_TimeVO" items="${res_tVO}"/>
+										    		<c:forEach var="reservation_TimeVO" items="${res_tVO}">
 												
 										    		<c:choose>
-<!-- 										    			預定10人 -->
+
 											    		<c:when test="${(param.party_size==10)}">
 											    		
 											    			<c:choose>
@@ -554,49 +481,44 @@ body {
 												    			</c:otherwise>
 												    			
 												    			</c:choose>
-<!-- 												    	預定9人 -->
+												    	
 											    			</c:when>
-											    			
+										    	  		
 											    			<c:when test="${(param.party_size==9)}">
 															</c:when>
-<!-- 															預定8人 -->
+														
 											    			<c:when test="${(param.party_size==8)}">
 											    			</c:when>
-<!-- 											    			預定7人 -->
+											    			
 											    			<c:when test="${(param.party_size==7)}">
 											    			</c:when>
-<!-- 											    			預定6人 -->
+											    			
 											    			<c:when test="${(param.party_size==6)}">
 											    			</c:when>
-<!-- 											    			預定5人 -->
+											    			
 											    			<c:when test="${(param.party_size==5)}">
 											    			</c:when>
-<!-- 											    			預定4人 -->
+											    			
 											    			<c:when test="${(param.party_size==4)}">
 											    			</c:when>
-<!-- 											    			預定3人 -->
+											    			
 											    			<c:when test="${(param.party_size==3)}">
 											    			</c:when>
-<!-- 											    			預定2人 -->
+											    			
 											    			<c:otherwise>
 											    			</c:otherwise>
 										    			</c:choose>
 																		
 																		
-																		
+														</c:forEach>				
 																		
 													</c:if>
 												</c:if>
-											</c:if>  
+											
 									
 								</c:forEach>
 								</c:forEach>
-									
-									
-									
 								</c:forEach>
-									
-									
 								<c:if test="${(param.booking_date )==(ordVO.booking_date)}" var="condition" scope="page" > 
 								    	
 								</c:if> 
@@ -605,34 +527,100 @@ body {
 						</div>
 
 
-					</div>
+					</div>	
 				</form>
-<!-- 				FORM結束 -->
-
-
+				
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/ord/ord.do" name="form2">
+						<input type="hidden" name="mem_no" value="M000004">
+						<input type="hidden" name="vendor_no" value="${param.vendor_no}">
+						<input type="hidden" name="tbl_no" value="T000001"> 
+						<input type="hidden" name="share_mem_no1" value="${ordVO.share_mem_no1}"> 
+						<input type="hidden" name="share_mem_no2" value="${ordVO.share_mem_no2}">
+						<input type="hidden" name="share_amount" value="0">
+	<!-- 				<input type="hidden" name="booking_time" value="12:30">	  -->
+						<input type="hidden" name="ord_time"
+								value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+	
+						<input type="hidden" name="total" value="1000"> 
+						<input type="hidden" name="arrival_time" value="${ordVO.arrival_time}"> 
+						<input type="hidden" name="finish_time" value="${ordVO.finish_time}"> 
+						<input type="hidden" name="verif_code" value="8JPXY6wQc5bvrN2y6h4h">
+						<input type="hidden" name="status" value="0"> 
+						<input type="hidden" name="booking_date" value="${param.booking_date}">		
+						<input type="hidden" name="party_size" value="${param.party_size}">		
+										
+	<!-- 										<input name="booking_date" id="f_date1" type="hidden" -->
+	<%-- 											value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/>"> --%>
+								
+						
+							
+				<div class=" btn-group-toggle" data-toggle="buttons" style="text-align: center;">
+					<c:forEach var="exc" items="${exclist}">
+						<c:if test="${booking_date!=exc.exc_date}">
+						<c:forEach var="rto" items="${rtolist}">
+<%-- 							${rto.booking_time} --%>
+						</c:forEach>
+						</c:if>			
+					</c:forEach>
+<%-- 					<c:out value="${exc.exc_date}"/> --%>
+					
+							
+					</div>	
+							
+						<c:forEach var="exc" items="${lhs}">	
+								${exc.booking_time}
+							</c:forEach>	
+								
+						<div class="note" style="margin-top: 50px">
+							<table>	
+								<tr>
+									<td>備註:</td>
+									<td><input type="TEXT" name="notes" size="70" value="" />
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="container">
+							<div class="row justify-content-center">
+								<div class="col-md-6">			
+								<input type="hidden" name="action" value="insert"> 
+								<input type="submit" value="送出新增">
+								</div>
+							</div>
+						</div>
+					</FORM>
+								
+				</div>
 			</div>
-			<div class="tab-pane fade" id="profile" role="tabpanel"
-				aria-labelledby="profile-tab">
-				...
-				<div class="row justify-content-center">
-					<div class="col-md-6">
-						<div class="row">
-
-							<div class="col-md-12">
+		</div>	  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  </div>
+				  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...\
+				  	<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-md-6">
 								<div class="find-place-img_wrap">
 									<div class="grid">
 										<figure class="effect-ruby">
 											<img src="images/zachariah-hagy-484664-unsplash.jpg"
-												class="img-fluid" alt="img13" id="hotp1" />
+													class="img-fluid" alt="img13" id="hotp1" />
 											<figcaption>
-												<h5></h5>
-
+													<h5></h5>
+	
 											</figcaption>
 										</figure>
 									</div>
 								</div>
-							</div>
-							<dl data-v-2ee1f21e="" class="info-list reset-list">
+								<dl data-v-2ee1f21e="" class="info-list reset-list">
 								<dt data-v-2ee1f21e="">餐廳位置</dt>
 								<hr>
 								<dd data-v-2ee1f21e="">台北信義新天地 A11 2F</dd>
@@ -659,172 +647,186 @@ body {
 									Pay )、LINE Pay 、微信支付、支付寶</dd>
 								<hr>
 							</dl>
-
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="tab-pane fade" id="contact" role="tabpanel"
-				aria-labelledby="contact-tab">
+				
+				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 				...
-				<div class="container">
-					<div class="row">
-						<div class="col-12 ">
-
-							<div class="col-md-12 ">
-								<h1 class="rating-num">4.0</h1>
-								<div class="rating">
-									<span class="glyphicon glyphicon-star"></span> <span
-										class="glyphicon glyphicon-star"></span> <span
-										class="glyphicon glyphicon-star"></span> <span
-										class="glyphicon glyphicon-star"></span> <span
-										class="glyphicon glyphicon-star-empty"></span>
-								</div>
-								<div>
-									<span class="glyphicon glyphicon-user"></span>1,050,008 total
-								</div>
-
-								<div class="col-md-6" style="margin-top: 100px">
-									<div class="row rating-desc">
-										<div class="col-xs-3 col-md-3 text-right">
-											<span class="glyphicon glyphicon-star"></span>5
-										</div>
-										<div class="col-xs-8 col-md-9">
-											<div class="progress progress-striped">
-												<div class="progress-bar progress-bar-success"
-													role="progressbar" aria-valuenow="20" aria-valuemin="0"
-													aria-valuemax="100" style="width: 80%">
-													<span class="sr-only">80%</span>
+					<div class="container">
+						<div class="row">
+							<div class="col-12 ">
+	
+								<div class="col-md-12 ">
+									<h1 class="rating-num">4.0</h1>
+									<div class="rating">
+										<span class="glyphicon glyphicon-star"></span> 
+										<span class="glyphicon glyphicon-star"></span> 
+										<span class="glyphicon glyphicon-star"></span> 
+										<span class="glyphicon glyphicon-star"></span> 
+										<span class="glyphicon glyphicon-star-empty"></span>
+									</div>
+									<div>
+										<span class="glyphicon glyphicon-user"></span>1,050,008 total
+									</div>
+	
+									<div class="col-md-6" style="margin-top: 100px">
+										<div class="row rating-desc">
+											<div class="col-xs-3 col-md-3 text-right">
+												<span class="glyphicon glyphicon-star"></span>5
+											</div>
+											<div class="col-xs-8 col-md-9">
+												<div class="progress progress-striped">
+													<div class="progress-bar progress-bar-success"
+														role="progressbar" aria-valuenow="20" aria-valuemin="0"
+														aria-valuemax="100" style="width: 80%">
+														<span class="sr-only">80%</span>
+													</div>
 												</div>
 											</div>
-										</div>
-										<!-- end 5 -->
-										<div class="col-xs-3 col-md-3 text-right">
-											<span class="glyphicon glyphicon-star"></span>4
-										</div>
-										<div class="col-xs-8 col-md-9">
-											<div class="progress">
-												<div class="progress-bar progress-bar-success"
-													role="progressbar" aria-valuenow="20" aria-valuemin="0"
-													aria-valuemax="100" style="width: 60%">
-													<span class="sr-only">60%</span>
+											<!-- end 5 -->
+											<div class="col-xs-3 col-md-3 text-right">
+												<span class="glyphicon glyphicon-star"></span>4
+											</div>
+											<div class="col-xs-8 col-md-9">
+												<div class="progress">
+													<div class="progress-bar progress-bar-success"
+														role="progressbar" aria-valuenow="20" aria-valuemin="0"
+														aria-valuemax="100" style="width: 60%">
+														<span class="sr-only">60%</span>
+													</div>
 												</div>
 											</div>
-										</div>
-										<!-- end 4 -->
-										<div class="col-xs-3 col-md-3 text-right">
-											<span class="glyphicon glyphicon-star"></span>3
-										</div>
-										<div class="col-xs-8 col-md-9">
-											<div class="progress">
-												<div class="progress-bar progress-bar-info"
-													role="progressbar" aria-valuenow="20" aria-valuemin="0"
-													aria-valuemax="100" style="width: 40%">
-													<span class="sr-only">40%</span>
+											<!-- end 4 -->
+											<div class="col-xs-3 col-md-3 text-right">
+												<span class="glyphicon glyphicon-star"></span>3
+											</div>
+											<div class="col-xs-8 col-md-9">
+												<div class="progress">
+													<div class="progress-bar progress-bar-info"
+														role="progressbar" aria-valuenow="20" aria-valuemin="0"
+														aria-valuemax="100" style="width: 40%">
+														<span class="sr-only">40%</span>
+													</div>
 												</div>
 											</div>
-										</div>
-										<!-- end 3 -->
-										<div class="col-xs-3 col-md-3 text-right">
-											<span class="glyphicon glyphicon-star"></span>2
-										</div>
-										<div class="col-xs-8 col-md-9">
-											<div class="progress">
-												<div class="progress-bar progress-bar-warning"
-													role="progressbar" aria-valuenow="20" aria-valuemin="0"
-													aria-valuemax="100" style="width: 20%">
-													<span class="sr-only">20%</span>
+											<!-- end 3 -->
+											<div class="col-xs-3 col-md-3 text-right">
+												<span class="glyphicon glyphicon-star"></span>2
+											</div>
+											<div class="col-xs-8 col-md-9">
+												<div class="progress">
+													<div class="progress-bar progress-bar-warning"
+														role="progressbar" aria-valuenow="20" aria-valuemin="0"
+														aria-valuemax="100" style="width: 20%">
+														<span class="sr-only">20%</span>
+													</div>
 												</div>
 											</div>
-										</div>
-										<!-- end 2 -->
-										<div class="col-xs-3 col-md-3 text-right">
-											<span class="glyphicon glyphicon-star"></span>1
-										</div>
-										<div class="col-xs-8 col-md-9">
-											<div class="progress">
-												<div class="progress-bar progress-bar-danger"
-													role="progressbar" aria-valuenow="80" aria-valuemin="0"
-													aria-valuemax="100" style="width: 15%">
-													<span class="sr-only">15%</span>
+											<!-- end 2 -->
+											<div class="col-xs-3 col-md-3 text-right">
+												<span class="glyphicon glyphicon-star"></span>1
+											</div>
+											<div class="col-xs-8 col-md-9">
+												<div class="progress">
+													<div class="progress-bar progress-bar-danger"
+														role="progressbar" aria-valuenow="80" aria-valuemin="0"
+														aria-valuemax="100" style="width: 15%">
+														<span class="sr-only">15%</span>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-								<div id="score" class="p20">
-									<div class="tit clearfix"></div>
-									<ul class="p20">
-										<li class="clearfix mb20">
-											<div class="fl"></div>
-											<dl class="fl clearfix">
-												<dd class="on fl"></dd>
-												<dd class="on fl"></dd>
-												<dd class="on fl"></dd>
-												<dd class="on fl"></dd>
-												<dd class="on fl"></dd>
-											</dl>
-										</li>
-
+									<div id="score" class="p20">
+										<div class="tit clearfix"></div>
+										<ul class="p20">
+											<li class="clearfix mb20">
+												<div class="fl"></div>
+												<dl class="fl clearfix">
+													<dd class="on fl"></dd>
+													<dd class="on fl"></dd>
+													<dd class="on fl"></dd>
+													<dd class="on fl"></dd>
+													<dd class="on fl"></dd>
+												</dl>
+											</li>
+	
+										</ul>
+									</div>
+	
+									<ul class="list-unstyled">
+										<li class="media"><img src="images/4809.jpg" class="mr-3"
+											alt="...">
+											<div class="media-body">
+												<h5 class="mt-0 mb-1">東西難吃</h5>
+												Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+												scelerisque ante sollicitudin. Cras purus odio, vestibulum in
+												vulputate at, tempus viverra turpis. Fusce condimentum nunc
+												ac nisi vulputate fringilla. Donec lacinia congue felis in
+												faucibus.
+											</div></li>
+										<hr>
+										<li class="media my-4"><img src="images/4809.jpg"
+											class="mr-3" alt="...">
+											<div class="media-body">
+												<h5 class="mt-0 mb-1">裝潢漂亮</h5>
+												Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+												scelerisque ante sollicitudin. Cras purus odio, vestibulum in
+												vulputate at, tempus viverra turpis. Fusce condimentum nunc
+												ac nisi vulputate fringilla. Donec lacinia congue felis in
+												faucibus.
+											</div></li>
+										<li class="media"><img src="images/4809.jpg" class="mr-3"
+											alt="...">
+											<div class="media-body">
+												<h5 class="mt-0 mb-1">氣憤好</h5>
+												Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+												scelerisque ante sollicitudin. Cras purus odio, vestibulum in
+												vulputate at, tempus viverra turpis. Fusce condimentum nunc
+												ac nisi vulputate fringilla. Donec lacinia congue felis in
+												faucibus.
+											</div></li>
+										<hr>
+										<li class="media"><img src="images/4809.jpg" class="mr-3"
+											alt="...">
+											<div class="media-body">
+												<h5 class="mt-0 mb-1">服務差</h5>
+												Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+												scelerisque ante sollicitudin. Cras purus odio, vestibulum in
+												vulputate at, tempus viverra turpis. Fusce condimentum nunc
+												ac nisi vulputate fringilla. Donec lacinia congue felis in
+												faucibus.
+											</div></li>
+										<hr>
 									</ul>
+	
 								</div>
-
-								<ul class="list-unstyled">
-									<li class="media"><img src="images/4809.jpg" class="mr-3"
-										alt="...">
-										<div class="media-body">
-											<h5 class="mt-0 mb-1">東西難吃</h5>
-											Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-											scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-											vulputate at, tempus viverra turpis. Fusce condimentum nunc
-											ac nisi vulputate fringilla. Donec lacinia congue felis in
-											faucibus.
-										</div></li>
-									<hr>
-									<li class="media my-4"><img src="images/4809.jpg"
-										class="mr-3" alt="...">
-										<div class="media-body">
-											<h5 class="mt-0 mb-1">裝潢漂亮</h5>
-											Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-											scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-											vulputate at, tempus viverra turpis. Fusce condimentum nunc
-											ac nisi vulputate fringilla. Donec lacinia congue felis in
-											faucibus.
-										</div></li>
-									<li class="media"><img src="images/4809.jpg" class="mr-3"
-										alt="...">
-										<div class="media-body">
-											<h5 class="mt-0 mb-1">氣憤好</h5>
-											Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-											scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-											vulputate at, tempus viverra turpis. Fusce condimentum nunc
-											ac nisi vulputate fringilla. Donec lacinia congue felis in
-											faucibus.
-										</div></li>
-									<hr>
-									<li class="media"><img src="images/4809.jpg" class="mr-3"
-										alt="...">
-										<div class="media-body">
-											<h5 class="mt-0 mb-1">服務差</h5>
-											Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-											scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-											vulputate at, tempus viverra turpis. Fusce condimentum nunc
-											ac nisi vulputate fringilla. Donec lacinia congue felis in
-											faucibus.
-										</div></li>
-									<hr>
-								</ul>
-
 							</div>
 						</div>
-					</div>
+				
+				
 				</div>
 			</div>
 		</div>
 	</div>
-	</div>
-	</div>
+</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+<!-- 	
 
 
 
@@ -887,7 +889,7 @@ body {
 			timepicker : false, //timepicker:true,
 			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)       
 			format : 'Y-m-d',
-			value : 'new Date()',
+// 			value : 'new Date()',
 // 			disabledDates: ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 // 	        startDate:	            '2017/07/10',  // 起始日
 	           //minDate:               '-1970-01-01', // 去除今日(不含)之前

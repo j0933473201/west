@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.reservation_time.model.Reservation_TimeVO;
 import com.restaurant_transaction_list.model.RES_Transaction_ListDAO;
 import com.restaurant_transaction_list.model.RES_Transaction_ListVO;
 
@@ -27,6 +28,9 @@ public class Exception_DateDAO implements Exception_DateDAO_Interface {
 	
 	private static final String GET_ONE_STMT = 
 			"SELECT EXC_NO, VENDOR_NO, EXC_DATE FROM EXCEPTION_DATE WHERE EXC_NO =?";
+	
+	private static final String GET_ALL_EXCDATE=
+			"SELECT	* FROM EXCEPTION_DATE where (case when VENDOR_NO=? then 1 else 0 end+ case when EXC_NO=? then 1 else 0 end)>=1";
 	
 	private static final String DELETE = 
 			"DELETE FROM EXCEPTION_DATE WHERE EXC_NO = ?";
@@ -344,17 +348,91 @@ public class Exception_DateDAO implements Exception_DateDAO_Interface {
 		
 		//findAll
 		
-		List<Exception_DateVO> list = dao.getAll();
-			for (Exception_DateVO exc : list) {
-			System.out.print(exc.getExc_no() + ",");
-			System.out.print(exc.getVendor_no() + ",");
-			System.out.print(exc.getExc_date() + ",");
+//		List<Exception_DateVO> list = dao.getAll();
+//			for (Exception_DateVO exc : list) {
+//			System.out.print(exc.getExc_no() + ",");
+//			System.out.print(exc.getVendor_no() + ",");
+//			System.out.print(exc.getExc_date() + ",");
+//			
+//					
+//			System.out.println("-------------------");
+//				
+//				}
 			
-					
-			System.out.println("-------------------");
-				
-				}
+			
+			List<Exception_DateVO> list = dao.getdate("V000001");
+			 for (Exception_DateVO res : list) {
+				System.out.print(res.getExc_date());
+//				System.out.println(list.size());
+			}
+		System.out.println(list.size());	
 		
+	}
+
+	@Override
+	public List<Exception_DateVO> getdate(String vendor_no) {
+		
+		List<Exception_DateVO> list = new ArrayList<Exception_DateVO>();
+		Exception_DateVO exception_DateVO = null;
+			System.out.println("come1");
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_EXCDATE);
+			pstmt.setString(1,vendor_no);
+			pstmt.setString(2,vendor_no);
+			rs = pstmt.executeQuery();
+	
+			
+			
+			while (rs.next()==true) {
+				exception_DateVO = new Exception_DateVO();
+				exception_DateVO.setExc_date(rs.getDate("exc_date"));
+				
+			
+			list.add(exception_DateVO); // Store the row in the list
+			System.out.println(list);
+			
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
 
 }

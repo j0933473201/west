@@ -1,5 +1,6 @@
 package com.reservation_table_ordered.model;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,5 +13,5 @@ public interface Reservation_Table_OrderedDAO_interface {
     public Reservation_Table_OrderedVO findByPrimaryKey(String rto_no);
     public List<Reservation_Table_OrderedVO> getAll();
     public List<Reservation_Table_OrderedVO> getAll(Map<String, String[]> map);
-
+    public List<Reservation_Table_OrderedVO> get2table(String vendor_no,Date booking_date);
 }

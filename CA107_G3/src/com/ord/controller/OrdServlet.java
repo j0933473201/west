@@ -2,6 +2,7 @@ package com.ord.controller;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,8 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.exception_date.model.Exception_DateService;
+import com.exception_date.model.Exception_DateVO;
 import com.ord.model.OrdService;
 import com.ord.model.OrdVO;
+import com.reservation_table_ordered.model.Reservation_Table_OrderedService;
+import com.reservation_table_ordered.model.Reservation_Table_OrderedVO;
+import com.reservation_time.model.Reservation_TimeService;
+import com.reservation_time.model.Reservation_TimeVO;
 import com.vendor.model.VendorService;
 import com.vendor.model.VendorVO;
 
@@ -383,9 +390,9 @@ public class OrdServlet extends HttpServlet {
         	req.setAttribute("errorMsgs", errorMsgs);
         	
         	String vendor_no = new String(req.getParameter("vendor_no"));
+        
         	
         	VendorService VSvc = new VendorService();
-        	
 			List<VendorVO> vVO = VSvc.getAll();
 			if (vVO == null) {
 				errorMsgs.add("invaild ");
@@ -400,6 +407,7 @@ public class OrdServlet extends HttpServlet {
 			
 			/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 			req.setAttribute("vVO", vVO); // 資料庫取出的empVO物件,存入req
+			req.setAttribute("vendor_no",vendor_no);
 			String url = "/ord/ord/addOrd2.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
@@ -449,23 +457,47 @@ public class OrdServlet extends HttpServlet {
 		}
 		
 		
-		
+			
 		if("updateDate".equals(action)){
-			System.out.println("有近來");
-
-	List<String> errorMsgs = new LinkedList<String>();
-	req.setAttribute("errorMsgs", errorMsgs);
-//	try {
+				System.out.println("有近來");
+	
+		List<String> errorMsgs = new LinkedList<String>();
+		req.setAttribute("errorMsgs", errorMsgs);
+	//	try {
+		String vendor_no = req.getParameter("vendor_no");
+		VendorService VSvc = new VendorService();
+		List<VendorVO> vVO = VSvc.getAll();
+		
+		
+		//不能訂位日期
+		
+		System.out.println("絕對沒問題------------------------------------");
+		Exception_DateService ESvc= new Exception_DateService();
+		List<Exception_DateVO> exclist=ESvc.getdate(vendor_no);
+		
+		
+		//開放預訂時間
+		Reservation_TimeService RSvc= new Reservation_TimeService();
+		List<Reservation_TimeVO> rtlist=RSvc.getVendor(vendor_no);
+		
+		
+		
+		
 		java.sql.Date booking_date=null;
 		try {
 			booking_date=java.sql.Date.valueOf(req.getParameter("booking_date").trim());
-			System.out.println(booking_date+"555");
+			
 			
 		}catch (IllegalArgumentException e) {
 			booking_date=new java.sql.Date(System.currentTimeMillis());
 			System.out.println(booking_date+"6666");
 			errorMsgs.add("please choose date!");
 		}
+		//以訂位時段剩餘數量
+		
+		Reservation_Table_OrderedService RtoSvc =new Reservation_Table_OrderedService();
+		List<Reservation_Table_OrderedVO> rtolist= RtoSvc.get2table(vendor_no, booking_date);
+		System.out.println("=============================="+rtolist);
 		
 		Calendar  cal =Calendar.getInstance();
 		cal.setTime(booking_date);
@@ -473,16 +505,36 @@ public class OrdServlet extends HttpServlet {
 		System.out.println("471");
 		java.sql.Date sqlTomorrow = new java.sql.Date(cal.getTimeInMillis());
 		System.out.println(sqlTomorrow);
-		String vendor_no = new String(req.getParameter("vendor_no"));
-		System.out.println("475");
-    	VendorService VSvc = new VendorService();
-    
-		List<VendorVO> vVO = VSvc.getAll();
+		
+		LinkedHashSet lhs=new LinkedHashSet();
+		
+		 for (Exception_DateVO exc : exclist) {
+				System.out.println("我是@@@@@@@@"+exc.getExc_date());
+				if(booking_date!=exc.getExc_date()) {
+				for(Reservation_Table_OrderedVO rto : rtolist) {
+					lhs.add(rto);
+				}
+				
+				}
+		 }
+		 System.out.println("集合..................."+lhs);
+		 
+		
+		
+		
+		
 		if (vVO == null) {
 			errorMsgs.add("invaild ");
 		}
+		req.setAttribute("lhs", lhs);
+		req.setAttribute("booking_date", booking_date);
+		req.setAttribute("rtlist",rtlist);
 		req.setAttribute("vVO", vVO);
-		
+		req.setAttribute("exclist", exclist);
+		req.setAttribute("rtolist", rtolist);
+		System.out.println("rtolist999999999999999999999999999999999999999"+rtolist);
+		System.out.println("eVO6666666666="+exclist);
+		System.out.println("拿到可定時段集合");
 		OrdService OrdSvc = new OrdService();
 		List<OrdVO> ordVO = OrdSvc.getAll();
 		req.setAttribute("OrdVO", ordVO);

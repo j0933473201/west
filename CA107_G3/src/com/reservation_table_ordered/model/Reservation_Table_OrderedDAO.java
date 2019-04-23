@@ -1,6 +1,7 @@
 package com.reservation_table_ordered.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.reservation_time.model.Reservation_TimeVO;
 import com.restaurant_transaction_list.model.RES_Transaction_ListVO;
 
 
@@ -33,8 +35,8 @@ public class Reservation_Table_OrderedDAO implements Reservation_Table_OrderedDA
 			"DELETE FROM RESERVATION_TABLE_ORDERED where RTO_NO = ?";
 	private static final String UPDATE = 
 			"UPDATE RESERVATION_TABLE_ORDERED set VENDOR_NO=?, BOOKING_DATE=?,BOOKING_TIME=?, TBL_O_NUM1=?, TBL_O_NUM2=?, TBL_O_NUM3=?, TBL_O_NUM4=?, TBL_O_NUM5=?,TBL_ORDERED1=?,TBL_ORDERED2=?,TBL_ORDERED3=?,TBL_ORDERED4=?,TBL_ORDERED5=? where RTO_NO=?";
-	
-	
+	private static final String GET_2TB ="select BOOKING_TIME from (select BOOKING_TIME , TBL_O_NUM1 - TBL_ORDERED1 as tbl_remain from reservation_table_ordered where VENDOR_NO=? and BOOKING_DATE=? )where tbl_remain > 0";
+//	TO_DATE(?,'yyyy-MM-dd') )
 	@Override
 	public void insert(Reservation_Table_OrderedVO reservation_Table_OrderedVO) {
 //		Connection con = null;
@@ -397,46 +399,128 @@ public class Reservation_Table_OrderedDAO implements Reservation_Table_OrderedDA
 		
 		//findByPrimaryKey
 		
-		Reservation_Table_OrderedVO resVO3 = dao.findByPrimaryKey("RTO0000001");
-		System.out.print(resVO3.getRto_no() + ",");
-		System.out.print(resVO3.getVendor_no() + ",");
-		System.out.print(resVO3.getBooking_date() + ",");
-		System.out.print(resVO3.getBooking_time() + ",");
-		System.out.print(resVO3.getTbl_o_num1() + ",");
-		System.out.print(resVO3.getTbl_o_num2() + ",");
-		System.out.print(resVO3.getTbl_o_num3() + ",");
-		System.out.print(resVO3.getTbl_o_num4() + ",");
-		System.out.print(resVO3.getTbl_o_num5() + ",");
-		System.out.print(resVO3.getTbl_ordered1() + ",");
-		System.out.print(resVO3.getTbl_ordered2() + ",");
-		System.out.print(resVO3.getTbl_ordered3() + ",");
-		System.out.print(resVO3.getTbl_ordered4() + ",");
-		System.out.print(resVO3.getTbl_ordered5() + ",");
-		
-		System.out.println("---------------------");
+//		Reservation_Table_OrderedVO resVO3 = dao.findByPrimaryKey("RTO0000001");
+//		System.out.print(resVO3.getRto_no() + ",");
+//		System.out.print(resVO3.getVendor_no() + ",");
+//		System.out.print(resVO3.getBooking_date() + ",");
+//		System.out.print(resVO3.getBooking_time() + ",");
+//		System.out.print(resVO3.getTbl_o_num1() + ",");
+//		System.out.print(resVO3.getTbl_o_num2() + ",");
+//		System.out.print(resVO3.getTbl_o_num3() + ",");
+//		System.out.print(resVO3.getTbl_o_num4() + ",");
+//		System.out.print(resVO3.getTbl_o_num5() + ",");
+//		System.out.print(resVO3.getTbl_ordered1() + ",");
+//		System.out.print(resVO3.getTbl_ordered2() + ",");
+//		System.out.print(resVO3.getTbl_ordered3() + ",");
+//		System.out.print(resVO3.getTbl_ordered4() + ",");
+//		System.out.print(resVO3.getTbl_ordered5() + ",");
+//		
+//		System.out.println("---------------------");
 		
 		//findAll
-		
-				List<Reservation_Table_OrderedVO> list = dao.getAll();
-				for (Reservation_Table_OrderedVO res : list) {
-					System.out.print(res.getRto_no() + ",");
-					System.out.print(res.getVendor_no() + ",");
-					System.out.print(res.getBooking_date() + ",");
-					System.out.print(res.getBooking_time() + ",");
-					System.out.print(res.getTbl_o_num1() + ",");
-					System.out.print(res.getTbl_o_num2() + ",");
-					System.out.print(res.getTbl_o_num3() + ",");
-					System.out.print(res.getTbl_o_num4() + ",");
-					System.out.print(res.getTbl_o_num5() + ",");
-					System.out.print(res.getTbl_ordered1() + ",");
-					System.out.print(res.getTbl_ordered2() + ",");
-					System.out.print(res.getTbl_ordered3() + ",");
-					System.out.print(res.getTbl_ordered4() + ",");
-					System.out.print(res.getTbl_ordered5() + ",");
-					
-					System.out.println("-------------------");
+//		
+//				List<Reservation_Table_OrderedVO> list = dao.getAll();
+//				for (Reservation_Table_OrderedVO res : list) {
+//					System.out.print(res.getRto_no() + ",");
+//					System.out.print(res.getVendor_no() + ",");
+//					System.out.print(res.getBooking_date() + ",");
+//					System.out.print(res.getBooking_time() + ",");
+//					System.out.print(res.getTbl_o_num1() + ",");
+//					System.out.print(res.getTbl_o_num2() + ",");
+//					System.out.print(res.getTbl_o_num3() + ",");
+//					System.out.print(res.getTbl_o_num4() + ",");
+//					System.out.print(res.getTbl_o_num5() + ",");
+//					System.out.print(res.getTbl_ordered1() + ",");
+//					System.out.print(res.getTbl_ordered2() + ",");
+//					System.out.print(res.getTbl_ordered3() + ",");
+//					System.out.print(res.getTbl_ordered4() + ",");
+//					System.out.print(res.getTbl_ordered5() + ",");
+//					
+//					System.out.println("-------------------");
+//				
+//				}
 				
+				//get
+				List<Reservation_Table_OrderedVO> list = dao.get2table("V000001", (java.sql.Date.valueOf("2018-07-20")));
+				 for (Reservation_Table_OrderedVO res : list) {
+					System.out.println(res.getBooking_time());
+					
 				}
+			
+				
+				
+				
+		
+	}
+
+	
+
+	@Override
+	public List<Reservation_Table_OrderedVO> get2table(String vendor_no, Date booking_date) {
+		
+		
+		List<Reservation_Table_OrderedVO> list = new ArrayList<Reservation_Table_OrderedVO>();
+		Reservation_Table_OrderedVO reservation_Table_OrderedVO = null;
+			System.out.println("hello");
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_2TB);
+			pstmt.setString(1, vendor_no);
+			pstmt.setDate(2, booking_date);
+			rs = pstmt.executeQuery();
+			
+			
+			
+			while (rs.next()==true) {
+				reservation_Table_OrderedVO = new Reservation_Table_OrderedVO();
+				reservation_Table_OrderedVO.setBooking_time(rs.getString("booking_time"));
+//				reservation_Table_OrderedVO.setVendor_no(rs.getString("vendor_no"));
+				System.out.println("hello1");
+			
+			list.add(reservation_Table_OrderedVO); // Store the row in the list
+			System.out.println(list);
+			
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 		
 	}
 

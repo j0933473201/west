@@ -72,4 +72,8 @@ public class Reservation_Table_OrderedService {
 	public List<Reservation_Table_OrderedVO> getAll() {
 		return dao.getAll();
 	}
+	public List<Reservation_Table_OrderedVO> get2table(String vendor_no, Date booking_date){
+		return dao.get2table(vendor_no, booking_date);
+	}
+	
 }

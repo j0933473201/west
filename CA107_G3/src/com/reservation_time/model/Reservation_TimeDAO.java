@@ -315,12 +315,12 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 			pstmt.setString(2, xxxId);
 			rs = pstmt.executeQuery();
 	
-			System.out.println(rs.getRow());
+			
 			
 			while (rs.next()==true) {
 			reservation_TimeVO = new Reservation_TimeVO();
 			reservation_TimeVO.setR_time(rs.getString("R_time"));
-			System.out.println("coming");
+			
 			list.add(reservation_TimeVO); // Store the row in the list
 			System.out.println(list);
 			
