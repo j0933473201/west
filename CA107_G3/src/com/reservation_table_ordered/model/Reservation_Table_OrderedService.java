@@ -75,5 +75,17 @@ public class Reservation_Table_OrderedService {
 	public List<Reservation_Table_OrderedVO> get2table(String vendor_no, Date booking_date){
 		return dao.get2table(vendor_no, booking_date);
 	}
+	public List<Reservation_Table_OrderedVO> get4table(String vendor_no, Date booking_date){
+		return dao.get4table(vendor_no, booking_date);
+	}
+	public List<Reservation_Table_OrderedVO> get6table(String vendor_no, Date booking_date){
+		return dao.get6table(vendor_no, booking_date);
+	}
+	public List<Reservation_Table_OrderedVO> get8table(String vendor_no, Date booking_date){
+		return dao.get8table(vendor_no, booking_date);
+	}
+	public List<Reservation_Table_OrderedVO> get10table(String vendor_no, Date booking_date){
+		return dao.get10table(vendor_no, booking_date);
+	}
 	
 }

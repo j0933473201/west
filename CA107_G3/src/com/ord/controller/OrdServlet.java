@@ -468,73 +468,114 @@ public class OrdServlet extends HttpServlet {
 		VendorService VSvc = new VendorService();
 		List<VendorVO> vVO = VSvc.getAll();
 		
+		Integer party_size = Integer.valueOf(req.getParameter("party_size"));
 		
-		//不能訂位日期
-		
-		System.out.println("絕對沒問題------------------------------------");
+		//不能訂位日期------------
 		Exception_DateService ESvc= new Exception_DateService();
 		List<Exception_DateVO> exclist=ESvc.getdate(vendor_no);
-		
-		
-		//開放預訂時間
+		//開放預訂時間-----------
 		Reservation_TimeService RSvc= new Reservation_TimeService();
 		List<Reservation_TimeVO> rtlist=RSvc.getVendor(vendor_no);
 		
-		
-		
-		
+		//訂位日期
 		java.sql.Date booking_date=null;
 		try {
 			booking_date=java.sql.Date.valueOf(req.getParameter("booking_date").trim());
-			
-			
 		}catch (IllegalArgumentException e) {
 			booking_date=new java.sql.Date(System.currentTimeMillis());
-			System.out.println(booking_date+"6666");
 			errorMsgs.add("please choose date!");
 		}
-		//以訂位時段剩餘數量
+		//已訂位時段剩餘數量------------
 		
 		Reservation_Table_OrderedService RtoSvc =new Reservation_Table_OrderedService();
-		List<Reservation_Table_OrderedVO> rtolist= RtoSvc.get2table(vendor_no, booking_date);
-		System.out.println("=============================="+rtolist);
+		List<Reservation_Table_OrderedVO> rtolist2= RtoSvc.get2table(vendor_no, booking_date);
+		List<Reservation_Table_OrderedVO> rtolist4= RtoSvc.get4table(vendor_no, booking_date);
+		List<Reservation_Table_OrderedVO> rtolist6= RtoSvc.get6table(vendor_no, booking_date);
+		List<Reservation_Table_OrderedVO> rtolist8= RtoSvc.get8table(vendor_no, booking_date);
+		List<Reservation_Table_OrderedVO> rtolist10= RtoSvc.get10table(vendor_no, booking_date);
 		
-		Calendar  cal =Calendar.getInstance();
-		cal.setTime(booking_date);
-		cal.add(Calendar.DAY_OF_YEAR,1);
-		System.out.println("471");
-		java.sql.Date sqlTomorrow = new java.sql.Date(cal.getTimeInMillis());
-		System.out.println(sqlTomorrow);
 		
+		//LinkedHashSet2 存剩餘數量大於零的2人坐時段-----------
 		LinkedHashSet lhs=new LinkedHashSet();
+		if(party_size==1||party_size==2) {
+			 for (Exception_DateVO exc : exclist) {
+					if(booking_date!=exc.getExc_date()) {
+						for(Reservation_Table_OrderedVO rto : rtolist2) {
+						lhs.add(rto);
+						}	
+					}
+			 }
+		}
+		//3~4party_size
+		LinkedHashSet lhs2=new LinkedHashSet();
+		if(party_size==3||party_size==4) {
+			 for (Exception_DateVO exc : exclist) {
+					if(booking_date!=exc.getExc_date()) {
+						for(Reservation_Table_OrderedVO rto : rtolist4) {
+						lhs.add(rto);
+						}	
+					}
+			 }
+		}
+		//5~6party_size
+				LinkedHashSet lhs3=new LinkedHashSet();
+				if(party_size==5||party_size==6) {
+					 for (Exception_DateVO exc : exclist) {
+							if(booking_date!=exc.getExc_date()) {
+								for(Reservation_Table_OrderedVO rto : rtolist6) {
+								lhs.add(rto);
+								}	
+							}
+					 }
+				}
+				//7~8party_size
+				LinkedHashSet lhs4=new LinkedHashSet();
+				if(party_size==7||party_size==8) {
+					 for (Exception_DateVO exc : exclist) {
+							if(booking_date!=exc.getExc_date()) {
+								for(Reservation_Table_OrderedVO rto : rtolist8) {
+								lhs.add(rto);
+								}	
+							}
+					 }
+				}
+				//9~10party_size
+				LinkedHashSet lhs5=new LinkedHashSet();
+				if(party_size==9||party_size==10) {
+					 for (Exception_DateVO exc : exclist) {
+							if(booking_date!=exc.getExc_date()) {
+								for(Reservation_Table_OrderedVO rto : rtolist10) {
+								lhs.add(rto);
+								}	
+							}
+					 }
+				}
 		
-		 for (Exception_DateVO exc : exclist) {
-				System.out.println("我是@@@@@@@@"+exc.getExc_date());
-				if(booking_date!=exc.getExc_date()) {
-				for(Reservation_Table_OrderedVO rto : rtolist) {
-					lhs.add(rto);
-				}
-				
-				}
-		 }
-		 System.out.println("集合..................."+lhs);
 		 
-		
+			Calendar  cal =Calendar.getInstance();
+			cal.setTime(booking_date);
+			cal.add(Calendar.DAY_OF_YEAR,1);
+			System.out.println("471");
+			java.sql.Date sqlTomorrow = new java.sql.Date(cal.getTimeInMillis());
+			System.out.println(sqlTomorrow);
 		
 		
 		
 		if (vVO == null) {
 			errorMsgs.add("invaild ");
 		}
+		
 		req.setAttribute("lhs", lhs);
+		req.setAttribute("lhs2", lhs2);
+		req.setAttribute("lhs3", lhs3);
+		req.setAttribute("lhs4", lhs4);
+		req.setAttribute("lhs5", lhs5);
+		
 		req.setAttribute("booking_date", booking_date);
 		req.setAttribute("rtlist",rtlist);
 		req.setAttribute("vVO", vVO);
 		req.setAttribute("exclist", exclist);
-		req.setAttribute("rtolist", rtolist);
-		System.out.println("rtolist999999999999999999999999999999999999999"+rtolist);
-		System.out.println("eVO6666666666="+exclist);
-		System.out.println("拿到可定時段集合");
+		req.setAttribute("rtolist2", rtolist2);
 		OrdService OrdSvc = new OrdService();
 		List<OrdVO> ordVO = OrdSvc.getAll();
 		req.setAttribute("OrdVO", ordVO);

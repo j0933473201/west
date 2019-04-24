@@ -11,7 +11,8 @@ import java.util.List;
 public class VendorJDBCDAO implements VendorDAO_interface {
 
 	final static String DRIVER = "oracle.jdbc.driver.OracleDriver";
-	final static String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+//	final static String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+	final static String URL = "jdbc:oracle:thin:@localhost:49161:XE";
 	final static String USER = "WEST";
 	final static String PASSWORD = "800627";
 

@@ -19,7 +19,8 @@ public class Reservation_Table_OrderedDAO implements Reservation_Table_OrderedDA
 		
 	
 	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WEST";
 	String passwd = "800627";
 	
@@ -36,7 +37,12 @@ public class Reservation_Table_OrderedDAO implements Reservation_Table_OrderedDA
 	private static final String UPDATE = 
 			"UPDATE RESERVATION_TABLE_ORDERED set VENDOR_NO=?, BOOKING_DATE=?,BOOKING_TIME=?, TBL_O_NUM1=?, TBL_O_NUM2=?, TBL_O_NUM3=?, TBL_O_NUM4=?, TBL_O_NUM5=?,TBL_ORDERED1=?,TBL_ORDERED2=?,TBL_ORDERED3=?,TBL_ORDERED4=?,TBL_ORDERED5=? where RTO_NO=?";
 	private static final String GET_2TB ="select BOOKING_TIME from (select BOOKING_TIME , TBL_O_NUM1 - TBL_ORDERED1 as tbl_remain from reservation_table_ordered where VENDOR_NO=? and BOOKING_DATE=? )where tbl_remain > 0";
-//	TO_DATE(?,'yyyy-MM-dd') )
+	private static final String GET_4TB ="select BOOKING_TIME from (select BOOKING_TIME , TBL_O_NUM2 - TBL_ORDERED2 as tbl_remain from reservation_table_ordered where VENDOR_NO=? and BOOKING_DATE=? )where tbl_remain > 0";
+	private static final String GET_6TB ="select BOOKING_TIME from (select BOOKING_TIME , TBL_O_NUM3 - TBL_ORDERED3 as tbl_remain from reservation_table_ordered where VENDOR_NO=? and BOOKING_DATE=? )where tbl_remain > 0";
+	private static final String GET_8TB ="select BOOKING_TIME from (select BOOKING_TIME , TBL_O_NUM4 - TBL_ORDERED4 as tbl_remain from reservation_table_ordered where VENDOR_NO=? and BOOKING_DATE=? )where tbl_remain > 0";
+	private static final String GET_10TB ="select BOOKING_TIME from (select BOOKING_TIME , TBL_O_NUM5 - TBL_ORDERED5 as tbl_remain from reservation_table_ordered where VENDOR_NO=? and BOOKING_DATE=? )where tbl_remain > 0";
+
+	//	TO_DATE(?,'yyyy-MM-dd') )
 	@Override
 	public void insert(Reservation_Table_OrderedVO reservation_Table_OrderedVO) {
 //		Connection con = null;
@@ -95,57 +101,57 @@ public class Reservation_Table_OrderedDAO implements Reservation_Table_OrderedDA
 
 	@Override
 	public void update(Reservation_Table_OrderedVO reservation_Table_OrderedVO) {
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//
-//		try {
-//
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
-//			pstmt = con.prepareStatement(UPDATE);
-//
-//			pstmt.setString(1, reservation_Table_OrderedVO.getVendor_no() );
-//			pstmt.setDate(2, reservation_Table_OrderedVO.getBooking_date() );
-//			pstmt.setString(3, reservation_Table_OrderedVO.getBooking_time());
-//			pstmt.setInt(4, reservation_Table_OrderedVO.getTbl_o_num1());
-//			pstmt.setInt(5, reservation_Table_OrderedVO.getTbl_o_num2());
-//			pstmt.setInt(6, reservation_Table_OrderedVO.getTbl_o_num3());
-//			pstmt.setInt(7, reservation_Table_OrderedVO.getTbl_o_num4());
-//			pstmt.setInt(8, reservation_Table_OrderedVO.getTbl_o_num5());
-//			pstmt.setInt(9, reservation_Table_OrderedVO.getTbl_ordered1());
-//			pstmt.setInt(10, reservation_Table_OrderedVO.getTbl_ordered2());
-//			pstmt.setInt(11, reservation_Table_OrderedVO.getTbl_ordered3());
-//			pstmt.setInt(12, reservation_Table_OrderedVO.getTbl_ordered4());
-//			pstmt.setInt(13, reservation_Table_OrderedVO.getTbl_ordered5());
-//			pstmt.setString(14, reservation_Table_OrderedVO.getRto_no());
-//			
-//			pstmt.executeUpdate();
-//
-//			// Handle any driver errors
-//		} catch (ClassNotFoundException e) {
-//			throw new RuntimeException("Couldn't load database driver. "
-//					+ e.getMessage());
-//			// Handle any SQL errors
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			// Clean up JDBC resources
-//		} finally {
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE);
+
+			pstmt.setString(1, reservation_Table_OrderedVO.getVendor_no() );
+			pstmt.setDate(2, reservation_Table_OrderedVO.getBooking_date() );
+			pstmt.setString(3, reservation_Table_OrderedVO.getBooking_time());
+			pstmt.setInt(4, reservation_Table_OrderedVO.getTbl_o_num1());
+			pstmt.setInt(5, reservation_Table_OrderedVO.getTbl_o_num2());
+			pstmt.setInt(6, reservation_Table_OrderedVO.getTbl_o_num3());
+			pstmt.setInt(7, reservation_Table_OrderedVO.getTbl_o_num4());
+			pstmt.setInt(8, reservation_Table_OrderedVO.getTbl_o_num5());
+			pstmt.setInt(9, reservation_Table_OrderedVO.getTbl_ordered1());
+			pstmt.setInt(10, reservation_Table_OrderedVO.getTbl_ordered2());
+			pstmt.setInt(11, reservation_Table_OrderedVO.getTbl_ordered3());
+			pstmt.setInt(12, reservation_Table_OrderedVO.getTbl_ordered4());
+			pstmt.setInt(13, reservation_Table_OrderedVO.getTbl_ordered5());
+			pstmt.setString(14, reservation_Table_OrderedVO.getRto_no());
+			
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 
 
 	}
@@ -522,6 +528,270 @@ public class Reservation_Table_OrderedDAO implements Reservation_Table_OrderedDA
 		}
 		return list;
 		
+	}
+
+	@Override
+	public List<Reservation_Table_OrderedVO> get4table(String vendor_no, Date booking_date) {
+		List<Reservation_Table_OrderedVO> list = new ArrayList<Reservation_Table_OrderedVO>();
+		Reservation_Table_OrderedVO reservation_Table_OrderedVO = null;
+			System.out.println("hello");
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_4TB);
+			pstmt.setString(1, vendor_no);
+			pstmt.setDate(2, booking_date);
+			rs = pstmt.executeQuery();
+			
+			
+			
+			while (rs.next()==true) {
+				reservation_Table_OrderedVO = new Reservation_Table_OrderedVO();
+				reservation_Table_OrderedVO.setBooking_time(rs.getString("booking_time"));
+//				reservation_Table_OrderedVO.setVendor_no(rs.getString("vendor_no"));
+				System.out.println("hello1");
+			
+			list.add(reservation_Table_OrderedVO); // Store the row in the list
+			System.out.println(list);
+			
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<Reservation_Table_OrderedVO> get6table(String vendor_no, Date booking_date) {
+		List<Reservation_Table_OrderedVO> list = new ArrayList<Reservation_Table_OrderedVO>();
+		Reservation_Table_OrderedVO reservation_Table_OrderedVO = null;
+			System.out.println("hello");
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_6TB);
+			pstmt.setString(1, vendor_no);
+			pstmt.setDate(2, booking_date);
+			rs = pstmt.executeQuery();
+			
+			
+			
+			while (rs.next()==true) {
+				reservation_Table_OrderedVO = new Reservation_Table_OrderedVO();
+				reservation_Table_OrderedVO.setBooking_time(rs.getString("booking_time"));
+//				reservation_Table_OrderedVO.setVendor_no(rs.getString("vendor_no"));
+				System.out.println("hello1");
+			
+			list.add(reservation_Table_OrderedVO); // Store the row in the list
+			System.out.println(list);
+			
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<Reservation_Table_OrderedVO> get8table(String vendor_no, Date booking_date) {
+		List<Reservation_Table_OrderedVO> list = new ArrayList<Reservation_Table_OrderedVO>();
+		Reservation_Table_OrderedVO reservation_Table_OrderedVO = null;
+			System.out.println("hello");
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_8TB);
+			pstmt.setString(1, vendor_no);
+			pstmt.setDate(2, booking_date);
+			rs = pstmt.executeQuery();
+			
+			
+			
+			while (rs.next()==true) {
+				reservation_Table_OrderedVO = new Reservation_Table_OrderedVO();
+				reservation_Table_OrderedVO.setBooking_time(rs.getString("booking_time"));
+//				reservation_Table_OrderedVO.setVendor_no(rs.getString("vendor_no"));
+				System.out.println("hello1");
+			
+			list.add(reservation_Table_OrderedVO); // Store the row in the list
+			System.out.println(list);
+			
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<Reservation_Table_OrderedVO> get10table(String vendor_no, Date booking_date) {
+		List<Reservation_Table_OrderedVO> list = new ArrayList<Reservation_Table_OrderedVO>();
+		Reservation_Table_OrderedVO reservation_Table_OrderedVO = null;
+			System.out.println("hello");
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_10TB);
+			pstmt.setString(1, vendor_no);
+			pstmt.setDate(2, booking_date);
+			rs = pstmt.executeQuery();
+			
+			
+			
+			while (rs.next()==true) {
+				reservation_Table_OrderedVO = new Reservation_Table_OrderedVO();
+				reservation_Table_OrderedVO.setBooking_time(rs.getString("booking_time"));
+//				reservation_Table_OrderedVO.setVendor_no(rs.getString("vendor_no"));
+				System.out.println("hello1");
+			
+			list.add(reservation_Table_OrderedVO); // Store the row in the list
+			System.out.println(list);
+			
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
 
 }

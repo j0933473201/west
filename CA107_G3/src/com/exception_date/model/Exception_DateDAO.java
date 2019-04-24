@@ -17,7 +17,9 @@ public class Exception_DateDAO implements Exception_DateDAO_Interface {
 
 	
 	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+	String url = "jdbc:oracle:thin:@localhost:49161:XE";
+	
 	String userid = "WEST";
 	String passwd = "800627";
 	

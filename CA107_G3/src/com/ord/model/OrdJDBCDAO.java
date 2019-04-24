@@ -10,7 +10,8 @@ import java.util.List;
 
 public class OrdJDBCDAO implements OrdDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WEST";
 	String passwd = "800627";
 	private static final String INSERT_STMT = 

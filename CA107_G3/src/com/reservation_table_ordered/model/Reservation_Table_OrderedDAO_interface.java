@@ -14,4 +14,10 @@ public interface Reservation_Table_OrderedDAO_interface {
     public List<Reservation_Table_OrderedVO> getAll();
     public List<Reservation_Table_OrderedVO> getAll(Map<String, String[]> map);
     public List<Reservation_Table_OrderedVO> get2table(String vendor_no,Date booking_date);
+    public List<Reservation_Table_OrderedVO> get4table(String vendor_no,Date booking_date);
+    public List<Reservation_Table_OrderedVO> get6table(String vendor_no,Date booking_date);
+    public List<Reservation_Table_OrderedVO> get8table(String vendor_no,Date booking_date);
+    public List<Reservation_Table_OrderedVO> get10table(String vendor_no,Date booking_date);
+
+
 }

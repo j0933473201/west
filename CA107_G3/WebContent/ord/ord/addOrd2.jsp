@@ -14,7 +14,7 @@
 <!-- 提交FORM表單 -->
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('.date #f_date1').blur(function() {
+		$('.date #f_date1').change(function() {
 			$('#form1').submit();
 		})
 		$('#inlineFormCustomSelectPref').change(function() {
@@ -362,20 +362,24 @@ body {
 							</ul>
 						</c:if>	
 <!-- 					  自動提交FORM開頭 -->
-					<form id="form1" action="<%=request.getContextPath()%>/ord/ord.do"
-						method="get">
+				<div>
+					<form id="form1" action="<%=request.getContextPath()%>/ord/ord.do" method="get">
 						<input type="hidden" name="action" id="action" value="updateDate">
 						<input type="hidden" name="vendor_no" value="${param.vendor_no}">
-					<div class="date">	
-						<table>
-							<tr>
-								<td>用餐日期</td>
-								<td><input name="booking_date" id="f_date1" type="text"
-									value="${ordVO.booking_date}"></td>
-							</tr>	
-						</table>
-					</div>
-					<div class="select1">
+						<div class="container">
+							<div class="row justify-content-center">
+								<div class="col-md-8x">
+										<div class="date" >	
+											用餐日期<input name="booking_date" id="f_date1" type="text"
+														value="${ordVO.booking_date}"  style="width: 400px;">
+												
+										</div>
+									</div>
+								</div>
+							</div>
+					<div class="container">
+							<div class="row justify-content-center">
+								<div class="col-md-9">
 						人數選擇 <select class="custom-select my-1 mr-sm-4"
 							id="inlineFormCustomSelectPref" style="width: 500px;"
 							name="party_size">
@@ -391,148 +395,15 @@ body {
 
 						</select>
 					</div>	
-					
-					
-					
-					
-					
-					
-					
-					
-					
-<%-- 					<c:out  value="${param.r_time}"/> --%>
-
-<!-- 				<div class=" btn-group-toggle" data-toggle="buttons" style="text-align: center;"> -->
-<!-- 					<select> -->
-<%-- 					<c:forEach var="r_time" items="${rVOlist}"> --%>
-					
-<%-- 				<input class="btn btn-primary" type="button"  name="booking_time" value="${r_time.getR_time()}" > --%>
-<%-- 					${r_time.getR_time()} --%>
-					
-<%-- 					<option value="${r_time.getR_time()}">${r_time.getR_time()}</option> --%>
-<%-- 					</c:forEach> --%>
-<!-- 					</select> -->
-<!-- 					</div> -->
-<%-- 					<c:if test="${param.booking_date != xxx.exc_date}" var="condition1" > --%>
-<%-- 							${reservation_TimeVO.r_time} --%>
-							
-							
-<%-- 						</c:if> --%>
-<%-- 					<c:out  value="${ccc}"/> --%>
-					
-<%-- 					<c:set var="ccc" value="${xxx.exc_date}"/> --%>
-<%-- 					<c:out  value="${ccc}"/> --%>
-<%-- 					${ccc} --%>
-<%-- 					${xxx.exc_date} --%>
-					
-					
-					<div class="container" style="margin-top: 50px">
-						<div class="col-md-12">
-							<div class=" btn-group-toggle" data-toggle="buttons"
-								style="text-align: center;">
-
-<%-- 								<c:forEach var="reservation_TimeVO" --%>
-<%-- 									items="${rev_tSvc.getVendor(param.vendor_no)}"> --%>
-									
-<!-- 									<input class="btn btn-primary" type="button" -->
-<%-- 										name="booking_time" value="${reservation_TimeVO.r_time}"> --%>
-<%-- 								</c:forEach> --%>
-								
-<!-- 								將取出的所有已訂桌位數存在變數中,防止過度存取資料庫 -->
-								<c:set var="rtoVO" value="${res_tboSvc.all}"/>
-<!-- 								將取出的所有不開放日期存在變數中,防止過度存取資料庫 -->
-								<c:set var="excVO" value="${exc_dateSvc.getdate(param.vendor_no)}"/>
-<!-- 								將取出的所有開放訂位時間存在變數中,防止過度存取資料庫 -->
-								<c:set var="res_tVO" value="${rev_tSvc.getVendor(param.vendor_no)}"/>
-								
-<%-- 								<c:out  value="${rev_tSvc.getVendor(param.vendor_no).get(0).getR_time()}"/> --%>
-<%-- 								<c:out  value="${rev_tSvc.getVendor(param.vendor_no).get(1).getR_time()}"/> --%>
-<%-- 								<c:out  value="${rev_tSvc.getVendor(param.vendor_no).get(2).getR_time()}"/> --%>
-<%-- 								<c:out  value="${rev_tSvc.getVendor(param.vendor_no).get(3).getR_time()}"/> --%>
-<%-- 								<c:out  value="${rev_tSvc.getVendor(param.vendor_no).get(4).getR_time()}"/> --%>
-								
-<!-- 								取得所有已訂位數資料 -->
-								<c:forEach var="Reservation_Table_OrderedVO" items="${rtoVO}">
-<!-- 									取得所有不開放訂位日期 -->
-									<c:forEach var="exceptionVO" items="${excVO}">
-<!-- 										取得所有開放訂位時段 -->
-										<c:forEach var="reservation_TimeVO" items="${res_tVO}">
-									
-<!-- 											先判斷傳進來的廠商編號是否等於 -->
-											<c:if test="${Reservation_Table_OrderedVO.vendor_no == param.vendor_no}" var="condition" > 
-<!-- 												判斷傳進來的訂位日期是否不是不開放訂位日期 -->
-<%-- 										    	<c:if test="${param.booking_date != exceptionVO.exc_date}" var="condition1" > --%>
-<!-- 										    		判斷可訂位時段不是空值 -->
-										    		<c:if test="${rev_tSvc.getVendor(param.vendor_no)!=null}" var="condition2" >
-<!-- 										    			取得所有可訂位時段並且以使用者選擇的人數來判斷當天對應到的桌型是否還有數量可以被預訂,如果不能預定就不顯示 -->
-										    		<c:forEach var="reservation_TimeVO" items="${res_tVO}">
-												
-										    		<c:choose>
-
-											    		<c:when test="${(param.party_size==10)}">
-											    		
-											    			<c:choose>
-												    			<c:when test="${(Reservation_Table_OrderedVO.tbl_o_num5)} gt ${(Reservation_Table_OrderedVO.tbl_ordered5)}">
-<%-- 												    				${rev_tSvc.getVendor(param.vendor_no).get(index).getR_time()} --%>
-<%-- 												    				<c:out  value="${rev_tSvc.getVendor(param.vendor_no).get(1).getR_time()}"/> --%>
-												    			</c:when>
-												    			<c:otherwise>
-												    			很抱歉,所選的人數桌型已額滿
-												    			</c:otherwise>
-												    			
-												    			</c:choose>
-												    	
-											    			</c:when>
-										    	  		
-											    			<c:when test="${(param.party_size==9)}">
-															</c:when>
-														
-											    			<c:when test="${(param.party_size==8)}">
-											    			</c:when>
-											    			
-											    			<c:when test="${(param.party_size==7)}">
-											    			</c:when>
-											    			
-											    			<c:when test="${(param.party_size==6)}">
-											    			</c:when>
-											    			
-											    			<c:when test="${(param.party_size==5)}">
-											    			</c:when>
-											    			
-											    			<c:when test="${(param.party_size==4)}">
-											    			</c:when>
-											    			
-											    			<c:when test="${(param.party_size==3)}">
-											    			</c:when>
-											    			
-											    			<c:otherwise>
-											    			</c:otherwise>
-										    			</c:choose>
-																		
-																		
-														</c:forEach>				
-																		
-													</c:if>
-												</c:if>
-											
-									
-								</c:forEach>
-								</c:forEach>
-								</c:forEach>
-								<c:if test="${(param.booking_date )==(ordVO.booking_date)}" var="condition" scope="page" > 
-								    	
-								</c:if> 
-
-							</div>
-						</div>
-
-
-					</div>	
+					</div>
+					</div>
+						
 				</form>
-				
+<!-- 				自動提交結束 -->
+		</div>
 		<div class="container">
 			<div class="row justify-content-center">
-				<div class="col-md-6">
+				<div class="col-md-8">
 					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/ord/ord.do" name="form2">
 						<input type="hidden" name="mem_no" value="M000004">
 						<input type="hidden" name="vendor_no" value="${param.vendor_no}">
@@ -551,38 +422,31 @@ body {
 						<input type="hidden" name="status" value="0"> 
 						<input type="hidden" name="booking_date" value="${param.booking_date}">		
 						<input type="hidden" name="party_size" value="${param.party_size}">		
-										
-	<!-- 										<input name="booking_date" id="f_date1" type="hidden" -->
-	<%-- 											value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/>"> --%>
-								
+		
+						<div class="container" style="margin-top: 50px">
+							<div class="col-md-12">
+								<div class=" btn-group-toggle" data-toggle="buttons">
+									
+										<c:forEach var="exc" items="${lhs}">	
+											<input class="btn btn-primary" type="button" name="booking_time" value="${exc.booking_time}">
+										</c:forEach>	
+								</div>
+							</div>
+						</div>	
 						
-							
-				<div class=" btn-group-toggle" data-toggle="buttons" style="text-align: center;">
-					<c:forEach var="exc" items="${exclist}">
-						<c:if test="${booking_date!=exc.exc_date}">
-						<c:forEach var="rto" items="${rtolist}">
-<%-- 							${rto.booking_time} --%>
-						</c:forEach>
-						</c:if>			
-					</c:forEach>
-<%-- 					<c:out value="${exc.exc_date}"/> --%>
-					
-							
-					</div>	
-							
-						<c:forEach var="exc" items="${lhs}">	
-								${exc.booking_time}
-							</c:forEach>	
-								
-						<div class="note" style="margin-top: 50px">
-							<table>	
-								<tr>
-									<td>備註:</td>
-									<td><input type="TEXT" name="notes" size="70" value="" />
-									</td>
-								</tr>
-							</table>
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-md-10">			
+								<table>	
+									<tr>
+										<td>備註:</td>
+										<td><input type="TEXT" name="notes" size="70" value="" />
+										</td>
+									</tr>
+								</table>
+							</div>
 						</div>
+					</div>
 						<div class="container">
 							<div class="row justify-content-center">
 								<div class="col-md-6">			
@@ -936,23 +800,6 @@ body {
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script
 		src="http://www.5imoban.net/download/jquery/jquery-1.8.3.min.js"></script>
-
-	<%--  window.onload=showStar(7);
-            
-            //n表示后台获取的星数
-            function showStar(n){
-              var del_star=document.getElementById("del_star");
-                var con_wid=document.getElementById("star_con").offsetWidth;
-                
-                console.log(con_wid+"??");
-                console.log(del_star+"00");
-                
-                //透明星星移动的像素
-                var del_move=(n*con_wid)/10;
-                
-                del_star.style.backgroundPosition=-del_move+"px 0px";
-                del_star.style.left=del_move+"px";
-            }; --%>
 
 
 	<script>
