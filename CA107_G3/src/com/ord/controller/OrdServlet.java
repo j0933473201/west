@@ -469,7 +469,8 @@ public class OrdServlet extends HttpServlet {
 		List<VendorVO> vVO = VSvc.getAll();
 		
 		Integer party_size = Integer.valueOf(req.getParameter("party_size"));
-		
+		String booking_time =req.getParameter("booking_time");
+		System.out.println("booking_time"+booking_time);
 		//不能訂位日期------------
 		Exception_DateService ESvc= new Exception_DateService();
 		List<Exception_DateVO> exclist=ESvc.getdate(vendor_no);

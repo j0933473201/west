@@ -5,7 +5,7 @@
 <%@ page import="com.ord.model.*"%>
 
 <%
-	OrdVO ordVO = (OrdVO) request.getAttribute("ordVO");
+	
 %>
 <!DOCTYPE html>
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
@@ -24,6 +24,35 @@
 		
 	})
 </script>
+
+<script type="text/javascript">
+ function changePic(e) {  
+  
+    document.getElementsByTagName("img")[0].src = URL.createObjectURL(event.target.files[0]);   
+ }
+</script>
+
+
+
+
+<script >
+	$(document).ready(function() {
+		$("#btngp").on("click",".btn2",function() {
+			alert(".btn2".va);
+		})
+		$("#btngp").click(function(){
+			var xxx = $(this).val();
+			$("booking_time").val(xxx);
+			$("#form3").submit();
+			});
+		
+	})
+</script>
+
+
+
+
+
 
 <!-- jQuery, Bootstrap JS. -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -411,7 +440,7 @@ body {
 						<input type="hidden" name="share_mem_no1" value="${ordVO.share_mem_no1}"> 
 						<input type="hidden" name="share_mem_no2" value="${ordVO.share_mem_no2}">
 						<input type="hidden" name="share_amount" value="0">
-	<!-- 				<input type="hidden" name="booking_time" value="12:30">	  -->
+<!-- 					<input type="hidden" name="booking_time" value="12:30">	  -->
 						<input type="hidden" name="ord_time"
 								value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"/>">
 	
@@ -423,16 +452,7 @@ body {
 						<input type="hidden" name="booking_date" value="${param.booking_date}">		
 						<input type="hidden" name="party_size" value="${param.party_size}">		
 		
-						<div class="container" style="margin-top: 50px">
-							<div class="col-md-12">
-								<div class=" btn-group-toggle" data-toggle="buttons">
-									
-										<c:forEach var="exc" items="${lhs}">	
-											<input class="btn btn-primary" type="button" name="booking_time" value="${exc.booking_time}">
-										</c:forEach>	
-								</div>
-							</div>
-						</div>	
+						
 						
 					<div class="container">
 						<div class="row justify-content-center">
@@ -456,6 +476,36 @@ body {
 							</div>
 						</div>
 					</FORM>
+				<form id="form3" action="<%=request.getContextPath()%>/ord/ord.do" method="get">		
+				<input type="hidden" name="action" id="action" value="updateDate">	
+					<div class="container" style="margin-top: 50px">
+							<div class="col-md-12">
+								<div class=" btn-group-toggle" data-toggle="buttons" id="btngp">
+									
+										<c:forEach var="exc" items="${lhs}">	
+											<input class="btn2 btn-primary" type="button" name="booking_time" value="${exc.booking_time}" >
+										</c:forEach>	
+								</div>
+									<input type="hidden" name="mem_no" value="M000004">
+						<input type="hidden" name="vendor_no" value="${param.vendor_no}">
+						<input type="hidden" name="tbl_no" value="T000001"> 
+						<input type="hidden" name="share_mem_no1" value="${ordVO.share_mem_no1}"> 
+						<input type="hidden" name="share_mem_no2" value="${ordVO.share_mem_no2}">
+						<input type="hidden" name="share_amount" value="0">
+					<input type="hidden" name="booking_time" value="12:30">	 
+						<input type="hidden" name="ord_time"
+								value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+	
+						<input type="hidden" name="total" value="1000"> 
+						<input type="hidden" name="arrival_time" value="${ordVO.arrival_time}"> 
+						<input type="hidden" name="finish_time" value="${ordVO.finish_time}"> 
+						<input type="hidden" name="verif_code" value="8JPXY6wQc5bvrN2y6h4h">
+						<input type="hidden" name="status" value="0"> 
+						<input type="hidden" name="booking_date" value="${param.booking_date}">		
+						<input type="hidden" name="party_size" value="${param.party_size}">	
+							</div>
+						</div>	
+					</form>
 								
 				</div>
 			</div>

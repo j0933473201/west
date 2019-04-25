@@ -267,10 +267,10 @@ public class VendorJDBCDAO implements VendorDAO_interface {
 	}
 
 	public static void main(String[] args) {
-//		VendorDAO_interface vDAO = new VendorJDBCDAO();
+		VendorDAO_interface vDAO = new VendorJDBCDAO();
 
 		// 單筆查詢
-		// System.out.println(vDAO.findByPrimaryKey("V000005"));
+		 System.out.println(vDAO.findByPrimaryKey("V000001"));
 
 		// 查詢全部
 //		 List<VendorVO> vlist = new ArrayList<>();
