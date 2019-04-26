@@ -9,6 +9,7 @@
 %>
 <!DOCTYPE html>
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+
 <html lang="en">
 <head>
 <!-- 提交FORM表單 -->
@@ -24,30 +25,11 @@
 		
 	})
 </script>
-
-<script type="text/javascript">
- function changePic(e) {  
-  
-    document.getElementsByTagName("img")[0].src = URL.createObjectURL(event.target.files[0]);   
- }
-</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
 
 
 
-<script >
-	$(document).ready(function() {
-		$("#btngp").on("click",".btn2",function() {
-			alert(".btn2".va);
-		})
-		$("#btngp").click(function(){
-			var xxx = $(this).val();
-			$("booking_time").val(xxx);
-			$("#form3").submit();
-			});
-		
-	})
-</script>
 
 
 
@@ -85,6 +67,7 @@
 <!-- 自訂 CSS主檔 -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/ord/css/style.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 
 
 <title>SeekFoodTable</title>
@@ -433,7 +416,7 @@ body {
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-8">
-					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/ord/ord.do" name="form2">
+					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/ord/ord.do" id="form2">
 						<input type="hidden" name="mem_no" value="M000004">
 						<input type="hidden" name="vendor_no" value="${param.vendor_no}">
 						<input type="hidden" name="tbl_no" value="T000001"> 
@@ -451,7 +434,13 @@ body {
 						<input type="hidden" name="status" value="0"> 
 						<input type="hidden" name="booking_date" value="${param.booking_date}">		
 						<input type="hidden" name="party_size" value="${param.party_size}">		
-		
+						
+						<div class=" btn-group-toggle" data-toggle="buttons" id="btngp">
+									
+										<c:forEach var="exc" items="${lhs}">	
+											<input class="btn2 btn-primary" type="button" id="xx${exc.booking_time}" name="booking_time" value="${exc.booking_time}" >
+										</c:forEach>	
+								</div>
 						
 						
 					<div class="container">
@@ -470,42 +459,42 @@ body {
 						<div class="container">
 							<div class="row justify-content-center">
 								<div class="col-md-6">			
-								<input type="hidden" name="action" value="insert"> 
-								<input type="submit" value="送出新增">
+								<input type="hidden" name="action" value="sel_time"> 
+<!-- 								<input type="submit" value="送出新增"> -->
 								</div>
 							</div>
 						</div>
 					</FORM>
-				<form id="form3" action="<%=request.getContextPath()%>/ord/ord.do" method="get">		
-				<input type="hidden" name="action" id="action" value="updateDate">	
-					<div class="container" style="margin-top: 50px">
-							<div class="col-md-12">
-								<div class=" btn-group-toggle" data-toggle="buttons" id="btngp">
+<%-- 				<form id="form3" action="<%=request.getContextPath()%>/ord/ord.do" method="get">		 --%>
+<!-- 				<input type="hidden" name="action" id="action" value="selected">	 -->
+<!-- 					<div class="container" style="margin-top: 50px"> -->
+<!-- 							<div class="col-md-12"> -->
+<!-- 								<div class=" btn-group-toggle" data-toggle="buttons" id="btngp"> -->
 									
-										<c:forEach var="exc" items="${lhs}">	
-											<input class="btn2 btn-primary" type="button" name="booking_time" value="${exc.booking_time}" >
-										</c:forEach>	
-								</div>
-									<input type="hidden" name="mem_no" value="M000004">
-						<input type="hidden" name="vendor_no" value="${param.vendor_no}">
-						<input type="hidden" name="tbl_no" value="T000001"> 
-						<input type="hidden" name="share_mem_no1" value="${ordVO.share_mem_no1}"> 
-						<input type="hidden" name="share_mem_no2" value="${ordVO.share_mem_no2}">
-						<input type="hidden" name="share_amount" value="0">
-					<input type="hidden" name="booking_time" value="12:30">	 
-						<input type="hidden" name="ord_time"
-								value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+<%-- 										<c:forEach var="exc" items="${lhs}">	 --%>
+<%-- 											<input class="btn2 btn-primary" type="button" name="booking_time" value="${exc.booking_time}" > --%>
+<%-- 										</c:forEach>	 --%>
+<!-- 								</div> -->
+<!-- 									<input type="hidden" name="mem_no" value="M000004"> -->
+<%-- 						<input type="hidden" name="vendor_no" value="${param.vendor_no}"> --%>
+<!-- 						<input type="hidden" name="tbl_no" value="T000001">  -->
+<%-- 						<input type="hidden" name="share_mem_no1" value="${ordVO.share_mem_no1}">  --%>
+<%-- 						<input type="hidden" name="share_mem_no2" value="${ordVO.share_mem_no2}"> --%>
+<!-- 						<input type="hidden" name="share_amount" value="0"> -->
+<!-- 					<input type="hidden" name="booking_time" value="12:30">	  -->
+<!-- 						<input type="hidden" name="ord_time" -->
+<%-- 								value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"/>"> --%>
 	
-						<input type="hidden" name="total" value="1000"> 
-						<input type="hidden" name="arrival_time" value="${ordVO.arrival_time}"> 
-						<input type="hidden" name="finish_time" value="${ordVO.finish_time}"> 
-						<input type="hidden" name="verif_code" value="8JPXY6wQc5bvrN2y6h4h">
-						<input type="hidden" name="status" value="0"> 
-						<input type="hidden" name="booking_date" value="${param.booking_date}">		
-						<input type="hidden" name="party_size" value="${param.party_size}">	
-							</div>
-						</div>	
-					</form>
+<!-- 						<input type="hidden" name="total" value="1000">  -->
+<%-- 						<input type="hidden" name="arrival_time" value="${ordVO.arrival_time}">  --%>
+<%-- 						<input type="hidden" name="finish_time" value="${ordVO.finish_time}">  --%>
+<!-- 						<input type="hidden" name="verif_code" value="8JPXY6wQc5bvrN2y6h4h"> -->
+<!-- 						<input type="hidden" name="status" value="0">  -->
+<%-- 						<input type="hidden" name="booking_date" value="${param.booking_date}">		 --%>
+<%-- 						<input type="hidden" name="party_size" value="${param.party_size}">	 --%>
+<!-- 							</div> -->
+<!-- 						</div>	 -->
+<!-- 					</form> -->
 								
 				</div>
 			</div>
@@ -784,7 +773,6 @@ body {
 
 	<!-- 日期的ＪＳ -->
 	
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
@@ -845,13 +833,13 @@ body {
 
 
 
-
+	
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script
 		src="http://www.5imoban.net/download/jquery/jquery-1.8.3.min.js"></script>
 
-
+	
 	<script>
 		$(function() {
 			//评分
@@ -866,7 +854,30 @@ body {
 		})
 	</script>
 
+<c:forEach var="exc" items="${lhs}">
+<script type="text/javascript">
+$("#xx${exc.booking_time}").click(async function(event){
+	const {value: file} = Swal.fire({
+		  title: "您選擇的<br>日期：${param.booking_date}<br>人數：${param.party_size}人<br>時段：${exc.booking_time}",
+		  width: 600,
+		  padding: '3em',
+		  background: '#fff url(https://sweetalert2.github.io/#examplesimages/trees.png)',
+		  showConfirmButton:true,
+		  backdrop: `
+		    rgba(0,0,123,0.4)
+		    url("https://sweetalert2.github.io/#examplesimages/nyan-cat.gif")
+		    center left
+		    no-repeat
+		  `
+		}).then(function(){
+			$('#form2').submit();
+		})
+})
+  
 
+</script>
+
+</c:forEach>
 
 
 </body>

@@ -42,7 +42,7 @@
           <option value="${vVO.vendor_no}">${vSvc.findByPK(vVO.vendor_no).v_name}
          </c:forEach>   
        </select>
-       <input type="hidden" name="action" value="selceted">
+       <input type="hidden" name="action" value="selected">
 <%--        <input type="hidden" name="vendor_no" value="${vVO.vendor_no}"> --%>
        <input type="submit" value="°e¥X">
     </FORM>

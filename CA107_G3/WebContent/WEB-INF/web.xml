@@ -25,4 +25,12 @@
     <servlet-name>servletRes</servlet-name>
     <url-pattern>/ord/servletRes.do</url-pattern>
   </servlet-mapping>
+   <servlet>
+    <servlet-name>ShowImg</servlet-name>
+    <servlet-class>tools.ShowImg</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowImg</servlet-name>
+    <url-pattern>/ShowImg.do</url-pattern>
+  </servlet-mapping>
 </web-app>

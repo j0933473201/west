@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.exception_date.model.Exception_DateService;
 import com.exception_date.model.Exception_DateVO;
@@ -21,6 +23,8 @@ import com.reservation_table_ordered.model.Reservation_Table_OrderedService;
 import com.reservation_table_ordered.model.Reservation_Table_OrderedVO;
 import com.reservation_time.model.Reservation_TimeService;
 import com.reservation_time.model.Reservation_TimeVO;
+import com.restaurant_menu.model.Restaurant_MenuService;
+import com.restaurant_menu.model.Restaurant_MenuVO;
 import com.vendor.model.VendorService;
 import com.vendor.model.VendorVO;
 
@@ -33,9 +37,10 @@ public class OrdServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
+	
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
+		String vendor=req.getParameter("vendor");//廠商中文名稱
 		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
@@ -385,7 +390,7 @@ public class OrdServlet extends HttpServlet {
 		
         
         
-        if("selceted".equals(action)) {
+        if("selected".equals(action)) {
         	List<String> errorMsgs = new LinkedList<String>();
         	req.setAttribute("errorMsgs", errorMsgs);
         	
@@ -588,16 +593,160 @@ public class OrdServlet extends HttpServlet {
 		successView.forward(req, res);
 		
 		
-//	}
+//	}	
 	
 		}
 		
 		
 		
+		if(action.equals("sel_time")) {
+			
+			String vendor_no=req.getParameter("vendor_no");
+			String mem_no =req.getParameter("mem_no");
+//			String tbl_no = req.getParameter("tbl_no");
+			java.sql.Timestamp ord_time =java.sql.Timestamp.valueOf(req.getParameter("ord_time"));
+			java.sql.Date booking_date = java.sql.Date.valueOf(req.getParameter("booking_date").trim());
+			String booking_time=req.getParameter("booking_time");
+			String notes=req.getParameter("notes");
+			
+			
+			
+			Integer party_size =new Integer(req.getParameter("party_size"));
+//			String share_mem_no1 =req.getParameter("share_mem_no1");
+//			String share_mem_no2 =req.getParameter("share_mem_no2");
+//			Integer share_amount =new Integer(req.getParameter("share_amount"));
+//			String arrival_time=req.getParameter("arrival_time");
+//			String finish_time=req.getParameter("finish_time");
+			String verif_code=req.getParameter("verif_code");
+			Integer status=new Integer(req.getParameter("status"));
+			
+			
+			
+			req.setAttribute("vendor_no", vendor_no);
+			req.setAttribute("mem_no", mem_no);
+//			req.setAttribute("tbl_no", tbl_no);
+			req.setAttribute("ord_time", ord_time);
+			req.setAttribute("booking_date", booking_date);
+			req.setAttribute("booking_time", booking_time);
+			req.setAttribute("notes", notes);
+			req.setAttribute("party_size", party_size);
+			req.setAttribute("status", status);
+			
+			String url = "/ord/ord/ordfood.jsp";
+			RequestDispatcher rd = req.getRequestDispatcher(url);
+			rd.forward(req, res);
+			
+		}
+		
+		
+		HttpSession session = req.getSession();
+		@SuppressWarnings("unchecked")
+		List<Restaurant_MenuVO> buylist = (Vector<Restaurant_MenuVO>) session.getAttribute("shoppingcart");
+		
+		
+			// 刪除購物車中的書籍
+			if(action.equals("DELETE_menu") || action.equals("ADD_menu")) {
+				
+				if(action.equals("DELETE_menu")){
+					
+					String del = req.getParameter("del");
+					int d = Integer.parseInt(del);
+					buylist.remove(d);
+					
+				}
+				
+			// 新增書籍至購物車中
+				else if (action.equals("ADD_menu")) {
+				// 取得後來新增的書籍
+				Restaurant_MenuVO rmenu = getMenu(req);
+				System.out.println(rmenu);
+				if (buylist == null) {
+					buylist = new Vector<Restaurant_MenuVO>();
+					buylist.add(rmenu);
+				} else {
+					if (buylist.contains(rmenu)) {
+						Restaurant_MenuVO  menulist= buylist.get(buylist.indexOf(rmenu));
+						menulist.setQuantity(menulist.getQuantity() + rmenu.getQuantity());
+						
+					} else {
+						buylist.add(rmenu);
+					}
+				}
+				
+			 }
+				
+				session.setAttribute("shoppingcart", buylist);
+				session.setAttribute("vendor", vendor);
+				String url= "/ord/ord/ordfood.jsp";
+				RequestDispatcher rd = req.getRequestDispatcher(url);
+				rd.forward(req, res);
+				}
+			
+			
+			
+			
+			
+			
+			
+		// 結帳，計算購物車書籍價錢總數
+				 if (action.equals("checkout")) {
+					double total = 0;
+					for (int i = 0; i < buylist.size(); i++) {
+						Restaurant_MenuVO menu = buylist.get(i);
+						Integer price = Integer.parseInt(menu.getMenu_price());
+						Integer quantity = menu.getQuantity();
+						total += (price * quantity);
+					}
+
+					String amount = String.valueOf(total);
+					req.setAttribute("amount", amount);
+					String url = "/ord/ord/check.jsp";
+					RequestDispatcher rd = req.getRequestDispatcher(url);
+					rd.forward(req, res);
+				}
 		
 	}
+		
+		
+	
 
 	
+	
+	
+
+
+	
+
+
+	private Restaurant_MenuVO getMenu(HttpServletRequest req) {
+		String menu_no = req.getParameter("menu_no");
+		String vendor_no = req.getParameter("vendor_no");
+		String menu_name = req.getParameter("menu_name");
+		String menu_price = req.getParameter("menu_price");
+//		Integer menu_stat = Integer.parseInt(req.getParameter("menu_stat"));
+		Integer quantity = Integer.parseInt(req.getParameter("quantity"));
+		String menu_text = req.getParameter("menu_text");
+		
+		Restaurant_MenuService RmSvc=new Restaurant_MenuService();
+		Restaurant_MenuVO menu = new Restaurant_MenuVO();
+		menu.setMenu_no(menu_no);
+		menu.setVendor_no(vendor_no);
+		menu.setMenu_name(menu_name);
+		menu.setMenu_price(menu_price);
+		menu.setQuantity((new Integer(quantity)).intValue());;
+		
+//		menu.setMenu_stat(menu_stat);
+		menu.setMenu_text(menu_text);
+		
+		return menu;
+		
+		
+	}
+	
+
+
+
+
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(req, res);

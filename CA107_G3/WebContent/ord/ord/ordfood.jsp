@@ -49,7 +49,7 @@
     <div class="row justify-content-center">
       <div class="col-md-12">
       <c:forEach var="menu_n" items="${res_memuSvc.getVendor('V000001')}">
-      <form name="shopping" action="<%=request.getContextPath()%>/Shopping.html" method="get">
+      <form name="shopping" action="<%=request.getContextPath()%>/ord/ord.do" method="get">
             <div class="col-sm-6 col-md-6">
 		        <div class="thumbnail" >
 		          	<h4 class="text-center">
@@ -58,7 +58,7 @@
 		         					${vendor.v_name}
 		         		 </span>
 		         		 </h4>
-		         			 <img src="${menu_n.menu_pic}" class="img-responsive">
+		         		<img id="p${menu_n.menu_no}" src="<%= request.getContextPath()%>/ShowImg.do?menu_no='${menu_n.menu_no}'"/>
 		         				 <div class="caption">
 		           					<div class="row">
 		              					<div class="col-md-6 col-xs-6">   
@@ -72,7 +72,7 @@
 		           				 <div class="row">
 		              				<div class="col-md-6">
 <!-- 		                				<a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>  -->
-		                				<input type="text" name="quantity" size="3" value=""  class="btn btn-primary btn-product" placeholder="輸入數量">
+		                				<input type="text" name="quantity" size="3"  class="btn btn-primary btn-product" placeholder="輸入數量"value=1>
 		              				</div>
 		              			<div class="col-md-6">
 					                 <button type="submit" class="btn btn-success btn-product" value="Buy"><span class="glyphicon glyphicon-shopping-cart">Buy</span></button>
@@ -82,11 +82,13 @@
 					          </div>
 					        </div>
 					      </div>
-					       <input type="hidden" name="vendor_no" value="${param.vendor_no}">
-					      <input type="hidden" name="vendor" value="${vendor.v_name}">
-					      <input type="hidden" name="menu_name" value="${menu_n.menu_name}">
-					      <input type="hidden" name="menu_price" value="${menu_n.menu_price}">
-					      <input type="hidden" name="action" value="ADD">
+					      
+					    <input type="hidden" name="vendor_no" value="${param.vendor_no}">
+						 <input type="hidden" name="vendor" value="${vendor.v_name}">
+						<input type="hidden" name="menu_name" value="${menu_n.menu_name}">
+						<input type="hidden" name="menu_price" value="${menu_n.menu_price}">
+<%-- 						<input type="hidden" name="quantity" value="${menu_n.quantity}"> --%>
+					       <input type="hidden" name="action" value="ADD_menu">
 					      </form>
 			      </c:forEach>
      
@@ -121,7 +123,7 @@
         </div> 
   </div>
 </div>
-<%-- <jsp:include page="/.jsp" flush="true" /> --%>
+<jsp:include page="/ord/ord/Cart.jsp" flush="true" />
 
 </body>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>

@@ -187,6 +187,7 @@ public class Restaurant_MenuJDBCDAO implements Restaurant_MenuDAO_interface {
 				rm.setMenu_pic(rs.getBytes("menu_pic"));
 				rm.setMenu_stat(rs.getInt("menu_stat"));
 				rm.setMenu_text(rs.getString("menu_text"));
+//				rm.setQuantity(rs.getInt("quantity"));
 			}
 
 			// Handle any driver errors
@@ -245,7 +246,7 @@ public class Restaurant_MenuJDBCDAO implements Restaurant_MenuDAO_interface {
 						rm.setMenu_price(rs.getString("menu_price"));
 						
 						rm.setMenu_pic(rs.getBytes("menu_pic"));
-						
+//						rm.setQuantity(rs.getInt("quantity"));
 						rm.setMenu_stat(rs.getInt("menu_stat"));
 						rm.setMenu_text(rs.getString("menu_text"));
 						rm.setMenu_no(rs.getString("menu_no"));
@@ -364,15 +365,15 @@ public class Restaurant_MenuJDBCDAO implements Restaurant_MenuDAO_interface {
 //		dao.delete("RM00000005");
 		
 //		//查單筆
-//		Restaurant_MenuVO rmVO1 = dao.findByPK("RM00000001");
-//		System.out.println(rmVO1.getMenu_no());
-//		System.out.println(rmVO1.getVendor_no());
-//		System.out.println(rmVO1.getMenu_name());
-//		System.out.println(rmVO1.getMenu_price());			
-//		System.out.println(rmVO1.getMenu_pic());
-//		System.out.println(rmVO1.getMenu_stat());
-//		System.out.println(rmVO1.getMenu_text());
-//		System.out.println("---------------------");
+		Restaurant_MenuVO rmVO1 = dao.findByPK("RM00000001");
+		System.out.println(rmVO1.getMenu_no());
+		System.out.println(rmVO1.getVendor_no());
+		System.out.println(rmVO1.getMenu_name());
+		System.out.println(rmVO1.getMenu_price());			
+		System.out.println(rmVO1.getMenu_pic());
+		System.out.println(rmVO1.getMenu_stat());
+		System.out.println(rmVO1.getMenu_text());
+		System.out.println("---------------------");
 //		
 //		//查全部
 //		List<Restaurant_MenuVO> list = dao.getAll();
@@ -388,11 +389,11 @@ public class Restaurant_MenuJDBCDAO implements Restaurant_MenuDAO_interface {
 //		}
 //	}
 		//findmenu_name
-				List<Restaurant_MenuVO> list = dao.getm_name("V000001");
-				 for (Restaurant_MenuVO res : list) {
-					System.out.print(res.getMenu_name());
-					System.out.println("comingcomming");
-				}
+//				List<Restaurant_MenuVO> list = dao.getm_name("V000001");
+//				 for (Restaurant_MenuVO res : list) {
+//					System.out.print(res.getMenu_name());
+//					System.out.println("comingcomming");
+//				}
 			
 	
 	

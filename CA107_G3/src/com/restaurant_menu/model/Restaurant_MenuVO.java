@@ -1,6 +1,7 @@
 package com.restaurant_menu.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 //MENU_NO           VARCHAR2(10 BYTE) NOT NULL
 //VENDOR_NO         VARCHAR2(7 BYTE) 
@@ -11,7 +12,38 @@ import java.io.Serializable;
 //MENU_TEXT         VARCHAR2(500 BYTE) 
 
 public class Restaurant_MenuVO implements Serializable{
-	
+	private static final long serialVersionUID = 1L;
+
+
+	@Override
+	public String toString() {
+		return "Restaurant_MenuVO [menu_no=" + menu_no + ", vendor_no=" + vendor_no + ", menu_name=" + menu_name
+				+ ", menu_price=" + menu_price + ", menu_pic=" + Arrays.toString(menu_pic) + ", menu_stat=" + menu_stat
+				+ ", menu_text=" + menu_text + ", quantity=" + quantity + "]";
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((menu_name == null) ? 0 : menu_name.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Restaurant_MenuVO other = (Restaurant_MenuVO) obj;
+		if (menu_name == null) {
+			if (other.menu_name != null)
+				return false;
+		} else if (!menu_name.equals(other.menu_name))
+			return false;
+		return true;
+	}
 	private String menu_no;
 	private String vendor_no;
 	private String menu_name;
@@ -19,12 +51,24 @@ public class Restaurant_MenuVO implements Serializable{
 	private byte[] menu_pic;
 	private Integer menu_stat;
 	private String menu_text;
-	
+	private  Integer quantity;
 	
 	
 	public Restaurant_MenuVO() {
 		super();
-		// TODO Auto-generated constructor stub
+		menu_no = "";
+		vendor_no = "";
+		menu_name = "";
+		menu_price="";
+		menu_stat=0;
+		menu_text = "";
+		quantity=0;
+	}
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 	public String getMenu_no() {
 		return menu_no;
