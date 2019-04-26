@@ -123,7 +123,7 @@
         </div> 
   </div>
 </div>
-<jsp:include page="/ord/ord/Cart.jsp" flush="true" />
+<jsp:include page="/ord/ord/shopcart.jsp" flush="true" />
 
 </body>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>

@@ -91,9 +91,7 @@ body {
                         <%
 							}
 						%>
-                        <tr>
-                            <td>   </td>
-                            <td>   </td>
+                       
                         <tr>
                             <td>   </td>
                             <td>   </td>
@@ -106,12 +104,10 @@ body {
                 	<td>
 	                	<a href="<%=request.getContextPath()%>/ord/ord/ordfood.jsp" >
 							<button class="btn btn-success btn-lg btn-block" >繼續點餐<span class="glyphicon glyphicon-shopping-cart"></span></button>
-							 
 						</a>
 					</td>
 					<td>
-		                <button type="button" class="btn btn-success btn-lg btn-block">
-		                    Pay Now<span class="glyphicon glyphicon-usd"></span>
+		                <button type="button" class="btn btn-success btn-lg btn-block"> Pay Now<span class="glyphicon glyphicon-usd"></span>
 		                </button>
 		           </td>
                 </tr>
