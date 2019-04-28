@@ -82,7 +82,7 @@ body { margin-top:20px; }
                     </div>                    
                 </div>
                 <div class="panel-body">
-                    <form role="form" id="payment-form" method="POST" action="javascript:void(0);">
+                    <form role="form" id="payment-form" name="pay"method="get" action="<%=request.getContextPath()%>/ord/ord.do">
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
@@ -129,19 +129,14 @@ body { margin-top:20px; }
                                 </div>
                             </div>
                         </div>
+                      
                         <div class="row">
                             <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label for="couponCode">COUPON CODE</label>
-                                    <input type="text" class="form-control" name="couponCode" />
-                                </div>
-                            </div>                        
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <button class="subscribe btn btn-success btn-lg btn-block" type="button">刷一波</button>
+                                <button class="btn btn-success btn-lg btn2-block" type="submit">刷一波</button>
                             </div>
                         </div>
+                        <input type="hidden" name="action"  value="insert">
+                       
                         <div class="row" style="display:none;">
                             <div class="col-xs-12">
                                 <p class="payment-errors"></p>
@@ -149,6 +144,7 @@ body { margin-top:20px; }
                         </div>
                     </form>
                 </div>
+                
             </div>            
             <!-- CREDIT CARD FORM ENDS HERE -->
             

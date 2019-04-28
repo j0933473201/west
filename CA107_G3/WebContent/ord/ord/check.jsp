@@ -21,7 +21,12 @@
 body {
     margin-top: 20px;
 }
-
+.btn-success {
+    background-color: #e48b1d;
+    border-color: #fbeed5;
+}
+.btn2-block {
+    width: 50%;
 </style>
 
 </head>
@@ -68,13 +73,13 @@ body {
                       <tbody>
          <%  @SuppressWarnings("unchecked")
 		Vector<Restaurant_MenuVO> buylist = (Vector<Restaurant_MenuVO>) session.getAttribute("shoppingcart");
-		String amount =  (String) request.getAttribute("amount");
+		String total =  (String)session.getAttribute("total");
 	%>	
 		<%	for (int i = 0; i < buylist.size(); i++) {
 		Restaurant_MenuVO menu = buylist.get(i);
 		
 			String vendor=menu.getMenu_no();
-			System.out.print("vendor"+vendor);
+			
 			String name = menu.getVendor_no();
 			String menu_name = menu.getMenu_name();
 			String menu_price = menu.getMenu_price();
@@ -96,7 +101,7 @@ body {
                             <td>   </td>
                             <td>   </td>
                             <td class="text-right"><h4><strong>Total: </strong></h4></td>
-                            <td class="text-center text-danger"><h4><strong><%=amount%></strong></h4></td>
+                            <td class="text-center text-danger"><h4><strong>${total}</strong></h4></td>
                         </tr>
                     </tbody>
                 </table>
@@ -107,8 +112,17 @@ body {
 						</a>
 					</td>
 					<td>
-		                <button type="button" class="btn btn-success btn-lg btn-block"> Pay Now<span class="glyphicon glyphicon-usd"></span>
-		                </button>
+					<a href="<%=request.getContextPath()%>/ord/ord/credit.jsp" >
+					<button type="button" class="btn btn-success btn-lg btn2-block"> 分攤<span class="glyphicon glyphicon-user"></span> </button></a>
+					<form name="check" action="<%=request.getContextPath()%>/ord/ord.do" method="get">
+					
+					<button type="submit" class="btn btn-success btn-lg btn2-block"> Pay Now<span class="glyphicon glyphicon-usd"></span></button>
+					
+						<input type="hidden" name="mem_no" value="M000004">
+						
+						
+					<input type="hidden" name="action" value="tocredit">
+					</form>
 		           </td>
                 </tr>
             </div>

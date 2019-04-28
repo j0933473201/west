@@ -6,7 +6,7 @@
 <%@ page import="com.restaurant_menu.model.*"%>
 <%@ page import="com.vendor.model.*"%>
 <%
-	OrdVO ordVO = (OrdVO) request.getAttribute("ordVO");
+	OrdVO ordVO = (OrdVO) session.getAttribute("ordVO");
 %> 
 
 <!DOCTYPE html>
@@ -87,8 +87,11 @@
 						 <input type="hidden" name="vendor" value="${vendor.v_name}">
 						<input type="hidden" name="menu_name" value="${menu_n.menu_name}">
 						<input type="hidden" name="menu_price" value="${menu_n.menu_price}">
+						<input type="hidden" name="menu_no" value="${menu_n.menu_no}">
+						
 <%-- 						<input type="hidden" name="quantity" value="${menu_n.quantity}"> --%>
 					       <input type="hidden" name="action" value="ADD_menu">
+					       
 					      </form>
 			      </c:forEach>
      

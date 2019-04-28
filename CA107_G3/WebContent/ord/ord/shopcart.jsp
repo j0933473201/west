@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ page import="com.restaurant_menu.model.*,java.util.* "%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
+<%@ page import="com.ord.model.*"%>
+<%@ page import="com.restaurant_menu.model.*"%>
 <!DOCTYPE html>
 <html>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -9,10 +13,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<jsp:useBean id="res_memuSvc" scope="page" class="com.restaurant_menu.model.Restaurant_MenuService" />
 <style>
 body {
 	margin-top: 20px;
+}
+.input-sm {
+    height: 35px;
+    font-size: 16px;
+    }
+
+.btn-xs {
+    font-size: 20px;
+    padding: 6px 5px;
 }
 
 </style>
@@ -29,7 +42,8 @@ body {
 						<div class="row">
 							<div class="col-xs-6">
 							 <% @SuppressWarnings("unchecked")
-							   Vector<Restaurant_MenuVO> buylist = (Vector<Restaurant_MenuVO>) session.getAttribute("shoppingcart");%>
+							   Vector<Restaurant_MenuVO> buylist = (Vector<Restaurant_MenuVO>) session.getAttribute("shoppingcart");
+							   String total =  (String) request.getAttribute("total");%>
 							<%if (buylist != null && (buylist.size() > 0)) {%>
 								<h5><span class="glyphicon glyphicon-shopping-cart"></span> ${param.vendor}</h5>
 							</div>
@@ -43,17 +57,19 @@ body {
 		 Restaurant_MenuVO order = buylist.get(index);
 	%>
 					<div class="row">
-						<div class="col-xs-2"><img class="img-responsive" src="http://placehold.it/100x70">
+						<div class="col-xs-2">
+						
 						</div>
 						<div class="col-xs-4">
 							<h4 class="product-name"><strong><%=order.getMenu_name()%></strong></h4><h4><small>Product description</small></h4>
 						</div>
 						<div class="col-xs-6">
 							<div class="col-xs-6 text-right">
-								<h6><strong><%=order.getMenu_price()%> <span class="text-muted">x</span></strong></h6>
+								<h4><strong>$<%=order.getMenu_price()%> <span class="text-muted">x</span></strong></h4>
 							</div>
-							<div class="col-xs-4">
-								<input type="text" class="form-control input-sm" value="<%=order.getQuantity()%>">
+							<div class="col-xs-3">
+<%-- 							<h4><strong><%=order.getQuantity()%> <span class="text-muted"></span></strong></h4> --%>
+								<input type="text" class="form-control input-sm" value="<%=order.getQuantity()%>" disabled>
 							</div>
 							<div class="col-xs-2">
 							 <form name="deleteForm" action="<%=request.getContextPath()%>/ord/ord.do" method="get">
@@ -62,6 +78,8 @@ body {
 								<button type="submit"class="btn btn-link btn-xs">
 									<span class="glyphicon glyphicon-trash"> </span>
 								</button>	
+								
+								
 							</form>
 								
 							</div>
@@ -86,14 +104,15 @@ body {
 				<div class="panel-footer">
 					<div class="row text-center">
 						<div class="col-xs-9">
-							<h4 class="text-right">Total <strong>$50.00</strong></h4>
+							<h4 class="text-right">Total <strong>$${total}</strong></h4>
 						</div>
 						<div class="col-xs-3">
 						 <form name="checkoutForm" action="<%=request.getContextPath()%>/ord/ord.do" method="get">
               				<input type="hidden" name="action"  value="checkout"> 
 							<input type="submit" value="付款結帳" class="btn btn-success btn-block">
+							
 							 </form>
-						
+							
 						</div>
 					</div>
 				</div>

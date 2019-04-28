@@ -423,11 +423,11 @@ body {
 						<input type="hidden" name="share_mem_no1" value="${ordVO.share_mem_no1}"> 
 						<input type="hidden" name="share_mem_no2" value="${ordVO.share_mem_no2}">
 						<input type="hidden" name="share_amount" value="0">
-<!-- 					<input type="hidden" name="booking_time" value="12:30">	  -->
+					<input type="hidden" name="booking_time" value="12:30">	 
 						<input type="hidden" name="ord_time"
 								value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"/>">
 	
-						<input type="hidden" name="total" value="1000"> 
+						
 						<input type="hidden" name="arrival_time" value="${ordVO.arrival_time}"> 
 						<input type="hidden" name="finish_time" value="${ordVO.finish_time}"> 
 						<input type="hidden" name="verif_code" value="8JPXY6wQc5bvrN2y6h4h">
@@ -438,7 +438,8 @@ body {
 						<div class=" btn-group-toggle" data-toggle="buttons" id="btngp">
 									
 										<c:forEach var="exc" items="${lhs}">	
-											<input class="btn2 btn-primary" type="button" id="xx${exc.booking_time}" name="booking_time" value="${exc.booking_time}" >
+										<input class="btn2 btn-primary" type="button" id="xx${exc.booking_time}" name="booking_time" value="${exc.booking_time}" >
+<%-- 										<input type="hidden" name="booking_time" value="${exc.booking_time}">  --%>
 										</c:forEach>	
 								</div>
 						
