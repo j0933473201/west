@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.ord.model.*"%>
+<%@ page import="com.vendor.model.*" %>
 
 <%
 	
@@ -12,12 +13,17 @@
 
 <html lang="en">
 <head>
+
+
+<script 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3teApdwmpN2yUfc6dftcDkHw1dLpV2B4&callback=initMap"></script>
+
 <!-- 提交FORM表單 -->
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('.date #f_date1').change(function() {
-			$('#form1').submit();
-		})
+// 		$('.date #f_date1').change(function() {
+// 			$('#form1').submit();
+// 		})
 		$('#inlineFormCustomSelectPref').change(function() {
 
 			$('#form1').submit();
@@ -27,8 +33,43 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
+  <script>
 
-
+    $(function(){
+    // 取得使用者輸入的地址
+      var addr = $('#addr').val();
+      // 建立 Geocoder() 物件
+      var gc = new google.maps.Geocoder();
+   // 用使用者輸入的地址查詢
+      gc.geocode({'address': addr}, function(result, status){
+        // 確認 OK
+        if(status == google.maps.GeocoderStatus.OK) {
+          var latlng = result[0].geometry.location;
+          // 將查詢結果設為地圖的中心
+          var LAT=latlng.lat(); //顯示經度
+          var LNG=latlng.lng(); //顯示緯度
+          
+          var position = {
+              lat: LAT,
+              lng: LNG
+            };
+          
+          var mymap = new google.maps.Map($('#map').get(0), {
+              zoom: 15,
+              center: {lat:LAT , lng:LNG}
+    });
+          
+          var marker = new google.maps.Marker({
+           position: position,
+           map: mymap,
+           animation: google.maps.Animation.BOUNCE
+         });
+          
+        }
+      }); 
+   
+    });
+    </script>
 
 
 
@@ -242,6 +283,10 @@ body {
 	height: 300px;
 	object-fit: cover;
 }
+.nav-link {
+    margin-inline-start: 100px;
+    margin-right: 100px;
+}
 </style>
 <body>
 	<!--============================= HEADER =============================-->
@@ -324,7 +369,7 @@ body {
 		
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="col-md-6">
+			<div class="col-md-12">
 				<ul class="nav nav-tabs justify-content-center" id="myTab"
 					role="tablist">
 					<li class="nav-item"><a class="nav-link active" id="home-tab"
@@ -361,7 +406,7 @@ body {
 	</div>
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="col-md-6">
+			<div class="col-md-12">
 	
 				<div class="tab-content" id="myTabContent">
 				  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...
@@ -423,7 +468,7 @@ body {
 						<input type="hidden" name="share_mem_no1" value="${ordVO.share_mem_no1}"> 
 						<input type="hidden" name="share_mem_no2" value="${ordVO.share_mem_no2}">
 						<input type="hidden" name="share_amount" value="0">
-					<input type="hidden" name="booking_time" value="12:30">	 
+<!-- 					<input type="hidden" name="booking_time" value="12:30">	  -->
 						<input type="hidden" name="ord_time"
 								value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"/>">
 	
@@ -438,12 +483,12 @@ body {
 						<div class=" btn-group-toggle" data-toggle="buttons" id="btngp">
 									
 										<c:forEach var="exc" items="${lhs}">	
-										<input class="btn2 btn-primary" type="button" id="xx${exc.booking_time}" name="booking_time" value="${exc.booking_time}" >
-<%-- 										<input type="hidden" name="booking_time" value="${exc.booking_time}">  --%>
+										<input class="btn2 btn-primary" type="button" id="xx${exc.booking_time}"  value="${exc.booking_time}" >
+
 										</c:forEach>	
 								</div>
 						
-						
+			 	 <input type="hidden" name="booking_time"  id="realyvalue"value="">  		 
 					<div class="container">
 						<div class="row justify-content-center">
 							<div class="col-md-10">			
@@ -504,7 +549,7 @@ body {
 				  
 				  
 				  
-				  
+				  <jsp:useBean id="venSvc" scope="page" class="com.vendor.model.VendorService" />
 				  
 				  
 				  </div>
@@ -524,25 +569,32 @@ body {
 										</figure>
 									</div>
 								</div>
+								<c:set  var="vendorVO" value="${venSvc.findByPK(param.vendor_no)}" /> 
+          
 								<dl data-v-2ee1f21e="" class="info-list reset-list">
 								<dt data-v-2ee1f21e="">餐廳位置</dt>
 								<hr>
-								<dd data-v-2ee1f21e="">台北信義新天地 A11 2F</dd>
+								
+							      
+ 
+				<input type="hidden" id="addr" value=" ${vendorVO.v_address1}${vendorVO.v_address2}${vendorVO.v_address3}">
+				      <div id="map" style="width:1000px; height:400px; margin:0px auto;" ></div>
+								<dd data-v-2ee1f21e="">${vendorVO.v_address1}${vendorVO.v_address2}${vendorVO.v_address3}</dd>
 								<hr>
-								<dt data-v-2ee1f21e="">料理類型</dt>
+								<dt data-v-2ee1f21e="">餐廳E-mail</dt>
 								<hr>
-								<dd data-v-2ee1f21e="">美式</dd>
+								<dd data-v-2ee1f21e="">${ vendorVO.v_mail}</dd>
 								<!---->
 								<hr>
 								<dt data-v-2ee1f21e="">店家電話</dt>
 								<hr>
 								<dd data-v-2ee1f21e="">
-									<a data-v-2ee1f21e="" href="tel:02-8786-7588">02-8786-7588</a>
+									<a data-v-2ee1f21e="" href="tel:02-8786-7588">${vendorVO.v_tel}</a>
 								</dd>
 								<hr>
 								<dt data-v-2ee1f21e="">營業時間</dt>
 								<hr>
-								<dd data-v-2ee1f21e="">11:00-00:00</dd>
+								<dd data-v-2ee1f21e="">${vendorVO.v_start_time}~${vendorVO.v_end_time}</dd>
 								<hr>
 								<dt data-v-2ee1f21e="">可接受付款方式</dt>
 								<hr>
@@ -551,6 +603,7 @@ body {
 									Pay )、LINE Pay 、微信支付、支付寶</dd>
 								<hr>
 							</dl>
+							
 							</div>
 						</div>
 					</div>
@@ -831,6 +884,7 @@ body {
 //              }});
 
 	</script>
+	
 
 
 
@@ -858,6 +912,7 @@ body {
 <c:forEach var="exc" items="${lhs}">
 <script type="text/javascript">
 $("#xx${exc.booking_time}").click(async function(event){
+	
 	const {value: file} = Swal.fire({
 		  title: "您選擇的<br>日期：${param.booking_date}<br>人數：${param.party_size}人<br>時段：${exc.booking_time}",
 		  width: 600,
@@ -871,6 +926,8 @@ $("#xx${exc.booking_time}").click(async function(event){
 		    no-repeat
 		  `
 		}).then(function(){
+			var yyy=$("#xx${exc.booking_time}").val();
+			$("#realyvalue").val(yyy);
 			$('#form2').submit();
 		})
 })
@@ -879,6 +936,11 @@ $("#xx${exc.booking_time}").click(async function(event){
 </script>
 
 </c:forEach>
+
+
+
+
+
 
 
 </body>

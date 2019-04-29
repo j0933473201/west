@@ -377,7 +377,7 @@ public class OrdServlet extends HttpServlet {
 //			}
 		}
 		
-		
+		HttpSession session = req.getSession();
 			
 		if("updateDate".equals(action)){
 				System.out.println("有近來");
@@ -500,7 +500,7 @@ public class OrdServlet extends HttpServlet {
 		req.setAttribute("rtolist2", rtolist2);
 		OrdService OrdSvc = new OrdService();
 		List<OrdVO> ordVO = OrdSvc.getAll();
-		req.setAttribute("OrdVO", ordVO);
+		session.setAttribute("OrdVO", ordVO);
 		
 		 // 資料庫取出的empVO物件,存入req
 		
@@ -514,7 +514,7 @@ public class OrdServlet extends HttpServlet {
 		}
 		
 		
-		HttpSession session = req.getSession();
+//		HttpSession session = req.getSession();
 		if(action.equals("sel_time")) {
 			
 			String vendor_no=req.getParameter("vendor_no");
@@ -530,11 +530,6 @@ public class OrdServlet extends HttpServlet {
 			
 			
 			Integer party_size =new Integer(req.getParameter("party_size"));
-//			String share_mem_no1 =req.getParameter("share_mem_no1");
-//			String share_mem_no2 =req.getParameter("share_mem_no2");
-//			Integer share_amount =new Integer(req.getParameter("share_amount"));
-//			String arrival_time=req.getParameter("arrival_time");
-//			String finish_time=req.getParameter("finish_time");
 			String verif_code=req.getParameter("verif_code");
 			Integer status=new Integer(req.getParameter("status"));
 			
@@ -543,8 +538,6 @@ public class OrdServlet extends HttpServlet {
 			session.setAttribute("vendor_no", vendor_no);
 			session.setAttribute("mem_no", mem_no);
 			System.out.println("vendor3===+++++++"+vendor_no);
-//			req.setAttribute("tbl_no", tbl_no);
-//			session.setAttribute("ord_time", ord_time);
 			session.setAttribute("booking_date", booking_date);
 			session.setAttribute("booking_time", booking_time);
 			System.out.println("selecttime"+booking_time);
@@ -562,40 +555,38 @@ public class OrdServlet extends HttpServlet {
 		
 		@SuppressWarnings("unchecked")
 		List<Restaurant_MenuVO> buylist = (Vector<Restaurant_MenuVO>) session.getAttribute("shoppingcart");
-		String vendor_no=(String) session.getAttribute("vendor_no");
 		
+		String vendor_no=(String) session.getAttribute("vendor_no");
 			// 刪除購物車中的書籍
 			if(action.equals("DELETE_menu") || action.equals("ADD_menu")) {
-				String booking_time=(String) session.getAttribute("booking_time");
-				System.out.println("add+debooking"+booking_time);
 				
 				if(action.equals("DELETE_menu")){
 					
 					String del = req.getParameter("del");
+					System.out.println("del======="+del);
 					int d = Integer.parseInt(del);
 					buylist.remove(d);
-					
 				}
 				
 			// 新增書籍至購物車中
+				
 				else if (action.equals("ADD_menu")) {
 				// 取得後來新增的書籍
-					
-					System.out.println("vendor_no="+vendor_no);
+				
 				Restaurant_MenuVO rmenu = getMenu(req);
-				System.out.println(rmenu);
-				if (buylist == null) {
-					buylist = new Vector<Restaurant_MenuVO>();
-					buylist.add(rmenu);
-				} else {
-					if (buylist.contains(rmenu)) {
-						Restaurant_MenuVO  menulist= buylist.get(buylist.indexOf(rmenu));
-						menulist.setQuantity(menulist.getQuantity() + rmenu.getQuantity());
-						
-					} else {
+				System.out.println("rmenu========="+rmenu);
+					if (buylist == null) {
+						buylist = new Vector<Restaurant_MenuVO>();
 						buylist.add(rmenu);
+					} else {
+						if (buylist.contains(rmenu)) {
+							Restaurant_MenuVO  menulist= buylist.get(buylist.indexOf(rmenu));
+							menulist.setQuantity(menulist.getQuantity() + rmenu.getQuantity());
+							
+						} else {
+							buylist.add(rmenu);
+						}
 					}
-				}
 				
 				}
 				double amount= 0;
@@ -603,14 +594,18 @@ public class OrdServlet extends HttpServlet {
 				Integer price=0;
 				String menu_no=null;
 				for (int i = 0; i < buylist.size(); i++) {
+					System.out.println("buylist====="+buylist);
 					Restaurant_MenuVO menu = buylist.get(i);
 					 price = Integer.parseInt(menu.getMenu_price());
 					 quantity = menu.getQuantity();
 					 menu_no =menu.getMenu_no();
 					amount += (price * quantity);
-			 }
+					System.out.println("menu=========="+menu);
+					session.setAttribute("menu", menu);
+				}
 				
-				
+			System.out.println("vendor_no888888888"+vendor_no);
+			session.setAttribute("vendor_no", vendor_no);
 				session.setAttribute("menu_no",menu_no);
 				System.out.println("menu_no========"+menu_no);
 				
@@ -621,19 +616,23 @@ public class OrdServlet extends HttpServlet {
 				System.out.println("quantity========="+quantity);
 				session.setAttribute("price", price);
 				System.out.println("price==========="+price);
+				System.out.println("==============="+session.getAttribute("buylist"));
 				session.setAttribute("shoppingcart", buylist);
+				System.out.println(session.getAttribute("shoppingcart"));
 				session.setAttribute("vendor", vendor);
-				String url= "/ord/ord/ordfood.jsp";
+				
+			String vendro_no=(String) session.getAttribute("vendor_no");
+			System.out.println(vendro_no);
+				String url = "/ord/ord/ordfood.jsp";
 				RequestDispatcher rd = req.getRequestDispatcher(url);
 				rd.forward(req, res);
+
+			return;
 			
-			
-			
-			}
-			
-			
+			}	
 			
 		// 結帳，計算購物車書籍價錢總數
+
 				 if (action.equals("checkout")) {
 					double amount = 0;
 					for (int i = 0; i < buylist.size(); i++) {
@@ -756,33 +755,45 @@ public class OrdServlet extends HttpServlet {
 							
 							List<Order_DetailVO>testList = new ArrayList<Order_DetailVO>();
 							
-							Order_DetailVO  Order_DetailVO =new Order_DetailVO();
-							System.out.println("cominginging");
+							List<Restaurant_MenuVO> buy = (Vector<Restaurant_MenuVO>) session.getAttribute("shoppingcart");
 							
-								String menu_no = (String) session.getAttribute("menu_no");
-								Integer price =(Integer) session.getAttribute("price");
-								Integer qty = (Integer) session.getAttribute("quantity");
-								
-								Order_DetailVO.setMenu_no(menu_no);
-								Order_DetailVO.setPrice(price);
-								Order_DetailVO.setQty(qty);
-								System.out.println("Order_DetailVO======="+Order_DetailVO);
+							for(Restaurant_MenuVO RVO:buy ) {
+								Order_DetailVO  Order_DetailVO =new Order_DetailVO();
+//								String menu_no = (String) session.getAttribute("menu_no");
+//								Integer price =(Integer) session.getAttribute("price");
+//								Integer qty = (Integer) session.getAttribute("quantity");
+								Order_DetailVO.setMenu_no(RVO.getMenu_no());
+								Order_DetailVO.setPrice(Integer.parseInt(RVO.getMenu_price()));
+								Order_DetailVO.setQty(RVO.getQuantity());
 								testList.add(Order_DetailVO);
+							}
+							
+							dao.insertWithOrd_detail(ordVO,testList);
+//							System.out.println("cominginging");
+//							
+//								String menu_no = (String) session.getAttribute("menu_no");
+//								Integer price =(Integer) session.getAttribute("price");
+//								Integer qty = (Integer) session.getAttribute("quantity");
+//								
+//								Order_DetailVO.setMenu_no(menu_no);
+//								Order_DetailVO.setPrice(price);
+//								Order_DetailVO.setQty(qty);
+//								testList.add(Order_DetailVO);
 							
 							
 							
 							// Send the use back to the form, if there were errors
 							if (!errorMsgs.isEmpty()) {
-								req.setAttribute("ordVO", ordVO); // 含有輸入格式錯誤的empVO物件,也存入req
+								req.setAttribute("ordVO", ordVO); 
 								RequestDispatcher failureView = req
-										.getRequestDispatcher("/ord/ord/addOrd.jsp");
+										.getRequestDispatcher("/ord/ord/addOrd2.jsp");
 								failureView.forward(req, res);
 								return;
 							}
 							
 							/***************************2.開始新增資料***************************************/
 							
-							 dao.insertWithOrd_detail(ordVO, testList);
+							 
 							
 							/***************************3.新增完成,準備轉交(Send the Success view)***********/
 							String url = "/ord/ord/listAllOrd.jsp";
@@ -799,14 +810,7 @@ public class OrdServlet extends HttpServlet {
 					}
 				 }
 				 
-				 
-				 
-	
-		
-	
-		
-		
-	
+			
 
 	
 	

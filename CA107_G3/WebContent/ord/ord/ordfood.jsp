@@ -5,14 +5,12 @@
 <%@ page import="com.ord.model.*"%>
 <%@ page import="com.restaurant_menu.model.*"%>
 <%@ page import="com.vendor.model.*"%>
-<%
-	OrdVO ordVO = (OrdVO) session.getAttribute("ordVO");
-%> 
+
 
 <!DOCTYPE html>
 <html>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<jsp:useBean id="res_memuSvc" scope="page" class="com.restaurant_menu.model.Restaurant_MenuService" />
+<jsp:useBean id="res_menuSvc" scope="page" class="com.restaurant_menu.model.Restaurant_MenuService" />
 <jsp:useBean id="res_tboSvc" scope="page" class="com.reservation_table_ordered.model.Reservation_Table_OrderedService" />
 <jsp:useBean id="rev_tSvc" scope="page" class="com.reservation_time.model.Reservation_TimeService" />
 <jsp:useBean id="now" scope="page" class="java.util.Date" />
@@ -42,13 +40,12 @@
 
 
 
-
 <!------ Include the above in your HEAD tag ---------->
 
 <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12">
-      <c:forEach var="menu_n" items="${res_memuSvc.getVendor('V000001')}">
+      <c:forEach var="menu_n" items="${res_menuSvc.getVendor(vendor_no)}">
       <form name="shopping" action="<%=request.getContextPath()%>/ord/ord.do" method="get">
             <div class="col-sm-6 col-md-6">
 		        <div class="thumbnail" >
@@ -83,7 +80,7 @@
 					        </div>
 					      </div>
 					      
-					    <input type="hidden" name="vendor_no" value="${param.vendor_no}">
+					    <input type="hidden" name="vendor_no" value="${vendor_no}">
 						 <input type="hidden" name="vendor" value="${vendor.v_name}">
 						<input type="hidden" name="menu_name" value="${menu_n.menu_name}">
 						<input type="hidden" name="menu_price" value="${menu_n.menu_price}">
@@ -124,9 +121,17 @@
 <!--       </div> -->
             
         </div> 
-  </div>
+   <%--      <jsp:include page="/ord/ord/shopcart.jsp" flush="true" /> --%>
+ <div class="col-7">
+   <%@ include file="/ord/ord/shopcart.jsp"%>
 </div>
-<jsp:include page="/ord/ord/shopcart.jsp" flush="true" />
+  </div>
+  
+ 
+</div>
+
+
+
 
 </body>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>

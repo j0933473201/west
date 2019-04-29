@@ -42,9 +42,9 @@ body {
 						<div class="row">
 							<div class="col-xs-6">
 							 <% @SuppressWarnings("unchecked")
-							   Vector<Restaurant_MenuVO> buylist = (Vector<Restaurant_MenuVO>) session.getAttribute("shoppingcart");
-							   String total =  (String) request.getAttribute("total");%>
-							<%if (buylist != null && (buylist.size() > 0)) {%>
+							   Vector<Restaurant_MenuVO> cart = (Vector<Restaurant_MenuVO>) session.getAttribute("shoppingcart");
+							   String total =  (String) session.getAttribute("total");%>
+							<%if (cart != null && (cart.size() > 0)) {%>
 								<h5><span class="glyphicon glyphicon-shopping-cart"></span> ${param.vendor}</h5>
 							</div>
 							
@@ -53,9 +53,9 @@ body {
 				</div>
 				<div class="panel-body">
 				 <%
-	 for (int index = 0; index < buylist.size(); index++) {
-		 Restaurant_MenuVO order = buylist.get(index);
-	%>
+					 for (int index = 0; index < cart.size(); index++) {
+						 Restaurant_MenuVO order = cart.get(index);
+				%>
 					<div class="row">
 						<div class="col-xs-2">
 						
@@ -65,7 +65,7 @@ body {
 						</div>
 						<div class="col-xs-6">
 							<div class="col-xs-6 text-right">
-								<h4><strong>$<%=order.getMenu_price()%> <span class="text-muted">x</span></strong></h4>
+								<h4><strong>$<%=order.getMenu_price()%><span class="text-muted">x</span></strong></h4>
 							</div>
 							<div class="col-xs-3">
 <%-- 							<h4><strong><%=order.getQuantity()%> <span class="text-muted"></span></strong></h4> --%>
@@ -74,7 +74,7 @@ body {
 							<div class="col-xs-2">
 							 <form name="deleteForm" action="<%=request.getContextPath()%>/ord/ord.do" method="get">
 				              <input type="hidden" name="action"  value="DELETE_menu">
-				              <input type="hidden" name="del" value="<%= index %>">
+				              <input type="hidden" name="del" value="<%=index %>">
 								<button type="submit"class="btn btn-link btn-xs">
 									<span class="glyphicon glyphicon-trash"> </span>
 								</button>	

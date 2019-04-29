@@ -568,6 +568,7 @@ public class OrdJDBCDAO implements OrdDAO_interface {
     					Order_DetailJDBCDAO dao = new Order_DetailJDBCDAO();
     					System.out.println("list.size()-A="+list.size());
     					for (Order_DetailVO order_detail : list) {
+    						
     						order_detail.setOrd_no(new String(next_ord_no)) ;
     						dao.insert2(order_detail,con);
     					}
