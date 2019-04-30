@@ -117,6 +117,8 @@
 <jsp:useBean id="now" scope="page" class="java.util.Date" />
 <jsp:useBean id="ordSvc" scope="page" class="com.ord.model.OrdService" />
 <jsp:useBean id="exc_dateSvc" scope="page" class="com.exception_date.model.Exception_DateService" />
+<jsp:useBean id="commentSvc" scope="page" class="com.comment.model.CommentsService" />
+<jsp:useBean id="memSvc" scope="page" class="com.member.model.MemberService" />
 
 </head>
 <style type="text/css">
@@ -560,8 +562,7 @@ body {
 								<div class="find-place-img_wrap">
 									<div class="grid">
 										<figure class="effect-ruby">
-											<img src="images/zachariah-hagy-484664-unsplash.jpg"
-													class="img-fluid" alt="img13" id="hotp1" />
+											<img src="<%= request.getContextPath()%>/ShowImg.do?vendor_no='${param.vendor_no}'&pic=1"/>
 											<figcaption>
 													<h5></h5>
 	
@@ -574,12 +575,10 @@ body {
 								<dl data-v-2ee1f21e="" class="info-list reset-list">
 								<dt data-v-2ee1f21e="">餐廳位置</dt>
 								<hr>
-								
-							      
- 
-				<input type="hidden" id="addr" value=" ${vendorVO.v_address1}${vendorVO.v_address2}${vendorVO.v_address3}">
-				      <div id="map" style="width:1000px; height:400px; margin:0px auto;" ></div>
 								<dd data-v-2ee1f21e="">${vendorVO.v_address1}${vendorVO.v_address2}${vendorVO.v_address3}</dd>
+								<hr>
+									<input type="hidden" id="addr" value=" ${vendorVO.v_address1}${vendorVO.v_address2}${vendorVO.v_address3}">
+									      <div id="map" style="width:700px; height:400px; margin:0px auto;" ></div>
 								<hr>
 								<dt data-v-2ee1f21e="">餐廳E-mail</dt>
 								<hr>
@@ -610,10 +609,11 @@ body {
 				</div>
 				
 				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-				...
+			
+				
 					<div class="container">
-						<div class="row">
-							<div class="col-12 ">
+						<div class="row justify-content-center">
+							<div class="col-8 ">
 	
 								<div class="col-md-12 ">
 									<h1 class="rating-num">4.0</h1>
@@ -713,51 +713,22 @@ body {
 	
 										</ul>
 									</div>
-	
+								
+								
+								
 									<ul class="list-unstyled">
-										<li class="media"><img src="images/4809.jpg" class="mr-3"
-											alt="...">
+									 <c:forEach var="comment" items="${commentSvc.getVendor(param.vendor_no)}">
+										<li class="media">
+										
+										<img src="images/4809.jpg" class="mr-3"alt="...">
+										
 											<div class="media-body">
-												<h5 class="mt-0 mb-1">東西難吃</h5>
-												Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-												scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-												vulputate at, tempus viverra turpis. Fusce condimentum nunc
-												ac nisi vulputate fringilla. Donec lacinia congue felis in
-												faucibus.
+												<h5 class="mt-0 mb-1"></h5>
+												${comment.cmnt}
 											</div></li>
 										<hr>
-										<li class="media my-4"><img src="images/4809.jpg"
-											class="mr-3" alt="...">
-											<div class="media-body">
-												<h5 class="mt-0 mb-1">裝潢漂亮</h5>
-												Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-												scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-												vulputate at, tempus viverra turpis. Fusce condimentum nunc
-												ac nisi vulputate fringilla. Donec lacinia congue felis in
-												faucibus.
-											</div></li>
-										<li class="media"><img src="images/4809.jpg" class="mr-3"
-											alt="...">
-											<div class="media-body">
-												<h5 class="mt-0 mb-1">氣憤好</h5>
-												Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-												scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-												vulputate at, tempus viverra turpis. Fusce condimentum nunc
-												ac nisi vulputate fringilla. Donec lacinia congue felis in
-												faucibus.
-											</div></li>
-										<hr>
-										<li class="media"><img src="images/4809.jpg" class="mr-3"
-											alt="...">
-											<div class="media-body">
-												<h5 class="mt-0 mb-1">服務差</h5>
-												Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-												scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-												vulputate at, tempus viverra turpis. Fusce condimentum nunc
-												ac nisi vulputate fringilla. Donec lacinia congue felis in
-												faucibus.
-											</div></li>
-										<hr>
+										</c:forEach>
+										
 									</ul>
 	
 								</div>

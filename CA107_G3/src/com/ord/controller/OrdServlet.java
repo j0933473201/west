@@ -519,6 +519,7 @@ public class OrdServlet extends HttpServlet {
 			
 			String vendor_no=req.getParameter("vendor_no");
 			String mem_no =req.getParameter("mem_no");
+			System.out.println("mem_no======"+mem_no);
 //			String tbl_no = req.getParameter("tbl_no");
 			java.sql.Timestamp ord_time =java.sql.Timestamp.valueOf(req.getParameter("ord_time"));
 			java.sql.Date booking_date = java.sql.Date.valueOf(req.getParameter("booking_date").trim());
@@ -572,7 +573,7 @@ public class OrdServlet extends HttpServlet {
 				
 				else if (action.equals("ADD_menu")) {
 				// 取得後來新增的書籍
-				
+				System.out.println("030303030303");
 				Restaurant_MenuVO rmenu = getMenu(req);
 				System.out.println("rmenu========="+rmenu);
 					if (buylist == null) {
@@ -779,6 +780,19 @@ public class OrdServlet extends HttpServlet {
 //								Order_DetailVO.setPrice(price);
 //								Order_DetailVO.setQty(qty);
 //								testList.add(Order_DetailVO);
+							
+							//傳送信件
+							
+							 String to = "yasmile718@yahoo.com.tw";
+						      
+						      String subject = "成功訂位";
+						      
+						      String ch_name = "ＪＥＮＮＹ";
+						  
+						      String messageText = "Hello! " + ch_name + " 恭喜你完成訂位,請洽0933473201偉斯特大帥哥 "; 
+						       
+						      MailService mailService = new MailService();
+						      mailService.sendMail(to, subject, messageText);
 							
 							
 							

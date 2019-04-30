@@ -8,11 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.restaurant_menu.model.Restaurant_MenuVO;
+
 public class CommentsJDBCDAO implements CommentsDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String userid = "CA107G3";
-	String passwd = "123456";
+	String url = "jdbc:oracle:thin:@localhost:49161:XE";
+	String userid = "WEST";
+	String passwd = "800627";
 
 	private static final String INSERT_STMT = 
 			"INSERT INTO comments (cmnt_no, ord_no, vendor_no, score, cmnt, time, cmnt_status)" + 
@@ -25,7 +27,10 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 			"DELETE FROM comments where cmnt_no = ?";
 	private static final String UPDATE = 
 			"UPDATE comments set ord_no=?, vendor_no=?, score=?, cmnt=?, time=?, cmnt_status=? where cmnt_no = ?";
-
+	private static final String GET_ONE_VENDOR = 
+			"SELECT * FROM comments where vendor_no = ?";
+	
+	
 	@Override
 	public void insert(CommentsVO commentsVO) {
 		Connection con = null;
@@ -180,7 +185,7 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// tablesVO ä¹Ÿç¨±?‚º Domain objects
+				// tablesVO ä¹Ÿç¨±?ï¿½ï¿½ Domain objects
 				commentsVO = new CommentsVO();
 				commentsVO.setCmnt_no(rs.getString("cmnt_no"));
 				commentsVO.setOrd_no(rs.getString("ord_no"));
@@ -243,7 +248,7 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// tablesVO ä¹Ÿç¨±?‚º Domain objects
+				// tablesVO ä¹Ÿç¨±?ï¿½ï¿½ Domain objects
 				commentsVO = new CommentsVO();
 				commentsVO.setCmnt_no(rs.getString("cmnt_no"));
 				commentsVO.setOrd_no(rs.getString("ord_no"));
@@ -293,7 +298,7 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 	public static void main(String[] args) {
 		CommentsJDBCDAO dao = new CommentsJDBCDAO();
 
-		// ?–°å¢?
+		// ?ï¿½ï¿½ï¿½?
 		CommentsVO commentsVO1 = new CommentsVO();
 		commentsVO1.setOrd_no("20190401-000001");
 		commentsVO1.setVendor_no("V000001");
@@ -314,10 +319,10 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 		commentsVO2.setCmnt_status(new Integer(1));
 		dao.update(commentsVO2);
 
-		// ?ˆª?™¤
+		// ?ï¿½ï¿½?ï¿½ï¿½
 		dao.delete("C000007");
 
-		// ?Ÿ¥è©?
+		// ?ï¿½ï¿½ï¿½?
 		CommentsVO commentsVO3 = dao.findByPrimaryKey("C000001");
 		System.out.print(commentsVO3.getCmnt_no() + ",");
 		System.out.print(commentsVO3.getOrd_no() + ",");
@@ -328,7 +333,7 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 		System.out.println(commentsVO3.getCmnt_status());
 		System.out.println("---------------------");
 
-		// ?Ÿ¥è©?
+		// ?ï¿½ï¿½ï¿½?
 		List<CommentsVO> list = dao.getAll();
 		for (CommentsVO aTables : list) {
 			System.out.print(aTables.getCmnt_no() + ",");
@@ -341,4 +346,59 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 			System.out.println();
 		}
 	}
+
+	@Override
+	public List<CommentsVO> getVendor(String vendor_no) {
+		List<CommentsVO> list = new ArrayList<CommentsVO>();
+		CommentsVO cm = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_VENDOR);
+			pstmt.setString(1, vendor_no);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				cm = new CommentsVO();
+				
+				cm.setVendor_no(rs.getString("vendor_no"));
+				cm.setCmnt_no(rs.getString("cmnt_no"));
+				cm.setScore(rs.getInt("score"));
+				cm.setCmnt(rs.getString("cmnt"));
+				cm.setTime(rs.getTimestamp("time"));
+				cm.setCmnt_status(rs.getInt("cmnt_status"));
+				
+				list.add(cm);
+				
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException se) {
+			
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return list;
+	}
+
+	
 }

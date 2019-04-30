@@ -2,6 +2,8 @@ package com.comment.model;
 
 import java.util.List;
 
+
+
 public class CommentsService {
 	private CommentsDAO_interface dao;
 	
@@ -44,4 +46,9 @@ public class CommentsService {
 	public List<CommentsVO> getAll() {
 		return dao.getAll();
 	}
+	 
+	public List<CommentsVO> getVendor(String vendor_no) {
+		return dao.getVendor(vendor_no);
+	}
+	
 }
