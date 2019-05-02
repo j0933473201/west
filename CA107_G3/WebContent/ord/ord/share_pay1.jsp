@@ -132,10 +132,10 @@ body { margin-top:20px; }
                                 <div class="form-group">
                                     <label for="cardCVC">AMOUNT</label>
                                     <input 
-                                        type="tel" 
+                                        type="text" 
                                         class="form-control"
                                         name="AMOUNT"
-                                        placeholder="AMOINT"
+                                        placeholder="${param.amount}"
                                     />
                                 </div>
                             </div>

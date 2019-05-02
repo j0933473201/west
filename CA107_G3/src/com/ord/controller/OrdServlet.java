@@ -20,6 +20,8 @@ import javax.servlet.http.HttpSession;
 
 import com.exception_date.model.Exception_DateService;
 import com.exception_date.model.Exception_DateVO;
+import com.member.model.MemberService;
+import com.member.model.MemberVO;
 import com.ord.model.OrdJDBCDAO;
 import com.ord.model.OrdService;
 import com.ord.model.OrdVO;
@@ -631,7 +633,7 @@ public class OrdServlet extends HttpServlet {
 			return;
 			
 			}	
-			
+	
 		// 結帳，計算購物車書籍價錢總數
 
 				 if (action.equals("checkout")) {
@@ -653,6 +655,65 @@ public class OrdServlet extends HttpServlet {
 					RequestDispatcher rd = req.getRequestDispatcher(url);
 					rd.forward(req, res);
 				 }
+				 
+				 if (action.equals("share_pick")) {
+					 String share_amount1=null;
+					 String share_amount2=null;
+					 String share_mem_no1=null; 
+					 String share_mem_no2=null;
+					 //分攤名單
+					 String[] xxx=req.getParameterValues("share_amount");
+					 for(int i =0;i<xxx.length;i++) {
+						 if(xxx[i].length()!=0&&xxx[i]!=""){
+//						 share_amount1 =Integer.parseInt(xxx[i]);
+//						 share_amount2 =Integer.parseInt(xxx[++i]);
+						 share_amount1 =(xxx[i]);
+						 share_amount2 =(xxx[++i]);
+					 }
+				 }	 
+					 //分攤金額
+					 String[]mem=req.getParameterValues("share_mem_no");
+					 for(int i=0;i<mem.length;i++) {
+						 if(mem[i]!=""&&mem[i].length()!=0) {
+							 share_mem_no1=mem[i];
+							 share_mem_no2=mem[++i];
+						 }
+					 }
+						System.out.println("分攤好友"+share_mem_no1);
+						System.out.println("分攤好友2"+share_mem_no2);
+						System.out.println("分攤金額"+share_amount1);
+						System.out.println("分攤金額2"+share_amount2);
+						//取得email
+						MemberService memSvc=new MemberService();
+						MemberVO memVO = memSvc.getOneMember(share_mem_no1);//分攤第一位
+						MemberVO memVO1 = memSvc.getOneMember(share_mem_no2);//分攤第二位
+						String name=memVO.getMem_name();
+						String email1=memVO.getMem_mail();
+						String email2=memVO1.getMem_mail();
+						String email3="ji394z06z06@yahoo.com.tw";
+					      
+						  String  URL= "http://localhost:8082/CA107_G3/ord/ord/share_pay1.jsp?mem_no="+share_mem_no1+"&amount="+share_amount1;
+						  String subject = "請點擊付款";
+					      String messageText = "Hello! " + name + 
+					    		  " 您的好友已完成訂位及選購餐點 ，您需要支付的金額為"
+					    		  +share_amount1+"元整"+"\r\n"
+					    			+ "請點擊以下連結完成付款以便於完成訂購手續"
+					    		  +"\r\n"
+					    		  +URL+
+					    		  "\r\n"+
+					    		  "請在2小時內完成付款，否則訂單不成立"; 
+					    String  total= (String) session.getAttribute("total");
+					      RedislService redisService =new RedislService();
+					      redisService.insetshare(total, share_amount1,share_amount2);
+//					      redisService.insetshare(share_mem_no2, share_amount2);
+//					      memSvc.insetshare(share_mem_no1, share_amount1);
+					      MailService mailService = new MailService();
+					      mailService.sendMail(email3, subject, messageText);
+					    
+					      
+//					      mailService.sendMail(email2, subject, messageText);
+						
+			 }
 				 
 				 
 				 

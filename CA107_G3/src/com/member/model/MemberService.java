@@ -2,11 +2,15 @@ package com.member.model;
 
 import java.util.List;
 
+import com.ord.controller.RedislService;
+
 public class MemberService {
 	private MemberDAO_interface dao;
+	private RedislService rs;
 
 	public MemberService() {
 		dao = new MemberJDBCDAO();
+//		rs = new RedislService();
 	}
 
 	public MemberVO addMember(String mem_name, String mem_account, String mem_pwd, String mem_gender,
@@ -93,4 +97,11 @@ public class MemberService {
 	public List<MemberVO> getAll(){
 		return dao.getAll();
 	}
+//	public void insetshare(String share_mem_no1,String share_amount1) {
+//		rs.insetshare(share_mem_no1, share_amount1);
+//	}
+//	public boolean forcheck(String pay_name,String pay_amount ) {
+//		return rs.forcheck(pay_name, pay_amount);
+//	}
+	
 }

@@ -16,6 +16,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<jsp:useBean id="vendorSvc" scope="page" class="com.vendor.model.VendorService" />
 <style>
 
 body {
@@ -38,13 +40,16 @@ body {
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6">
                     <address>
-                        <strong>Elf Cafe</strong>
+                    
+                     <c:set var ="vendor" value="${vendorSvc.findByPK(vendor_no)}" />
+		         				
+                        <strong>	${vendor.v_name}</strong>
                         <br>
-                        2135 Sunset Blvd
+                      ${vendor.v_address1}${vendor.v_address2}
                         <br>
-                        Los Angeles, CA 90026
+                        ${vendor.v_address3}
                         <br>
-                        <abbr title="Phone">P:</abbr> (213) 484-6829
+                        <abbr title="Phone">P:</abbr> ${vendor.v_n_code}-${vendor.v_tel}
                     </address>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 text-right">
@@ -112,8 +117,11 @@ body {
 						</a>
 					</td>
 					<td>
-					<a href="<%=request.getContextPath()%>/ord/ord/credit.jsp" >
-					<button type="button" class="btn btn-success btn-lg btn2-block"> 分攤<span class="glyphicon glyphicon-user"></span> </button></a>
+					<form name="share" action="<%=request.getContextPath()%>/ord/ord.do" method="get">
+					<input type="hidden" name="action" value="share">
+					<button type="submit" class="btn btn-success btn-lg btn2-block"> 分攤<span class="glyphicon glyphicon-user"></span> </button>
+					</form>
+					
 					<form name="check" action="<%=request.getContextPath()%>/ord/ord.do" method="get">
 					
 					<button type="submit" class="btn btn-success btn-lg btn2-block"> Pay Now<span class="glyphicon glyphicon-usd"></span></button>
@@ -128,6 +136,10 @@ body {
             </div>
         </div>
     </div>
+     </div>
+     <div class="col-7">
+     <jsp:include page="/ord/ord/share_sel.jsp" flush="true" />
+  
 </div>
 </body>
 </html>

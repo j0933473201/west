@@ -51,7 +51,7 @@
 		        <div class="thumbnail" >
 		          	<h4 class="text-center">
 		          		<span class="label label-info">
-		        			 <c:set var ="vendor" value="${vendorSvc.findByPK('V000001')}" />
+		        			 <c:set var ="vendor" value="${vendorSvc.findByPK(vendor_no)}" />
 		         					${vendor.v_name}
 		         		 </span>
 		         		 </h4>
