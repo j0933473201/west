@@ -700,7 +700,7 @@ public class OrdServlet extends HttpServlet {
 					    			+ "請點擊以下連結完成付款以便於完成訂購手續"
 					    		  +"\r\n"
 					    		  +URL+
-					    		  "\r\n"+
+					    		  "\r\n"+ 
 					    		  "請在2小時內完成付款，否則訂單不成立"; 
 					    String  total= (String) session.getAttribute("total");
 					      RedislService redisService =new RedislService();
