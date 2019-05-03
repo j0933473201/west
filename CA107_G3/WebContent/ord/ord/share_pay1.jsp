@@ -86,6 +86,8 @@ body { margin-top:20px; }
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
+                                <h2>${param.name}您好</h2>
+                               <input  type="hidden"  name="share_mem_no" value="${param.mem_no}">
                                     <label for="cardNumber">CARD NUMBER</label>
                                     <div class="input-group">
                                         <input 
@@ -131,6 +133,7 @@ body { margin-top:20px; }
                             <div class="col-xs-5 col-md-5 pull-right">
                                 <div class="form-group">
                                     <label for="cardCVC">AMOUNT</label>
+                                    <input  type="hidden"  name="AMOUNT" value="${param.amount}">
                                     <input 
                                         type="text" 
                                         class="form-control"
@@ -150,7 +153,7 @@ body { margin-top:20px; }
                       
                         
                         </div>
-                        <input type="hidden" name="action"  value="insert">
+                        <input type="hidden" name="action"  value="share_pay">
                        
                         <div class="row" style="display:none;">
                             <div class="col-xs-12">

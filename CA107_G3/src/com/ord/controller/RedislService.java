@@ -8,17 +8,33 @@ import redis.clients.jedis.Transaction;
 
 public class RedislService {
 	
-	public void insetshare(String sharetotal,String share_amount1,String share_amount2) {
+	public void insettotal(String total ,String amount) {
 	
 		//建立連線
 		Jedis jedis = new Jedis("localhost", 6379);
 		jedis.auth("123456");
 		
 //		//放分攤金額及分攤會員編號
-//		jedis.set(share_mem_no1, share_amount1);
-//		jedis.lpush("customers", "David", "James", "Vincent", "Ben", "Ron", "George", "Howard");
-		jedis.rpush(sharetotal,share_amount1, share_amount2);
+		jedis.set(total, amount);
+
 		jedis.close();
+	}
+	
+	public void insertshare (String share_mem,String share_amount) {
+		
+		//建立連線
+				Jedis jedis = new Jedis("localhost", 6379);
+				jedis.auth("123456");
+				
+				jedis.set(share_mem,share_amount);
+				jedis.close();
+	}
+	public String gettotal(String total) {
+		Jedis jedis = new Jedis("localhost", 6379);
+		jedis.auth("123456");
+		 
+		String total_amount=(jedis.get(total));
+		return total_amount;
 	}
 	
 	public boolean forcheck(String pay_name,String pay_amount ) {

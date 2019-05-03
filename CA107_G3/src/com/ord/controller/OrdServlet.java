@@ -656,6 +656,9 @@ public class OrdServlet extends HttpServlet {
 					rd.forward(req, res);
 				 }
 				 
+				 
+				 //選擇好友分攤後會將總金額，以及哪幾位好友存在redis
+				 
 				 if (action.equals("share_pick")) {
 					 String share_amount1=null;
 					 String share_amount2=null;
@@ -688,11 +691,15 @@ public class OrdServlet extends HttpServlet {
 						MemberVO memVO = memSvc.getOneMember(share_mem_no1);//分攤第一位
 						MemberVO memVO1 = memSvc.getOneMember(share_mem_no2);//分攤第二位
 						String name=memVO.getMem_name();
+						String name1=memVO1.getMem_name();
+						
 						String email1=memVO.getMem_mail();
 						String email2=memVO1.getMem_mail();
+						
 						String email3="ji394z06z06@yahoo.com.tw";
-					      
-						  String  URL= "http://localhost:8082/CA107_G3/ord/ord/share_pay1.jsp?mem_no="+share_mem_no1+"&amount="+share_amount1;
+						String email4="j0933473201@icloud.com";
+						
+						  String  URL= "http://localhost:8082/CA107_G3/ord/ord/share_pay1.jsp?mem_no="+share_mem_no1+"&amount="+share_amount1+"&name="+name;
 						  String subject = "請點擊付款";
 					      String messageText = "Hello! " + name + 
 					    		  " 您的好友已完成訂位及選購餐點 ，您需要支付的金額為"
@@ -702,21 +709,39 @@ public class OrdServlet extends HttpServlet {
 					    		  +URL+
 					    		  "\r\n"+ 
 					    		  "請在2小時內完成付款，否則訂單不成立"; 
+					      
+					      String  URL1= "http://localhost:8082/CA107_G3/ord/ord/share_pay1.jsp?mem_no="+share_mem_no2+"&amount="+share_amount2+"&name1="+name1;
+						  String subject1 = "請點擊付款";
+					      String messageText1= "Hello! " + name1 + 
+					    		  " 您的好友已完成訂位及選購餐點 ，您需要支付的金額為"
+					    		  +share_amount2+"元整"+"\r\n"
+					    			+ "請點擊以下連結完成付款以便於完成訂購手續"
+					    		  +"\r\n"
+					    		  +URL1+
+					    		  "\r\n"+ 
+					    		  "請在2小時內完成付款，否則訂單不成立"; 
+					      
+					      //拿到總數,以及兩個朋友應該分攤的金額redis
 					    String  total= (String) session.getAttribute("total");
+					    String amount= Integer.toString(0);
+					    
 					      RedislService redisService =new RedislService();
-					      redisService.insetshare(total, share_amount1,share_amount2);
-//					      redisService.insetshare(share_mem_no2, share_amount2);
+					      //存入redis
+					      redisService.insettotal("total", total);
+					      redisService.insertshare(share_mem_no1,amount );
+					      redisService.insertshare(share_mem_no2, amount);
+					      session.setAttribute("share_mem_no1", share_mem_no1);
+					      session.setAttribute("share_mem_no2", share_mem_no2);
+					      
 //					      memSvc.insetshare(share_mem_no1, share_amount1);
+					     //寄信
 					      MailService mailService = new MailService();
 					      mailService.sendMail(email3, subject, messageText);
-					    
-					      
-//					      mailService.sendMail(email2, subject, messageText);
-						
+					      mailService.sendMail(email4, subject1, messageText1);			
 			 }
 				 
 				 
-				 
+				 //個人付款
 				 if (action.equals("tocredit")) {
 					 
 					 double amount = 0;
@@ -725,8 +750,6 @@ public class OrdServlet extends HttpServlet {
 							Integer price = Integer.parseInt(menu.getMenu_price());
 							Integer quantity = menu.getQuantity();
 							amount += (price * quantity);
-						
-							
 						}
 						
 						String booking_time=(String) session.getAttribute("booking_time");
@@ -738,6 +761,177 @@ public class OrdServlet extends HttpServlet {
 						RequestDispatcher rd = req.getRequestDispatcher(url);
 						rd.forward(req, res);
 					 }
+				 
+				 
+				 	//繳費後檢查是否分攤好友皆有完成
+				 if("share_pay".equals(action)) {
+//					 String share_mem_no1=(String) session.getAttribute("share_mem_no1");
+					 
+					//取得付款的人以及金額並且存進redis
+					String amount=req.getParameter("AMOUNT");
+					String share_mem_no1=req.getParameter("share_mem_no");
+					 RedislService redisService =new RedislService();
+					 redisService.insertshare(share_mem_no1, amount);
+					 
+					 //從redis取出total以及兩個分攤金額
+					 //11,22代表要付款的會員編號
+					String share_mem_no11= (String) session.getAttribute("share_mem_no1");
+					String share_mem_no22=(String) session.getAttribute("share_mem_no2");
+					//總共要付的金額
+					 String total1=(redisService.gettotal("total"));
+					 Integer total=(int)(Double.parseDouble(total1));
+					 System.out.println("===="+total);
+					 //取出share_amount1已經付的錢
+					 //取出share_amount2已經付的錢
+					 Integer share_amount1=0;
+					 Integer share_amount2=0;
+					 if(redisService.gettotal(share_mem_no11).length()==0) {
+						  share_amount1=0;
+					 }else {
+						 share_amount1=Integer.parseInt((redisService.gettotal(share_mem_no11)));
+					 }
+					 System.out.println("====share_amount1"+share_amount1);
+					 
+					 if(redisService.gettotal(share_mem_no22).equals("")) {
+						share_amount2=0;
+					 }else {
+						  share_amount2=Integer.parseInt((redisService.gettotal(share_mem_no22)));
+					 }
+					 System.out.println("  share_amount2====="+  share_amount2);
+
+					 //判斷兩個付款相加有沒有等於總共要負的款項
+					 Integer share_amount=share_amount1+share_amount2;
+					 System.out.println(" ====total"+total);
+					 if(share_amount<total) {   //如果金額小於
+						 String url = "/ord/ord/addOrd2.jsp";
+							RequestDispatcher successView = req.getRequestDispatcher(url); 
+							successView.forward(req, res);		
+					 }else {
+						 String mem_no = (String) session.getAttribute("mem_no");
+						 vendor_no  = (String) session.getAttribute("vendor_no");
+						String tbl_no =(String) session.getAttribute("tbl_no");
+						Integer party_size =(Integer) (session.getAttribute("party_size"));
+						share_mem_no1 =(String) session.getAttribute("share_mem_no1");
+						String share_mem_no2 =(String) session.getAttribute("share_mem_no2");
+						java.sql.Timestamp ord_time =new java.sql.Timestamp(System.currentTimeMillis());
+						System.out.println("ordtime======"+ord_time);
+						java.sql.Date booking_date=null;
+						try {
+							booking_date = (Date) session.getAttribute("booking_date");
+						} catch (IllegalArgumentException e) {
+							booking_date=new java.sql.Date(System.currentTimeMillis());
+//							errorMsgs.add("please choose date!");
+						}
+						String booking_time=(String) session.getAttribute("booking_time");
+						System.out.println("booking_time======="+booking_time);
+						String notes=(String) session.getAttribute("notes");
+//						Integer total=null;
+//						try {
+							
+//							total = (Integer) session.getAttribute("total");
+							System.out.println("total======"+total);
+//							} catch (NumberFormatException e) {
+								
+//								errorMsgs.add("please. insert right total");
+//							}catch (NullPointerException b ) {
+							
+//								errorMsgs.add("please insert total number");}
+						
+						String arrival_time=req.getParameter("arrival_time");
+						String finish_time=req.getParameter("finish_time");
+						String verif_code=req.getParameter("verif_code");
+						Integer status=(Integer) session.getAttribute("status");
+						
+						
+						OrdJDBCDAO dao = new OrdJDBCDAO();
+						
+						
+						OrdVO ordVO = new OrdVO();
+						
+						ordVO.setMem_no(mem_no);
+						ordVO.setVendor_no(vendor_no);
+						ordVO.setTbl_no(tbl_no);
+						ordVO.setParty_size(party_size);
+						ordVO.setShare_mem_no1(share_mem_no1);
+						ordVO.setShare_mem_no2(share_mem_no2);
+						ordVO.setShare_amount(share_amount);
+						ordVO.setOrd_time(ord_time);
+						ordVO.setBooking_date(booking_date);
+						ordVO.setBooking_time(booking_time);
+						ordVO.setNotes(notes);
+						ordVO.setTotal(total);
+						ordVO.setArrival_time(arrival_time);
+						ordVO.setFinish_time(finish_time);
+						ordVO.setVerif_code(verif_code);
+						ordVO.setStatus(status);
+						
+						List<Order_DetailVO>testList = new ArrayList<Order_DetailVO>();
+						
+						List<Restaurant_MenuVO> buy = (Vector<Restaurant_MenuVO>) session.getAttribute("shoppingcart");
+						
+						for(Restaurant_MenuVO RVO:buy ) {
+							Order_DetailVO  Order_DetailVO =new Order_DetailVO();
+//							String menu_no = (String) session.getAttribute("menu_no");
+//							Integer price =(Integer) session.getAttribute("price");
+//							Integer qty = (Integer) session.getAttribute("quantity");
+							Order_DetailVO.setMenu_no(RVO.getMenu_no());
+							Order_DetailVO.setPrice(Integer.parseInt(RVO.getMenu_price()));
+							Order_DetailVO.setQty(RVO.getQuantity());
+							testList.add(Order_DetailVO);
+						}
+						
+						dao.insertWithOrd_detail(ordVO,testList);
+//						System.out.println("cominginging");
+//						
+//							String menu_no = (String) session.getAttribute("menu_no");
+//							Integer price =(Integer) session.getAttribute("price");
+//							Integer qty = (Integer) session.getAttribute("quantity");
+//							
+//							Order_DetailVO.setMenu_no(menu_no);
+//							Order_DetailVO.setPrice(price);
+//							Order_DetailVO.setQty(qty);
+//							testList.add(Order_DetailVO);
+						
+						//傳送信件
+						
+						 String to = "yasmile718@yahoo.com.tw";
+					      
+					      String subject = "成功訂位";
+					      
+					      String ch_name = "ＪＥＮＮＹ";
+					  
+					      String messageText = "Hello! " + ch_name + " 恭喜你完成訂位,請洽0933473201偉斯特大帥哥 "; 
+					       
+					      MailService mailService = new MailService();
+					      mailService.sendMail(to, subject, messageText);
+						
+						
+						
+						// Send the use back to the form, if there were errors
+//						if (!errorMsgs.isEmpty()) {
+//							req.setAttribute("ordVO", ordVO); 
+//							RequestDispatcher failureView = req
+//									.getRequestDispatcher("/ord/ord/addOrd2.jsp");
+//							failureView.forward(req, res);
+//							return;
+//						}
+						
+						/***************************2.開始新增資料***************************************/
+						
+						 
+						
+						/***************************3.新增完成,準備轉交(Send the Success view)***********/
+						String url = "/ord/ord/listAllOrd.jsp";
+						RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+						successView.forward(req, res);	
+//						 
+					 }
+					 
+					 
+					
+				 }
+				 
+				 
 				 
 				 if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
 						
