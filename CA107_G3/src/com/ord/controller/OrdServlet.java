@@ -3,6 +3,8 @@ package com.ord.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashSet;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpSession;
 
 import com.exception_date.model.Exception_DateService;
 import com.exception_date.model.Exception_DateVO;
+import com.friend_list.model.Friend_ListVO;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 import com.ord.model.OrdJDBCDAO;
@@ -35,6 +38,8 @@ import com.restaurant_menu.model.Restaurant_MenuVO;
 import com.vendor.model.VendorService;
 import com.vendor.model.VendorVO;
 
+import oracle.sql.DATE;
+
 
 
 public class OrdServlet extends HttpServlet {
@@ -49,7 +54,7 @@ public class OrdServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		String vendor=req.getParameter("vendor");//廠商中文名稱
 		
-		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
+		if ("getOne_For_Display".equals(action)) { 
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -65,11 +70,9 @@ public class OrdServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ord/ord/select_page.jsp");
-					
+					RequestDispatcher failureView = 
+					req.getRequestDispatcher("/ord/ord/select_page.jsp");
 					failureView.forward(req, res);
-					
 					return;//程式中斷
 				}
 				
@@ -81,8 +84,8 @@ public class OrdServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ord/ord/select_page.jsp");
+					RequestDispatcher failureView = 
+					req.getRequestDispatcher("/ord/ord/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -125,14 +128,12 @@ public class OrdServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-//			try {
-				/***************************1.接收請求參數****************************************/
+			try {
+//				/***************************1.接收請求參數****************************************/
 				String ord_no = new String(req.getParameter("ord_no"));
-				
 				/***************************2.開始查詢資料****************************************/
 				OrdService ordSvc = new OrdService();
 				OrdVO ordVO = ordSvc.getOneOrd(ord_no);
-								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("ordVO", ordVO);         // 資料庫取出的empVO物件,存入req
 				String url = "/ord/ord/update_ord_input.jsp";
@@ -140,12 +141,12 @@ public class OrdServlet extends HttpServlet {
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理**********************************/
-//			} catch (Exception e) {
-//				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/ord/listAllOrd.jsp");
-//				failureView.forward(req, res);
-//			}
+			} catch (Exception e) {
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/ord/ord/listAllOrd.jsp");
+				failureView.forward(req, res);
+			}
 		}
 		
 		
@@ -155,24 +156,18 @@ public class OrdServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-		System.out.println("upte");
 //			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String ord_no = new String(req.getParameter("ord_no").trim());
-				
 				String mem_no = req.getParameter("mem_no");
-				
 				String vendor_no  = req.getParameter("vendor_no");
 				String tbl_no ="";
 				try {
 					tbl_no = new String(req.getParameter("tbl_no").trim());
 				} catch (Exception e) {
-					
 					errorMsgs.add("please insert tbl_no.");
 				}
 				Integer party_size =new Integer(req.getParameter("party_size"));
-				
-				
 				String share_mem_no1 =req.getParameter("share_mem_no1");
 				String share_mem_no2 =req.getParameter("share_mem_no2");
 				Integer share_amount =new Integer(req.getParameter("share_amount"));
@@ -196,9 +191,8 @@ public class OrdServlet extends HttpServlet {
 						total = 0;
 						errorMsgs.add("please. insert right total");
 					}catch (NullPointerException b ) {
-					System.out.println("66666666");
 					total = 0;
-						errorMsgs.add("please insert total number");}
+					errorMsgs.add("please insert total number");}
 				
 				String arrival_time=req.getParameter("arrival_time");
 				String finish_time=req.getParameter("finish_time");
@@ -215,46 +209,6 @@ public class OrdServlet extends HttpServlet {
 					status = 0;
 					errorMsgs.add("please insert  status number");
 				}
-//				Integer status=new Integer(req.getParameter("status"));
-				
-				
-//				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-//				if (ename == null || ename.trim().length() == 0) {
-//					errorMsgs.add("員工姓名: 請勿空白");
-//				} else if(!ename.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
-//					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
-//	            }
-//				
-//				String job = req.getParameter("job").trim();
-//				if (job == null || job.trim().length() == 0) {
-//					errorMsgs.add("職位請勿空白");
-//				}	
-//				
-//				java.sql.Date hiredate = null;
-//				try {
-//					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
-//				} catch (IllegalArgumentException e) {
-//					hiredate=new java.sql.Date(System.currentTimeMillis());
-//					errorMsgs.add("請輸入日期!");
-//				}
-//
-//				Double sal = null;
-//				try {
-//					sal = new Double(req.getParameter("sal").trim());
-//				} catch (NumberFormatException e) {
-//					sal = 0.0;
-//					errorMsgs.add("薪水請填數字.");
-//				}
-//
-//				Double comm = null;
-//				try {
-//					comm = new Double(req.getParameter("comm").trim());
-//				} catch (NumberFormatException e) {
-//					comm = 0.0;
-//					errorMsgs.add("獎金請填數字.");
-//				}
-
-				
 //					System.out.println(java.sql.Timestamp((System.currentTimeMillis())));
 				OrdVO ordVO = new OrdVO();
 				ordVO.setOrd_no(ord_no);
@@ -295,11 +249,11 @@ public class OrdServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
-//				/***************************其他可能的錯誤處理*************************************/
+////				/***************************其他可能的錯誤處理*************************************/
 //			} catch (Exception e) {
 //				errorMsgs.add("修改資料失敗:"+e.getMessage());
 //				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/ord/update_ord_input.jsp");
+//						.getRequestDispatcher("/ord/ord/update_ord_input.jsp");
 //				failureView.forward(req, res);
 //			}
 		}
@@ -314,7 +268,7 @@ public class OrdServlet extends HttpServlet {
         	
         	String vendor_no = new String(req.getParameter("vendor_no"));
         
-        	
+        	try {
         	VendorService VSvc = new VendorService();
 			List<VendorVO> vVO = VSvc.getAll();
 			if (vVO == null) {
@@ -336,12 +290,12 @@ public class OrdServlet extends HttpServlet {
 			successView.forward(req, res);
 
 			/***************************其他可能的錯誤處理*************************************/
-//		} catch (Exception e) {
-//			errorMsgs.add("can not find ord_no detail:" + e.getMessage());
-//			RequestDispatcher failureView = req
-//					.getRequestDispatcher("/ord/ord/select_page.jsp");
-//			failureView.forward(req, res);
-//		}
+		} catch (Exception e) {
+			errorMsgs.add("can not find ord_no detail:" + e.getMessage());
+			RequestDispatcher failureView = req
+					.getRequestDispatcher("/ord/ord/select_page.jsp");
+			failureView.forward(req, res);
+		}
         	
         	
         }
@@ -355,7 +309,7 @@ public class OrdServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 	
-//			try {
+			try {
 				/***************************1.接收請求參數***************************************/
 				String ord_no = new String(req.getParameter("ord_no"));
 				
@@ -371,12 +325,12 @@ public class OrdServlet extends HttpServlet {
 				System.out.println("url="+url);
 				
 				/***************************其他可能的錯誤處理**********************************/
-//			} catch (Exception e) {
-//				errorMsgs.add("刪除資料失敗:"+e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/ord/listAllOrd.jsp");
-//				failureView.forward(req, res);
-//			}
+			} catch (Exception e) {
+				errorMsgs.add("刪除資料失敗:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/ord/listAllOrd.jsp");
+				failureView.forward(req, res);
+			}
 		}
 		
 		HttpSession session = req.getSession();
@@ -624,6 +578,8 @@ public class OrdServlet extends HttpServlet {
 				System.out.println(session.getAttribute("shoppingcart"));
 				session.setAttribute("vendor", vendor);
 				
+				
+				
 			String vendro_no=(String) session.getAttribute("vendor_no");
 			System.out.println(vendro_no);
 				String url = "/ord/ord/ordfood.jsp";
@@ -649,38 +605,109 @@ public class OrdServlet extends HttpServlet {
 					System.out.println("check==booking"+booking_time);
 					
 					String total = String.valueOf(amount);
+					ZonedDateTime now = ZonedDateTime.now();
+					DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+					String date=now.format(formatter);
+					session.setAttribute("date", date);
 					session.setAttribute("total", total);
 					System.out.println("total000000000"+total);
 					String url = "/ord/ord/check.jsp";
 					RequestDispatcher rd = req.getRequestDispatcher(url);
 					rd.forward(req, res);
+					
 				 }
 				 
-				 
+				 	//跳出好友列表
+				 if(action.equals("show_share")) {
+					 
+					 String share1234="MM";
+					 session.setAttribute("share1234", share1234);
+					
+						String url = "/ord/ord/check.jsp";
+						RequestDispatcher rd = req.getRequestDispatcher(url);
+						rd.forward(req, res);
+					}
+
+			
 				 //選擇好友分攤後會將總金額，以及哪幾位好友存在redis
-				 
+					
 				 if (action.equals("share_pick")) {
+					 List<String> errorMsgs = new LinkedList<String>();
+					 req.setAttribute("errorMsgs", errorMsgs);
+//					session.setAttribute("share", 1);
+					 String share_amount=null;
 					 String share_amount1=null;
 					 String share_amount2=null;
+					 String share_mem_no=null;
 					 String share_mem_no1=null; 
 					 String share_mem_no2=null;
-					 //分攤名單
-					 String[] xxx=req.getParameterValues("share_amount");
-					 for(int i =0;i<xxx.length;i++) {
-						 if(xxx[i].length()!=0&&xxx[i]!=""){
-//						 share_amount1 =Integer.parseInt(xxx[i]);
-//						 share_amount2 =Integer.parseInt(xxx[++i]);
-						 share_amount1 =(xxx[i]);
-						 share_amount2 =(xxx[++i]);
+				try {
+					 if( (req.getParameterValues("share_mem_no")==null)&&(req.getParameterValues("share_amount")==null)) {
+						 java.sql.Date booking_date=null;
+							try {
+								booking_date=java.sql.Date.valueOf(req.getParameter("booking_date").trim());
+							}catch (IllegalArgumentException e) {
+								booking_date=new java.sql.Date(System.currentTimeMillis());
+								errorMsgs.add("please choose date!");
+							}
+							if (!errorMsgs.isEmpty()) {
+								RequestDispatcher failureView = 
+								req.getRequestDispatcher("/ord/ord/check.jsp");
+								failureView.forward(req, res);
+								return;//程式中斷
+							}
 					 }
-				 }	 
 					 //分攤金額
-					 String[]mem=req.getParameterValues("share_mem_no");
-					 for(int i=0;i<mem.length;i++) {
-						 if(mem[i]!=""&&mem[i].length()!=0) {
-							 share_mem_no1=mem[i];
-							 share_mem_no2=mem[++i];
+					 
+					 
+					 ArrayList<String> list=new ArrayList();
+				
+					 try{
+						 String[] xxx=req.getParameterValues("share_amount");
+						 for(int i =0;i<xxx.length;i++) {
+								 if(xxx[i].length()!=0&&xxx[i]!=""){
+		//						 share_amount1 =Integer.parseInt(xxx[i]);
+		//						 share_amount2 =Integer.parseInt(xxx[++i]);
+								 share_amount =(xxx[i]);
+								 System.out.println("share_amount1===="+share_amount1);
+								list.add(share_amount);
+								 } 
+							 }	
+						 }catch(Exception e) {
+							 errorMsgs.add("請填入分攤的金額");
+				 }
+					 if (!errorMsgs.isEmpty()) {
+							RequestDispatcher failureView = 
+							req.getRequestDispatcher("/ord/ord/check.jsp");
+							failureView.forward(req, res);
+							return;//程式中斷
+						}
+					 
+					 for(int i=0;i<list.size();i++) {
+						 share_amount1=list.get(0);
+						 share_amount2=list.get(1);
+					 }
+					 
+					 
+					 //分攤名單
+			
+					 ArrayList<String> list1=new ArrayList();
+					 try {
+						 String[]mem=req.getParameterValues("share_mem_no");
+						 for(int i=0;i<mem.length;i++) {
+							 if(mem[i]!=""&&mem[i].length()!=0) {
+								 share_mem_no=mem[i];
+								 list1.add(share_mem_no);
+							 }
 						 }
+					 }catch(Exception e) {
+						 errorMsgs.add("請選擇分攤的好友");
+					 }
+					
+					 
+					 for(int x=0;x<list1.size();x++) {
+						 share_mem_no1=list1.get(0);
+						 share_mem_no2=list1.get(1);
 					 }
 						System.out.println("分攤好友"+share_mem_no1);
 						System.out.println("分攤好友2"+share_mem_no2);
@@ -737,7 +764,15 @@ public class OrdServlet extends HttpServlet {
 					     //寄信
 					      MailService mailService = new MailService();
 					      mailService.sendMail(email3, subject, messageText);
-					      mailService.sendMail(email4, subject1, messageText1);			
+					      mailService.sendMail(email4, subject1, messageText1);
+					      
+					      
+				 } catch (Exception e) {
+						errorMsgs.add("請輸入正確資訊:" + e.getMessage());
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/ord/ord/check.jsp");
+						failureView.forward(req, res);
+					}
 			 }
 				 
 				 
@@ -799,10 +834,10 @@ public class OrdServlet extends HttpServlet {
 					 }
 					 System.out.println("  share_amount2====="+  share_amount2);
 
-					 //判斷兩個付款相加有沒有等於總共要負的款項
+					 //判斷兩個付款相加有沒有等於總共要付的款項
 					 Integer share_amount=share_amount1+share_amount2;
 					 System.out.println(" ====total"+total);
-					 if(share_amount<total) {   //如果金額小於
+					 if(share_amount<total) {   //付款金額相加小於總total
 						 String url = "/ord/ord/addOrd2.jsp";
 							RequestDispatcher successView = req.getRequestDispatcher(url); 
 							successView.forward(req, res);		
@@ -825,26 +860,17 @@ public class OrdServlet extends HttpServlet {
 						String booking_time=(String) session.getAttribute("booking_time");
 						System.out.println("booking_time======="+booking_time);
 						String notes=(String) session.getAttribute("notes");
-//						Integer total=null;
-//						try {
-							
-//							total = (Integer) session.getAttribute("total");
 							System.out.println("total======"+total);
-//							} catch (NumberFormatException e) {
-								
-//								errorMsgs.add("please. insert right total");
-//							}catch (NullPointerException b ) {
-							
-//								errorMsgs.add("please insert total number");}
 						
 						String arrival_time=req.getParameter("arrival_time");
 						String finish_time=req.getParameter("finish_time");
-						String verif_code=req.getParameter("verif_code");
+						
+						System.out.println(randomString(10)); 
+						String verif_code=randomString(10);
 						Integer status=(Integer) session.getAttribute("status");
 						
-						
+		/***************************2.開始新增資料***************************************/
 						OrdJDBCDAO dao = new OrdJDBCDAO();
-						
 						
 						OrdVO ordVO = new OrdVO();
 						
@@ -868,7 +894,7 @@ public class OrdServlet extends HttpServlet {
 						List<Order_DetailVO>testList = new ArrayList<Order_DetailVO>();
 						
 						List<Restaurant_MenuVO> buy = (Vector<Restaurant_MenuVO>) session.getAttribute("shoppingcart");
-						
+							//新增訂單同時新增訂單明細
 						for(Restaurant_MenuVO RVO:buy ) {
 							Order_DetailVO  Order_DetailVO =new Order_DetailVO();
 //							String menu_no = (String) session.getAttribute("menu_no");
@@ -881,54 +907,42 @@ public class OrdServlet extends HttpServlet {
 						}
 						
 						dao.insertWithOrd_detail(ordVO,testList);
-//						System.out.println("cominginging");
-//						
-//							String menu_no = (String) session.getAttribute("menu_no");
-//							Integer price =(Integer) session.getAttribute("price");
-//							Integer qty = (Integer) session.getAttribute("quantity");
-//							
-//							Order_DetailVO.setMenu_no(menu_no);
-//							Order_DetailVO.setPrice(price);
-//							Order_DetailVO.setQty(qty);
-//							testList.add(Order_DetailVO);
 						
+						
+//						＝＝＝＝拿取會員姓名＝＝＝＝
+						MemberService memSvc=new MemberService();
+						MemberVO memVO=memSvc.getOneMember(mem_no);
+						String m_name=memVO.getMem_name();
+						
+//						＝＝＝＝拿取餐廳名稱＝＝＝＝＝
+						VendorService VendorSvc=new VendorService();
+						VendorVO vVO=VendorSvc.findByPK(vendor_no);
+						String v_name=vVO.getV_name();
 						//傳送信件
 						
-						 String to = "yasmile718@yahoo.com.tw";
+						 String to = "ji394z06z06@yahoo.com.tw";
 					      
 					      String subject = "成功訂位";
 					      
-					      String ch_name = "ＪＥＮＮＹ";
+					      String ch_name = m_name;
 					  
-					      String messageText = "Hello! " + ch_name + " 恭喜你完成訂位,請洽0933473201偉斯特大帥哥 "; 
-					       
+					      String messageText =
+					      "Hello! " + ch_name + " 恭喜您與好友已經完成訂位,請於"+booking_date  +"\r\n"+
+					      "當日"+booking_time+"攜帶愉快的心情於"  +"\r\n"
+					      +v_name+"餐廳"+"\r\n"+
+					      "享受美好的一餐"+"\r\n"+
+					      "切記出示驗證碼"+verif_code+"或是"+"QRcode進行驗證"
+					      ; 
 					      MailService mailService = new MailService();
 					      mailService.sendMail(to, subject, messageText);
-						
-						
-						
-						// Send the use back to the form, if there were errors
-//						if (!errorMsgs.isEmpty()) {
-//							req.setAttribute("ordVO", ordVO); 
-//							RequestDispatcher failureView = req
-//									.getRequestDispatcher("/ord/ord/addOrd2.jsp");
-//							failureView.forward(req, res);
-//							return;
-//						}
-						
-						/***************************2.開始新增資料***************************************/
-						
-						 
-						
+				
 						/***************************3.新增完成,準備轉交(Send the Success view)***********/
 						String url = "/ord/ord/listAllOrd.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 						successView.forward(req, res);	
 //						 
-					 }
-					 
-					 
-					
+					 }	 
+				
 				 }
 				 
 				 
@@ -940,7 +954,7 @@ public class OrdServlet extends HttpServlet {
 						// send the ErrorPage view.
 						req.setAttribute("errorMsgs", errorMsgs);
 							System.out.println("insert");
-//						try {
+						try {
 							/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 							String mem_no = (String) session.getAttribute("mem_no");
 							
@@ -949,13 +963,7 @@ public class OrdServlet extends HttpServlet {
 							Integer party_size =(Integer) (session.getAttribute("party_size"));
 							String share_mem_no1 =req.getParameter("share_mem_no1");
 							String share_mem_no2 =req.getParameter("share_mem_no2");
-							
-						
-								Integer share_amount =(Integer) (session.getAttribute("share_amount"));
-							
-								
-							
-							
+							Integer share_amount =(Integer) (session.getAttribute("share_amount"));
 							java.sql.Timestamp ord_time =new java.sql.Timestamp(System.currentTimeMillis());
 							System.out.println("ordtime======"+ord_time);
 							java.sql.Date booking_date=null;
@@ -983,12 +991,21 @@ public class OrdServlet extends HttpServlet {
 							
 							String arrival_time=req.getParameter("arrival_time");
 							String finish_time=req.getParameter("finish_time");
-							String verif_code=req.getParameter("verif_code");
+							String verif_code=randomString(10);
 							Integer status=(Integer) session.getAttribute("status");
 							
+//							＝＝＝＝拿取會員姓名＝＝＝＝
+							MemberService memSvc=new MemberService();
+							MemberVO memVO=memSvc.getOneMember(mem_no);
+							String m_name=memVO.getMem_name();
+							
+//							＝＝＝＝拿取餐廳名稱＝＝＝＝＝
+							VendorService VendorSvc=new VendorService();
+							VendorVO vVO=VendorSvc.findByPK(vendor_no);
+							String v_name=vVO.getV_name();
 							
 							OrdJDBCDAO dao = new OrdJDBCDAO();
-							
+				/***************************2.開始新增資料***************************************/
 							
 							OrdVO ordVO = new OrdVO();
 							
@@ -1038,18 +1055,22 @@ public class OrdServlet extends HttpServlet {
 							
 							//傳送信件
 							
-							 String to = "yasmile718@yahoo.com.tw";
+							 String to = "ji394z06z06@yahoo.com.tw";
 						      
 						      String subject = "成功訂位";
 						      
-						      String ch_name = "ＪＥＮＮＹ";
+						      String ch_name = m_name;
 						  
-						      String messageText = "Hello! " + ch_name + " 恭喜你完成訂位,請洽0933473201偉斯特大帥哥 "; 
+						      String messageText =
+						      "Hello! " + ch_name + " 恭喜你已經完成訂位,請於"+booking_date  +"\r\n"+
+						      "當日"+booking_time+"攜帶愉快的心情於"  +"\r\n"
+						      +v_name+"餐廳"+"\r\n"+
+						      "享受美好的一餐"+"\r\n"+
+						      "切記出示驗證碼"+verif_code+"或是"+"QRcode進行驗證"
+						      ; 
 						       
 						      MailService mailService = new MailService();
 						      mailService.sendMail(to, subject, messageText);
-							
-							
 							
 							// Send the use back to the form, if there were errors
 							if (!errorMsgs.isEmpty()) {
@@ -1059,23 +1080,19 @@ public class OrdServlet extends HttpServlet {
 								failureView.forward(req, res);
 								return;
 							}
-							
-							/***************************2.開始新增資料***************************************/
-							
-							 
-							
-							/***************************3.新增完成,準備轉交(Send the Success view)***********/
+						
+				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 							String url = "/ord/ord/listAllOrd.jsp";
 							RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 							successView.forward(req, res);				
 							
-							/***************************其他可能的錯誤處理**********************************/
-//						} catch (Exception e) {
-//							errorMsgs.add(e.getMessage());
-//							RequestDispatcher failureView = req
-//									.getRequestDispatcher("/ord/addOrd.jsp");
-//							failureView.forward(req, res);
-//						}
+				/***************************其他可能的錯誤處理**********************************/
+						} catch (Exception e) {
+							errorMsgs.add(e.getMessage());
+							RequestDispatcher failureView = req
+									.getRequestDispatcher("/ord/addOrd2.jsp");
+							failureView.forward(req, res);
+						}
 					}
 				 }
 				 
@@ -1087,8 +1104,18 @@ public class OrdServlet extends HttpServlet {
 
 
 	
-
-
+//＝＝＝＝＝＝＝＝亂數產生方法＝＝＝＝＝＝＝＝＝
+	private static String randomString(int xxx) {
+		String str = "0123456789abcdefghijklmnopqrstuvwxyz"; 
+		StringBuffer sb = new StringBuffer(); 
+		for (int i = 0; i < xxx; i++) { 
+		int idx = (int)(Math.random() * str.length()); 
+		sb.append(str.charAt(idx)); 
+		
+	}
+		return  sb.toString(); 
+}
+//＝＝＝＝＝＝＝＝＝取得菜單資訊＝＝＝＝＝＝＝＝＝
 	private Restaurant_MenuVO getMenu(HttpServletRequest req) {
 		String menu_no = req.getParameter("menu_no");
 		String vendor_no = req.getParameter("vendor_no");

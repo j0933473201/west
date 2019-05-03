@@ -477,7 +477,6 @@ body {
 						
 						<input type="hidden" name="arrival_time" value="${ordVO.arrival_time}"> 
 						<input type="hidden" name="finish_time" value="${ordVO.finish_time}"> 
-						<input type="hidden" name="verif_code" value="8JPXY6wQc5bvrN2y6h4h">
 						<input type="hidden" name="status" value="0"> 
 						<input type="hidden" name="booking_date" value="${param.booking_date}">		
 						<input type="hidden" name="party_size" value="${param.party_size}">		

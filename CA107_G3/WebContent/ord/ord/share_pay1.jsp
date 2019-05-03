@@ -86,7 +86,7 @@ body { margin-top:20px; }
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                <h2>${param.name}您好</h2>
+                                <h2>${param.name}您好,請完成付款</h2>
                                <input  type="hidden"  name="share_mem_no" value="${param.mem_no}">
                                     <label for="cardNumber">CARD NUMBER</label>
                                     <div class="input-group">
@@ -138,7 +138,8 @@ body { margin-top:20px; }
                                         type="text" 
                                         class="form-control"
                                         name="AMOUNT"
-                                        placeholder="${param.amount}"
+                                         value ="${param.amount}"
+                                         disabled
                                     />
                                 </div>
                             </div>

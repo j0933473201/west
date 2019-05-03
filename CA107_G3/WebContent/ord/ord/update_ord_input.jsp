@@ -83,7 +83,7 @@
 	</tr>
 	<tr>
 <!-- 		<td>卓號:</td> -->
-		<td>卓號:<input type="TEXT" name="tbl_no" size="45" readonly="readonly"	value="<%=ordVO.getTbl_no()%>" /></td>
+		<td>卓號:<input type="TEXT" name="tbl_no" size="45" value="<%=ordVO.getTbl_no()%>" /></td>
 	</tr>
 	<tr>
 <!-- 		<td>付款好友1:</td> -->

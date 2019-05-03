@@ -79,7 +79,7 @@
   
   
   <li>
-    <FORM METHOD="get" ACTION="<%= request.getContextPath() %>/ord/ord.do"" >
+    <FORM METHOD="get" ACTION="<%= request.getContextPath() %>/ord/ord.do">
         <b>¿é¤J­q³æ½s¸¹ </b>
         <input type="text" name="ord_no">
         <input type="hidden" name="action" value="getOne_For_Display">

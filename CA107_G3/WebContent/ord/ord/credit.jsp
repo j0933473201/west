@@ -15,6 +15,7 @@
 </head>
 <style>
 
+
 body { margin-top:20px; }
 
 
@@ -58,10 +59,16 @@ body { margin-top:20px; }
 .credit-card-box .panel-heading img {
     min-width: 180px;
 }
+.swal2-popup {
+    width: 80em;
+    background: #fff;
+    font-family: inherit;
+    font-size: 1.5rem;
+    }
 
 </style>
 <body>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
 <div class="container">
@@ -135,7 +142,9 @@ body { margin-top:20px; }
                                         type="tel" 
                                         class="form-control"
                                         name="AMOUNT"
-                                        placeholder="AMOINT"
+<%--                                         placeholder="${total}" --%>
+                                        value="${total}"
+                                       disabled
                                     />
                                 </div>
                             </div>
@@ -143,7 +152,7 @@ body { margin-top:20px; }
                              <div class="col-xs-7 col-md-8">
                                 <div class="form-group">
                                     <label for="cardCVC"></label>
-                                  	<button class="btn btn-success btn-lg btn2-block" type="submit">刷一波</button>
+                                  	<button class="btn btn-success btn-lg btn2-block" type="submit" id="pay">刷一波</button>
                                 </div>
                             </div>
                         
@@ -300,4 +309,16 @@ var readyInterval = setInterval(function() {
 }, 250);
 
 </script>
+<script type="text/javascript">
+$("#pay").click(async function(event){
+	
+	const {value: file} = Swal.fire({
+	  position: 'center',
+	  type: 'success',
+	  title: '您的預訂程序已完成,請留意信箱',
+	  showConfirmButton: false,
+	  timer: 100000
+	})
+	})
+	</script>
 </html>

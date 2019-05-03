@@ -28,7 +28,7 @@ body {
     border-color: #fbeed5;
 }
 .btn2-block {
-    width: 50%;
+    width: 100%;
 </style>
 
 </head>
@@ -54,10 +54,7 @@ body {
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 text-right">
                     <p>
-                        <em>Date: 1st November, 2013</em>
-                    </p>
-                    <p>
-                        <em>Receipt #: 34522677W</em>
+                        <em>Date: ${date}</em>
                     </p>
                 </div>
             </div>
@@ -72,7 +69,7 @@ body {
                             <th>餐點</th>
                             <th>數量</th>
                             <th class="text-center">單價</th>
-                            <th class="text-center">總額</th>
+                  
                         </tr>
                     </thead>
                       <tbody>
@@ -96,7 +93,7 @@ body {
                            <td class="col-md-9"><h4><em><%= menu_name %></em></h4></td>
                             <td class="col-md-1" style="text-align: center"> <%=quantity %> </td>
                             <td class="col-md-1 text-center"><%= menu_price %></td>
-                            <td class="col-md-1 text-center"></td>
+                            
                         </tr>
                         <%
 							}
@@ -118,17 +115,14 @@ body {
 					</td>
 					<td>
 					<form name="share" action="<%=request.getContextPath()%>/ord/ord.do" method="get">
-					<input type="hidden" name="action" value="share">
+					<input type="hidden" name="action" value="show_share">
 					<button type="submit" class="btn btn-success btn-lg btn2-block"> 分攤<span class="glyphicon glyphicon-user"></span> </button>
 					</form>
 					
 					<form name="check" action="<%=request.getContextPath()%>/ord/ord.do" method="get">
-					
-					<button type="submit" class="btn btn-success btn-lg btn2-block"> Pay Now<span class="glyphicon glyphicon-usd"></span></button>
-					
+					<button type="submit" class="btn btn-success btn-lg btn2-block" id="pay"> Pay Now<span class="glyphicon glyphicon-usd"></span></button>
 						<input type="hidden" name="mem_no" value="M000004">
-						
-						
+<%-- 						<input type="hidden" name="mem_no" value="${mem_no}"> --%>
 					<input type="hidden" name="action" value="tocredit">
 					</form>
 		           </td>
@@ -137,9 +131,20 @@ body {
         </div>
     </div>
      </div>
-     <div class="col-7">
+     <div class="col-12">
+      	<c:if test="${not empty errorMsgs}">
+							<font style="color: red">請修正以下錯誤:</font>
+							<ul>
+								<c:forEach var="message" items="${errorMsgs}">
+									<li style="color: red">${message}</li>
+								</c:forEach>
+							</ul>
+						</c:if>	
+   
+     <c:if test="${share1234!=null}">
      <jsp:include page="/ord/ord/share_sel.jsp" flush="true" />
-  
+  	</c:if>
 </div>
 </body>
+
 </html>
