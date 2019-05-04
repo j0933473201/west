@@ -17,6 +17,16 @@
     <servlet-name>OrdServlet</servlet-name>
     <url-pattern>/ord/ord.do</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>Ord_DetailServlet</servlet-name>
+    <servlet-class>com.ord_detail.controller.Ord_DetailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Ord_DetailServlet</servlet-name>
+    <url-pattern>/o_detail/o_detail.do</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
     <servlet-name>servletRes</servlet-name>
     <servlet-class>com.ord.controller.servletRes</servlet-class>
@@ -25,7 +35,7 @@
     <servlet-name>servletRes</servlet-name>
     <url-pattern>/ord/servletRes.do</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
     <servlet-name>ShowImg</servlet-name>
     <servlet-class>tools.ShowImg</servlet-class>
   </servlet>

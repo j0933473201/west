@@ -7,7 +7,7 @@
 
 <%
 	OrdService ordSvc = new OrdService();
-    List<OrdVO> list = ordSvc.getAll();
+    List<OrdVO> list = ordSvc.findByvendor_no("V000001");
     OrdVO ordVO = new OrdVO();
     pageContext.setAttribute("list",list);
 %>

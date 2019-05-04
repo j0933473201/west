@@ -12,6 +12,9 @@ public interface OrdDAO_interface {
     public void delete(String ord_no);
     public OrdVO findByPrimaryKey(String ord_no);
     public List<OrdVO> getAll();
+    public List<OrdVO>findByvendor_no(String vendor_no);
+    public List<OrdVO>findBymem_no(String mem_no);
+    
     
     
     public void insertWithOrd_detail(OrdVO OrdVO , List<Order_DetailVO> list);

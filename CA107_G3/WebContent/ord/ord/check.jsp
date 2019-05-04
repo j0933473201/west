@@ -141,7 +141,7 @@ body {
 							</ul>
 						</c:if>	
    
-     <c:if test="${share1234!=null}">
+     <c:if test="${(share1234)!=null}">
      <jsp:include page="/ord/ord/share_sel.jsp" flush="true" />
   	</c:if>
 </div>

@@ -13,8 +13,8 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="/Users/chenpo-hsi/Desktop/JedisEx/jars/commons-pool2-2.5.0.jar"/>
-	<classpathentry kind="lib" path="/Users/chenpo-hsi/Desktop/JedisEx/jars/jedis-2.9.0.jar"/>
-	<classpathentry kind="lib" path="/Users/chenpo-hsi/Desktop/JedisEx/jars/json.jar"/>
+	<classpathentry kind="lib" path="/Users/chenpo-hsi/Desktop/java補充/JedisEx/jars/json.jar"/>
+	<classpathentry kind="lib" path="/Users/chenpo-hsi/Desktop/java補充/JedisEx/jars/jedis-2.9.0.jar"/>
+	<classpathentry kind="lib" path="/Users/chenpo-hsi/git/west/CA107_G3/src/jars/commons-pool2-2.5.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

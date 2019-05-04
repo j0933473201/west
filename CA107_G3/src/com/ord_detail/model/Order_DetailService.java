@@ -46,4 +46,10 @@ public class Order_DetailService {
 	public List<Order_DetailVO> getAll() {
 		return dao.getAll();
 	}
+	
+	  public List<Order_DetailVO> findbyOrd_no(String ord_no){
+		return dao.findbyOrd_no(ord_no);
+		  
+	  };
+	
 }

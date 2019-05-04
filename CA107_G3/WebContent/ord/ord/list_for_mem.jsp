@@ -7,7 +7,7 @@
 
 <%
 	OrdService ordSvc = new OrdService();
-    List<OrdVO> list = ordSvc.getAll();
+    List<OrdVO> list = ordSvc.findBymem_no("M000004");
     OrdVO ordVO = new OrdVO();
     pageContext.setAttribute("list",list);
 %>
@@ -100,12 +100,7 @@ height:1px
 						</c:if>
 						
                     
-			  <td> 
-			  <FORM METHOD="get" ACTION="<%=request.getContextPath()%>/ord/ord.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
-			     <input type="hidden" name="ord_no"  value="${ordVO.ord_no}">
-			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-			</td>
+			 
 			<td>
 			 <FORM METHOD="get" ACTION="<%=request.getContextPath()%>/o_detail/o_detail.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="查看訂單明細">

@@ -25,6 +25,9 @@ public class Order_DetailJDBCDAO implements Order_DetailDAO_interface {
 			"DELETE FROM order_detail where ord_no = ? and menu_no=?";
 	private static final String UPDATE = 
 			"UPDATE order_detail set qty=?, price=? where ord_no = ? and menu_no=?";
+	private static final String GET_ONE_ORDER_NO_LIST = 
+			"SELECT ord_no, menu_no, qty, price FROM order_detail where ord_no = ?";
+			
 
 	@Override
 	public void insert(Order_DetailVO order_detailVO) {
@@ -159,6 +162,69 @@ public class Order_DetailJDBCDAO implements Order_DetailDAO_interface {
 		}
 	}
 
+	public List<Order_DetailVO> findbyOrd_no(String ord_no) {
+		
+		List<Order_DetailVO> list = new ArrayList<Order_DetailVO>();
+		Order_DetailVO order_detailVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_ORDER_NO_LIST);
+			pstmt.setString(1, ord_no);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// order_detailVO 也稱為 Domain objects
+				order_detailVO = new Order_DetailVO();
+				order_detailVO.setOrd_no(rs.getString("ord_no"));
+				order_detailVO.setMenu_no(rs.getString("menu_no"));
+				order_detailVO.setQty(rs.getInt("qty"));
+				order_detailVO.setPrice(rs.getInt("price"));
+				list.add(order_detailVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list ;
+		
+	}
 	@Override
 	public Order_DetailVO findByPrimaryKey(String ord_no, String menu_no) {
 		Order_DetailVO order_detailVO = null;

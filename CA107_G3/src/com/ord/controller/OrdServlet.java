@@ -119,6 +119,143 @@ public class OrdServlet extends HttpServlet {
 			}
 		}
 		
+		//會員瀏覽所有訂單
+		if ("getMem_For_Display".equals(action)) { 
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				String mem_no = req.getParameter("mem_no");
+//				if (str == null || (str.trim()).length() == 0) {
+//					errorMsgs.add("Please insert ord_no");
+//					System.out.println("13");
+//				}
+				// Send the use back to the form, if there were errors
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = 
+//					req.getRequestDispatcher("/ord/ord/select_page.jsp");//記得倒回首頁
+//					failureView.forward(req, res);
+//					return;//程式中斷
+//				}
+//				
+//				String mem_no = null;
+//				try {
+//					mem_no = new String(str);
+//				} catch (Exception e) {
+//					errorMsgs.add("error ord_no");
+//				}
+//				// Send the use back to the form, if there were errors
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = 
+//					req.getRequestDispatcher("/ord/ord/select_page.jsp");
+//					failureView.forward(req, res);
+//					return;//程式中斷
+//				}
+				
+				/***************************2.開始查詢資料*****************************************/
+				OrdService ordSvc = new OrdService();
+				List<OrdVO> ordVO = ordSvc.findBymem_no(mem_no);
+				if (ordVO == null) {
+					errorMsgs.add("invaild ord_no");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/ord/ord/select_page.jsp");//導向首頁
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("ordVO", ordVO); // 資料庫取出的empVO物件,存入req
+				String url = "/ord/ord/list_for_mem.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("can not find ord_no detail:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/ord/ord/select_page.jsp");//倒回首頁
+				failureView.forward(req, res);
+			}
+		}
+		
+		
+		
+		//會員瀏覽所有訂單
+				if ("getVendor_For_Display".equals(action)) { 
+
+					List<String> errorMsgs = new LinkedList<String>();
+					// Store this set in the request scope, in case we need to
+					// send the ErrorPage view.
+					req.setAttribute("errorMsgs", errorMsgs);
+
+					try {
+						/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+						String vendor_no = req.getParameter("vendor_no");
+//						if (str == null || (str.trim()).length() == 0) {
+//							errorMsgs.add("Please insert ord_no");
+//							System.out.println("13");
+//						}
+						// Send the use back to the form, if there were errors
+//						if (!errorMsgs.isEmpty()) {
+//							RequestDispatcher failureView = 
+//							req.getRequestDispatcher("/ord/ord/select_page.jsp");//記得倒回首頁
+//							failureView.forward(req, res);
+//							return;//程式中斷
+//						}
+//						
+//						String mem_no = null;
+//						try {
+//							mem_no = new String(str);
+//						} catch (Exception e) {
+//							errorMsgs.add("error ord_no");
+//						}
+//						// Send the use back to the form, if there were errors
+//						if (!errorMsgs.isEmpty()) {
+//							RequestDispatcher failureView = 
+//							req.getRequestDispatcher("/ord/ord/select_page.jsp");
+//							failureView.forward(req, res);
+//							return;//程式中斷
+//						}
+						
+						/***************************2.開始查詢資料*****************************************/
+						OrdService ordSvc = new OrdService();
+						List<OrdVO> ordVO = ordSvc.findBymem_no(vendor_no);
+						if (ordVO == null) {
+							errorMsgs.add("invaild ord_no");
+						}
+						// Send the use back to the form, if there were errors
+						if (!errorMsgs.isEmpty()) {
+							RequestDispatcher failureView = req
+									.getRequestDispatcher("/ord/ord/select_page.jsp");//導向首頁
+							failureView.forward(req, res);
+							return;//程式中斷
+						}
+						
+						/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+						req.setAttribute("ordVO", ordVO); // 資料庫取出的empVO物件,存入req
+						String url = "/ord/ord/list_for_vendor.jsp";
+						RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+						successView.forward(req, res);
+
+						/***************************其他可能的錯誤處理*************************************/
+					} catch (Exception e) {
+						errorMsgs.add("can not find ord_no detail:" + e.getMessage());
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/ord/ord/select_page.jsp");//倒回首頁
+						failureView.forward(req, res);
+					}
+				}
+		
+		
+		
+		
 		
 		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
 
@@ -621,6 +758,7 @@ public class OrdServlet extends HttpServlet {
 				 if(action.equals("show_share")) {
 					 
 					 String share1234="MM";
+					
 					 session.setAttribute("share1234", share1234);
 					
 						String url = "/ord/ord/check.jsp";
