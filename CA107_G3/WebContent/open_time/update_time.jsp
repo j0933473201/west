@@ -4,13 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <%@ page import="com.vendor.model.*"%>
 
-<jsp:useBean id="vVO" scope="session" class="com.vendor.model.VendorVO" />
-<jsp:useBean id="rtnVO" scope="page" class=" com.reservation_table_number.model.Reservation_Table_NumberService" />
-<jsp:useBean id="excVO" scope="page" class="com.exception_date.model.Exception_DateService" />
-<jsp:useBean id="r_tVO" scope="page" class=" com.reservation_time.model.Reservation_TimeService" />
+
 
 <!DOCTYPE html>
-
+<jsp:useBean id="vVO" scope="session" class="com.vendor.model.VendorVO" />
+<jsp:useBean id="excVO" scope="page" class="com.exception_date.model.Exception_DateService" />
+<jsp:useBean id="r_tVO" scope="page" class="com.reservation_time.model.Reservation_TimeService" />
+<jsp:useBean id="rtnVO" scope="page" class="com.reservation_table_number.model.Reservation_Table_NumberService" />
 
 <html>
 <head>
@@ -196,8 +196,8 @@ to {
 								<div class="input_fields_wrap01">
 										    <button class="add_field_button01">增加日期</button>
 										   <div class="date" >
-										   <c:forEach var="exc_list" items="">
-										    <input type="date" class="exc_date1" name="exc_date"  value="${excVO.find_by_vendor_no('V000001')}" required>
+										   <c:forEach var="exc_list" items="${excVO.find_by_vendor_no('V000001')}">
+										    <input type="date" class="exc_date1" name="exc_date"  value="${ exc_list.exc_date}" required>
 										    </c:forEach>
 										    </div>
 										    
@@ -215,7 +215,10 @@ to {
 										<div class="input_fields_wrap">
 										    <button class="add_field_button">增加時段</button>
 										    <div>
-										    <input type="number" name="open_hours" placeholder="1200"></div>
+										    <c:forEach var="rt_list" items="${r_tVO.finby_v_no('V000001')}">
+										    <input type="text" name="open_hours" value="${rt_list.r_time }">
+										  </c:forEach>
+										  </div>
 										</div>
 								</div>
 							</div>
@@ -228,15 +231,18 @@ to {
 									<label for="validationTooltip01">設定開放桌位：</label>
 								</div>
 								<div class="col-5">
-									<br>兩人桌數量：<input type="number" class="res_num" name="rtbl_o_num1"  required>
+								 <c:forEach var="rtn_list" items="${ rtnVO.findBy_vendor('V000002')}">
+
+									<br>兩人桌數量：<input type="number" class="res_num" name="rtbl_o_num1" value="${rtn_list.rtbl_o_num1}" required>
 									
-									<br>四人桌數量：<input type="number" class="res_num" name="rtbl_o_num2"  required>
+									<br>四人桌數量：<input type="number" class="res_num" name="rtbl_o_num2" value="${rtn_list.rtbl_o_num2}"  required>
 									
-									<br>六人桌數量：<input type="number" class="res_num" name="rtbl_o_num3"  required>
+									<br>六人桌數量：<input type="number" class="res_num" name="rtbl_o_num3"  value="${rtn_list.rtbl_o_num3}" required>
 									
-									<br>八人桌數量：<input type="number" class="res_num" name="rtbl_o_num4"  required>
+									<br>八人桌數量：<input type="number" class="res_num" name="rtbl_o_num4" value="${rtn_list.rtbl_o_num4}"  required>
 									
-									<br>十人桌數量：<input type="number" class="res_num" name="rtbl_o_num5"  required>
+									<br>十人桌數量：<input type="number" class="res_num" name="rtbl_o_num5" value="${rtn_list.rtbl_o_num5}"  required>
+									</c:forEach>
 								</div>
 							</div>
 <!-- 							<div class="form-row"> -->
@@ -246,7 +252,7 @@ to {
 <!-- 								<div class="col-8"> -->
 <!-- 								</div> -->
 <!-- 							</div> -->
-<input type="hidden" name="action"	value="get_vendor_insert">
+<input type="hidden" name="action"	value="get_vendor_update">
 <%-- <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"> --%>
 							<div>
 								<button type="submit" class="btn btn-primary col-12">修改</button>

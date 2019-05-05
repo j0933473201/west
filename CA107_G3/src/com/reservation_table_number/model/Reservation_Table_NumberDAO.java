@@ -33,7 +33,7 @@ public class Reservation_Table_NumberDAO implements Reservation_Table_NumberDAO_
 	private static final String UPDATE = 
 			"UPDATE RESERVATION_TABLE_NUMBER SET VENDOR_NO=?, RTBL_O_NUM1=?,RTBL_O_NUM2=?,RTBL_O_NUM3=?,RTBL_O_NUM4=?,RTBL_O_NUM5=? where RTN_NO=?";
 	private static final String GET_BY_VENDOR = 
-			"SELECT RTN_NO, VENDOR_NO, RTBL_O_NUM1,RTBL_O_NUM2, RTBL_O_NUM3,RTBL_O_NUM4,RTBL_O_NUM5 FROM RESERVATION_TABLE_NUMBER WHERE VENDOR_NO =?";
+			"SELECT * FROM RESERVATION_TABLE_NUMBER WHERE VENDOR_NO=?";
 	
 	
 	@Override
@@ -369,7 +369,7 @@ public class Reservation_Table_NumberDAO implements Reservation_Table_NumberDAO_
 		
 		//findAll
 		
-				List<Reservation_Table_NumberVO> list = dao.getAll();
+				List<Reservation_Table_NumberVO> list = dao.findBy_vendor("V000001");
 				for (Reservation_Table_NumberVO res : list) {
 					System.out.print(res.getRtn_no() + ",");
 					System.out.print(res.getVendor_no() + ",");
@@ -387,7 +387,7 @@ public class Reservation_Table_NumberDAO implements Reservation_Table_NumberDAO_
 	public List<Reservation_Table_NumberVO> findBy_vendor(String vendor_no) {
 		List<Reservation_Table_NumberVO> list = new ArrayList<Reservation_Table_NumberVO>();
 		Reservation_Table_NumberVO resVO = null;
-
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -397,12 +397,16 @@ public class Reservation_Table_NumberDAO implements Reservation_Table_NumberDAO_
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_BY_VENDOR);
+			pstmt.setString(1, vendor_no);
 			rs = pstmt.executeQuery();
-
+			
+			
 			while (rs.next()) {
+
 				
 				
 				resVO = new Reservation_Table_NumberVO();
+				
 				resVO.setRtn_no(rs.getString("rtn_no"));
 				resVO.setVendor_no(rs.getString("vendor_no"));
 				resVO.setRtbl_o_num1(rs. getInt("Rtbl_o_num1"));

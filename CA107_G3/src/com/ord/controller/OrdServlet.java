@@ -494,12 +494,12 @@ public class OrdServlet extends HttpServlet {
 		
 		//訂位日期
 		java.sql.Date booking_date=null;
-		try {
+//		try {
 			booking_date=java.sql.Date.valueOf(req.getParameter("booking_date").trim());
-		}catch (IllegalArgumentException e) {
-			booking_date=new java.sql.Date(System.currentTimeMillis());
-			errorMsgs.add("please choose date!");
-		}
+//		}catch (IllegalArgumentException e) {
+//			booking_date=new java.sql.Date(System.currentTimeMillis());
+//			errorMsgs.add("please choose date!");
+//		}
 		//已訂位時段剩餘數量------------
 		
 		Reservation_Table_OrderedService RtoSvc =new Reservation_Table_OrderedService();
@@ -624,7 +624,7 @@ public class OrdServlet extends HttpServlet {
 			
 			
 			Integer party_size =new Integer(req.getParameter("party_size"));
-			String verif_code=req.getParameter("verif_code");
+		
 			Integer status=new Integer(req.getParameter("status"));
 			
 			
@@ -638,11 +638,13 @@ public class OrdServlet extends HttpServlet {
 			session.setAttribute("notes", notes);
 			session.setAttribute("party_size", party_size);
 			session.setAttribute("status", status);
-			
+			System.out.println("status======"+status);
+			System.out.println("party_size===="+party_size);
 			String url = "/ord/ord/ordfood.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
 			
+			return;
 		}
 		
 		

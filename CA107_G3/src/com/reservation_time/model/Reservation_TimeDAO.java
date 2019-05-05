@@ -425,7 +425,7 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 
 				Class.forName(driver);
 				con = DriverManager.getConnection(url, userid, passwd);
-				pstmt = con.prepareStatement(CASE);
+				pstmt = con.prepareStatement(GET_BY_VENDOR);
 				pstmt.setString(1, vendor_no);
 				rs = pstmt.executeQuery();
 		

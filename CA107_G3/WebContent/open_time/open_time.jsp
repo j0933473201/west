@@ -241,7 +241,7 @@ to {
 <input type="hidden" name="action"	value="get_vendor_insert">
 <%-- <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"> --%>
 							<div>
-								<button type="submit" class="btn btn-primary col-12">修改</button>
+								<button type="submit" class="btn btn-primary col-12">新增</button>
 							</div>
 						</div>
 					</div>

@@ -45,13 +45,13 @@
 <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12">
-      <c:forEach var="menu_n" items="${res_menuSvc.getVendor(vendor_no)}">
+      <c:forEach var="menu_n" items="${res_menuSvc.getVendor('V000001')}">
       <form name="shopping" action="<%=request.getContextPath()%>/ord/ord.do" method="get">
             <div class="col-sm-6 col-md-6">
 		        <div class="thumbnail" >
 		          	<h4 class="text-center">
 		          		<span class="label label-info">
-		        			 <c:set var ="vendor" value="${vendorSvc.findByPK(vendor_no)}" />
+		        			 <c:set var ="vendor" value="${vendorSvc.findByPK('V000001')}" />
 		         					${vendor.v_name}
 		         		 </span>
 		         		 </h4>
