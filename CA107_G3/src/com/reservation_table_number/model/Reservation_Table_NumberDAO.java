@@ -32,104 +32,106 @@ public class Reservation_Table_NumberDAO implements Reservation_Table_NumberDAO_
 			"DELETE FROM RESERVATION_TABLE_NUMBER WHERE RTN_NO = ?";
 	private static final String UPDATE = 
 			"UPDATE RESERVATION_TABLE_NUMBER SET VENDOR_NO=?, RTBL_O_NUM1=?,RTBL_O_NUM2=?,RTBL_O_NUM3=?,RTBL_O_NUM4=?,RTBL_O_NUM5=? where RTN_NO=?";
+	private static final String GET_BY_VENDOR = 
+			"SELECT RTN_NO, VENDOR_NO, RTBL_O_NUM1,RTBL_O_NUM2, RTBL_O_NUM3,RTBL_O_NUM4,RTBL_O_NUM5 FROM RESERVATION_TABLE_NUMBER WHERE VENDOR_NO =?";
 	
 	
 	@Override
 	public void insert(Reservation_Table_NumberVO reservation_table_numberVO) {
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//		
-//		try {
-//
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
-//			pstmt = con.prepareStatement(INSERT_STMT);
-//
-//			pstmt.setString(1, reservation_table_numberVO.getVendor_no());
-//			pstmt.setInt(2, reservation_table_numberVO.getRtbl_o_num1());
-//			pstmt.setInt(3, reservation_table_numberVO.getRtbl_o_num2());
-//			pstmt.setInt(4, reservation_table_numberVO.getRtbl_o_num3());
-//			pstmt.setInt(5, reservation_table_numberVO.getRtbl_o_num4());
-//			pstmt.setInt(6, reservation_table_numberVO.getRtbl_o_num5());
-//
-//			pstmt.executeUpdate();
-//				System.out.println("OK1");
-//			// Handle any driver errors
-//		} catch (ClassNotFoundException e) {
-//			throw new RuntimeException("Couldn't load database driver. "
-//					+ e.getMessage());
-//			// Handle any SQL errors
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			// Clean up JDBC resources
-//		} finally {
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(INSERT_STMT);
+
+			pstmt.setString(1, reservation_table_numberVO.getVendor_no());
+			pstmt.setInt(2, reservation_table_numberVO.getRtbl_o_num1());
+			pstmt.setInt(3, reservation_table_numberVO.getRtbl_o_num2());
+			pstmt.setInt(4, reservation_table_numberVO.getRtbl_o_num3());
+			pstmt.setInt(5, reservation_table_numberVO.getRtbl_o_num4());
+			pstmt.setInt(6, reservation_table_numberVO.getRtbl_o_num5());
+
+			pstmt.executeUpdate();
+				System.out.println("OK1");
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 
 
 	}
 
 	@Override
 	public void update(Reservation_Table_NumberVO reservation_table_numberVO) {
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//
-//		try {
-//
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
-//			pstmt = con.prepareStatement(UPDATE);
-//
-//			pstmt.setString(1, reservation_table_numberVO.getVendor_no() );
-//			pstmt.setInt(2, reservation_table_numberVO.getRtbl_o_num1() );
-//			pstmt.setInt(3, reservation_table_numberVO.getRtbl_o_num2());
-//			pstmt.setInt(4, reservation_table_numberVO.getRtbl_o_num3());
-//			pstmt.setInt(5, reservation_table_numberVO.getRtbl_o_num4());
-//			pstmt.setInt(6, reservation_table_numberVO.getRtbl_o_num5());
-//			pstmt.setString(7, reservation_table_numberVO.getRtn_no());
-//			
-//
-//			pstmt.executeUpdate();
-//
-//			// Handle any driver errors
-//		} catch (ClassNotFoundException e) {
-//			throw new RuntimeException("Couldn't load database driver. "
-//					+ e.getMessage());
-//			// Handle any SQL errors
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			// Clean up JDBC resources
-//		} finally {
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE);
+
+			pstmt.setString(1, reservation_table_numberVO.getVendor_no() );
+			pstmt.setInt(2, reservation_table_numberVO.getRtbl_o_num1() );
+			pstmt.setInt(3, reservation_table_numberVO.getRtbl_o_num2());
+			pstmt.setInt(4, reservation_table_numberVO.getRtbl_o_num3());
+			pstmt.setInt(5, reservation_table_numberVO.getRtbl_o_num4());
+			pstmt.setInt(6, reservation_table_numberVO.getRtbl_o_num5());
+			pstmt.setString(7, reservation_table_numberVO.getRtn_no());
+			
+
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 
 
 	}
@@ -379,5 +381,72 @@ public class Reservation_Table_NumberDAO implements Reservation_Table_NumberDAO_
 					
 					System.out.println("-------------------");
 	}
+	}
+	
+	@Override
+	public List<Reservation_Table_NumberVO> findBy_vendor(String vendor_no) {
+		List<Reservation_Table_NumberVO> list = new ArrayList<Reservation_Table_NumberVO>();
+		Reservation_Table_NumberVO resVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_BY_VENDOR);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				
+				
+				resVO = new Reservation_Table_NumberVO();
+				resVO.setRtn_no(rs.getString("rtn_no"));
+				resVO.setVendor_no(rs.getString("vendor_no"));
+				resVO.setRtbl_o_num1(rs. getInt("Rtbl_o_num1"));
+				resVO.setRtbl_o_num2(rs. getInt("Rtbl_o_num2"));
+				resVO.setRtbl_o_num3(rs. getInt("Rtbl_o_num3"));
+				resVO.setRtbl_o_num4(rs. getInt("Rtbl_o_num4"));
+				resVO.setRtbl_o_num5(rs. getInt("Rtbl_o_num5"));
+				
+				list.add(resVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+		
 	}
 }

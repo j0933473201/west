@@ -27,6 +27,15 @@
     <url-pattern>/o_detail/o_detail.do</url-pattern>
   </servlet-mapping>
   
+  
+  <servlet>
+    <servlet-name>Res_timeServlet</servlet-name>
+    <servlet-class>com.reservation_time.controller.Res_timeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Res_timeServlet</servlet-name>
+    <url-pattern>/rtime/rtime.do</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>servletRes</servlet-name>
     <servlet-class>com.ord.controller.servletRes</servlet-class>

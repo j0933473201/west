@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <%@ page import="com.vendor.model.*"%>
 
 <jsp:useBean id="vVO" scope="session" class="com.vendor.model.VendorVO" />
+<jsp:useBean id="rtnVO" scope="page" class=" com.reservation_table_number.model.Reservation_Table_NumberService" />
+<jsp:useBean id="excVO" scope="page" class="com.exception_date.model.Exception_DateService" />
+<jsp:useBean id="r_tVO" scope="page" class=" com.reservation_time.model.Reservation_TimeService" />
 
 <!DOCTYPE html>
 
@@ -192,7 +196,11 @@ to {
 								<div class="input_fields_wrap01">
 										    <button class="add_field_button01">增加日期</button>
 										   <div class="date" >
-										    <input type="date" class="exc_date1" name="exc_date"  required></div>
+										   <c:forEach var="exc_list" items="">
+										    <input type="date" class="exc_date1" name="exc_date"  value="${excVO.find_by_vendor_no('V000001')}" required>
+										    </c:forEach>
+										    </div>
+										    
 										</div>
 									
 									<div class="invalid-tooltip">請輸入正確格式</div>

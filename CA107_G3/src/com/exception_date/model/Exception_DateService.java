@@ -56,7 +56,10 @@ public class Exception_DateService {
 
 	public List<Exception_DateVO> getdate(String vendor_no){
 		return dao.getdate(vendor_no);
-
-	
 	}
+	public List<Exception_DateVO>find_by_vendor_no(String vendor_no){
+		return dao.find_by_vendor(vendor_no);
+	}
+	
+	
 }

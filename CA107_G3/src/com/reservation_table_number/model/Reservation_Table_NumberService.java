@@ -57,5 +57,8 @@ public class Reservation_Table_NumberService {
 		return dao.getAll();
 	}
 	
+	public List<Reservation_Table_NumberVO>findBy_vendor(String vendor_no){
+		return dao.findBy_vendor(vendor_no);
+	};
 	
 }

@@ -46,4 +46,8 @@ public class Reservation_TimeService {
 	public List<Reservation_TimeVO> getVendor(String xxxId){
 		return dao.getVendor(xxxId);
 	}
+	public List<Reservation_TimeVO> finby_v_no(String vendor_no) {
+		return dao.finby_v_no(vendor_no);
+	}
 }
+

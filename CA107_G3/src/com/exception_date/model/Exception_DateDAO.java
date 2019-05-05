@@ -39,140 +39,141 @@ public class Exception_DateDAO implements Exception_DateDAO_Interface {
 	private static final String UPDATE = 
 			"UPDATE EXCEPTION_DATE SET VENDOR_NO=?, EXC_DATE=? where EXC_NO=?";
 	
-	
+	private static final String GET_ONE_BY_VENDOR = 
+			"SELECT EXC_NO, VENDOR_NO, EXC_DATE FROM EXCEPTION_DATE WHERE VENDOR_NO =?";
 	
 	@Override
 	public void insert(Exception_DateVO exception_dateVO) {
 //		
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//		
-//		try {
-//
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
-//			pstmt = con.prepareStatement(INSERT_STMT);
-//
-//			pstmt.setString(1, exception_dateVO.getVendor_no());
-//			pstmt.setDate(2, exception_dateVO.getExc_date());
-//			
-//
-//			pstmt.executeUpdate();
-//				System.out.println("OK1");
-//			// Handle any driver errors
-//		} catch (ClassNotFoundException e) {
-//			throw new RuntimeException("Couldn't load database driver. "
-//					+ e.getMessage());
-//			// Handle any SQL errors
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			// Clean up JDBC resources
-//		} finally {
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(INSERT_STMT);
+
+			pstmt.setString(1, exception_dateVO.getVendor_no());
+			pstmt.setDate(2, exception_dateVO.getExc_date());
+			
+
+			pstmt.executeUpdate();
+				System.out.println("OK1");
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 
 	}
 
 	@Override
 	public void update(Exception_DateVO exception_dateVO) {
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//
-//		try {
-//
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
-//			pstmt = con.prepareStatement(UPDATE);
-//
-//			pstmt.setString(1, exception_dateVO.getVendor_no() );
-//			pstmt.setDate(2, exception_dateVO.getExc_date() );
-//			pstmt.setString(3, exception_dateVO.getExc_no());
-//
-//			pstmt.executeUpdate();
-//
-//			// Handle any driver errors
-//		} catch (ClassNotFoundException e) {
-//			throw new RuntimeException("Couldn't load database driver. "
-//					+ e.getMessage());
-//			// Handle any SQL errors
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			// Clean up JDBC resources
-//		} finally {
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE);
+
+			pstmt.setString(1, exception_dateVO.getVendor_no() );
+			pstmt.setDate(2, exception_dateVO.getExc_date() );
+			pstmt.setString(3, exception_dateVO.getExc_no());
+
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 
 
 	}
 
 	@Override
 	public void delete(String exc_no) {
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//
-//		try {
-//
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
-//			pstmt = con.prepareStatement(DELETE);
-//
-//			pstmt.setString(1, exc_no);
-//
-//			pstmt.executeUpdate();
-//				System.out.println("OKOK");
-//			// Handle any driver errors
-//		} catch (ClassNotFoundException e) {
-//			throw new RuntimeException("Couldn't load database driver. "
-//					+ e.getMessage());
-//			// Handle any SQL errors
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			// Clean up JDBC resources
-//		} finally {
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(DELETE);
+
+			pstmt.setString(1, exc_no);
+
+			pstmt.executeUpdate();
+				System.out.println("OKOK");
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 
 
 	}
@@ -395,6 +396,71 @@ public class Exception_DateDAO implements Exception_DateDAO_Interface {
 			while (rs.next()==true) {
 				exception_DateVO = new Exception_DateVO();
 				exception_DateVO.setExc_date(rs.getDate("exc_date"));
+				
+			
+			list.add(exception_DateVO); // Store the row in the list
+			System.out.println(list);
+			
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<Exception_DateVO> find_by_vendor(String vendor_no) {
+		List<Exception_DateVO> list = new ArrayList<Exception_DateVO>();
+		Exception_DateVO exception_DateVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_BY_VENDOR);
+			pstmt.setString(1,vendor_no);
+			rs = pstmt.executeQuery();
+	
+			
+			
+			while (rs.next()==true) {
+				exception_DateVO = new Exception_DateVO();
+				exception_DateVO.setExc_date(rs.getDate("exc_date"));
+				exception_DateVO.setExc_no(rs.getString("exc_no"));
+				exception_DateVO.setVendor_no(rs.getNString("vendor_no"));
 				
 			
 			list.add(exception_DateVO); // Store the row in the list

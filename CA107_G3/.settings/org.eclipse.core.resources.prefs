@@ -26,6 +26,7 @@ encoding//src/com/reservation_table_number/model=UTF-8
 encoding//src/com/reservation_table_ordered/model=UTF-8
 encoding//src/com/reservation_time/controller/Res_timeServlet.java=UTF-8
 encoding//src/com/reservation_time/model=UTF-8
+encoding//src/com/reservation_time/model/Reservation_TimeDAO.java=UTF-8
 encoding//src/com/reservation_time/model/Reservation_TimeDAO_Interface.java=UTF-8
 encoding//src/com/restaurant_transaction_list/model=UTF-8
 encoding//src/com/restaurant_transaction_list/model/RES_Transaction_ListDAO.java=UTF-8

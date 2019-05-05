@@ -36,49 +36,51 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 	
 	private static final String CASE = "SELECT	* FROM RESERVATION_TIME where (case when VENDOR_NO=? then 1 else 0 end+ case when RT_NO=? then 1 else 0 end)>=1";
 	
+	private static final String GET_BY_VENDOR=
+			"SELECT RT_NO, VENDOR_NO, R_TIME FROM RESERVATION_TIME WHERE VENDOR_NO =?";
 	@Override
 	public void insert(Reservation_TimeVO reservation_timeVO) {
 		
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//		
-//		try {
-//
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
-//			pstmt = con.prepareStatement(INSERT_STMT);
-//
-//			pstmt.setString(1, reservation_timeVO.getVendor_no());
-//			pstmt.setString(2, reservation_timeVO.getR_time());
-//			
-//
-//			pstmt.executeUpdate();
-//				System.out.println("OK1");
-//			// Handle any driver errors
-//		} catch (ClassNotFoundException e) {
-//			throw new RuntimeException("Couldn't load database driver. "
-//					+ e.getMessage());
-//			// Handle any SQL errors
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			// Clean up JDBC resources
-//		} finally {
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(INSERT_STMT);
+
+			pstmt.setString(1, reservation_timeVO.getVendor_no());
+			pstmt.setString(2, reservation_timeVO.getR_time());
+			
+
+			pstmt.executeUpdate();
+				System.out.println("OK1");
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 
 
 	}
@@ -86,46 +88,46 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 	@Override
 	public void update(Reservation_TimeVO reservation_timeVO) {
 		
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//
-//		try {
-//
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
-//			pstmt = con.prepareStatement(UPDATE);
-//
-//			pstmt.setString(1, reservation_timeVO.getVendor_no() );
-//			pstmt.setString(2, reservation_timeVO.getR_time() );
-//			pstmt.setString(3, reservation_timeVO.getRt_no() );
-//			
-//			pstmt.executeUpdate();
-//
-//			// Handle any driver errors
-//		} catch (ClassNotFoundException e) {
-//			throw new RuntimeException("Couldn't load database driver. "
-//					+ e.getMessage());
-//			// Handle any SQL errors
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			// Clean up JDBC resources
-//		} finally {
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE);
+
+			pstmt.setString(1, reservation_timeVO.getVendor_no() );
+			pstmt.setString(2, reservation_timeVO.getR_time() );
+			pstmt.setString(3, reservation_timeVO.getRt_no() );
+			
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 
 
 	}
@@ -409,6 +411,74 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 	System.out.println(list.size());
 	
 	}
+
+	@Override
+	public List<Reservation_TimeVO> finby_v_no(String vendor_no) {
+		
+			List<Reservation_TimeVO> list = new ArrayList<Reservation_TimeVO>();
+			Reservation_TimeVO reservation_TimeVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			try {
+
+				Class.forName(driver);
+				con = DriverManager.getConnection(url, userid, passwd);
+				pstmt = con.prepareStatement(CASE);
+				pstmt.setString(1, vendor_no);
+				rs = pstmt.executeQuery();
+		
+				
+				
+				while (rs.next()==true) {
+				reservation_TimeVO = new Reservation_TimeVO();
+				reservation_TimeVO.setR_time(rs.getString("R_time"));
+				reservation_TimeVO.setRt_no(rs.getString("rt_no"));
+				reservation_TimeVO.setVendor_no(rs.getString("vendor_no"));
+				
+				
+				list.add(reservation_TimeVO); // Store the row in the list
+				System.out.println(list);
+				
+				}
+
+				// Handle any driver errors
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException("Couldn't load database driver. "
+						+ e.getMessage());
+				// Handle any SQL errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return list;
+			
+		}
+	
 
 
 

@@ -14,5 +14,6 @@ public interface Reservation_Table_NumberDAO_interface {
     public Reservation_Table_NumberVO findByPrimaryKey(String rtn_no);
     public List<Reservation_Table_NumberVO> getAll();
     public List<Reservation_Table_NumberVO> getAll(Map<String, String[]> map);
+    public List<Reservation_Table_NumberVO>findBy_vendor(String vendor_no);
 	
 }

@@ -12,6 +12,7 @@ public interface Reservation_TimeDAO_Interface {
     public List<Reservation_TimeVO> getAll();
    
     public List<Reservation_TimeVO> getVendor(String xxxId);
+    public List<Reservation_TimeVO>finby_v_no(String vendor_no);
     
 		
 		
