@@ -11,5 +11,5 @@ public interface CommentsDAO_interface {
     public List<CommentsVO> getAll();
 	public List<CommentsVO> getVendor(String vendor_no);
 //	public List<CommentsVO>findByRate(String vendor_no);
-	public CommentsVO findByord_no(String ord_no);
+	public List<CommentsVO> findByord_no(String ord_no);
 }

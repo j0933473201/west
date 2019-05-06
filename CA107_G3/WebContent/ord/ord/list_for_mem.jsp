@@ -7,7 +7,7 @@
 
 <%
 	OrdService ordSvc = new OrdService();
-    List<OrdVO> list = ordSvc.findBymem_no("M000001");
+    List<OrdVO> list = ordSvc.findBymem_no("M000004");
     OrdVO ordVO = new OrdVO();
     pageContext.setAttribute("list",list);
 %>

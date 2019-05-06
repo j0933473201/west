@@ -30,7 +30,7 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 	private static final String GET_ONE_VENDOR = 
 			"SELECT * FROM comments where vendor_no = ?";
 	private static final String GET_BY_ORD_NO=
-			"SELECT cmnt_no, ord_no, vendor_no, score, cmnt, time, cmnt_status FROM comments where cmnt_no = ?";
+			"SELECT cmnt_no, ord_no, vendor_no, score, cmnt, time, cmnt_status FROM comments where ord_no = ?";
 	
 	
 	@Override
@@ -369,6 +369,7 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 				cm = new CommentsVO();
 				
 				cm.setVendor_no(rs.getString("vendor_no"));
+				cm.setOrd_no(rs.getString("ord_no"));
 				cm.setCmnt_no(rs.getString("cmnt_no"));
 				cm.setScore(rs.getInt("score"));
 				cm.setCmnt(rs.getString("cmnt"));
@@ -403,10 +404,70 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 	}
 
 	@Override
-	public CommentsVO findByord_no(String ord_no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public List<CommentsVO> findByord_no(String ord_no) {
+		List<CommentsVO> list = new ArrayList<CommentsVO>();
+			CommentsVO commentsVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			try {
+
+				Class.forName(driver);
+				con = DriverManager.getConnection(url, userid, passwd);
+				pstmt = con.prepareStatement(GET_BY_ORD_NO);
+
+				pstmt.setString(1, ord_no);
+
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+					// tablesVO 也稱?�� Domain objects
+					commentsVO = new CommentsVO();
+					commentsVO.setCmnt_no(rs.getString("cmnt_no"));
+					commentsVO.setOrd_no(rs.getString("ord_no"));
+					commentsVO.setVendor_no(rs.getString("vendor_no"));
+					commentsVO.setScore(rs.getInt("score"));
+					commentsVO.setCmnt(rs.getString("cmnt"));
+					commentsVO.setTime(rs.getTimestamp("time"));
+					commentsVO.setCmnt_status(rs.getInt("cmnt_status"));			
+				}
+					list.add(commentsVO);
+				// Handle any driver errors
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException("Couldn't load database driver. "
+						+ e.getMessage());
+				// Handle any SQL errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return list;
+		}
+	
 
 	
 }
