@@ -12,7 +12,7 @@
 
 <%
 	Order_DetailService O_detailSvc = new Order_DetailService();
-	List<Order_DetailVO> list = O_detailSvc.findbyOrd_no("20190416-000005");
+	List<Order_DetailVO> list = O_detailSvc.findbyOrd_no("20190506-000005");
 // 	List<Order_DetailVO> list = O_detailSvc.findbyOrd_no("20190416-000005");
 	pageContext.setAttribute("list",list);
 %>

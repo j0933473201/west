@@ -17,8 +17,16 @@
     <servlet-name>OrdServlet</servlet-name>
     <url-pattern>/ord/ord.do</url-pattern>
   </servlet-mapping>
-  
     <servlet>
+    <servlet-name>Comments_Servlet</servlet-name>
+    <servlet-class>com.controller.model.Comments_Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Comments_Servlet</servlet-name>
+    <url-pattern>/comment/comment.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>Ord_DetailServlet</servlet-name>
     <servlet-class>com.ord_detail.controller.Ord_DetailServlet</servlet-class>
   </servlet>
@@ -26,8 +34,6 @@
     <servlet-name>Ord_DetailServlet</servlet-name>
     <url-pattern>/o_detail/o_detail.do</url-pattern>
   </servlet-mapping>
-  
-  
   <servlet>
     <servlet-name>Res_timeServlet</servlet-name>
     <servlet-class>com.reservation_time.controller.Res_timeServlet</servlet-class>

@@ -25,7 +25,7 @@
 
 
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>修改廠商營業資訊</title>
 </head>
 <style>
 body {
@@ -198,6 +198,8 @@ to {
 										   <div class="date" >
 										   <c:forEach var="exc_list" items="${excVO.find_by_vendor_no('V000001')}">
 										    <input type="date" class="exc_date1" name="exc_date"  value="${ exc_list.exc_date}" required>
+										    <input type="hidden" name="exc_no"  value="${ exc_list.exc_no}" required>
+										   
 										    </c:forEach>
 										    </div>
 										    
@@ -216,7 +218,9 @@ to {
 										    <button class="add_field_button">增加時段</button>
 										    <div>
 										    <c:forEach var="rt_list" items="${r_tVO.finby_v_no('V000001')}">
-										    <input type="text" name="open_hours" value="${rt_list.r_time }">
+										    <input type="text" name="open_hours" value="${rt_list.r_time}">
+										    <input type="hidden" name="rt_no" value="${rt_list.rt_no }"required>
+										    
 										  </c:forEach>
 										  </div>
 										</div>
@@ -231,8 +235,8 @@ to {
 									<label for="validationTooltip01">設定開放桌位：</label>
 								</div>
 								<div class="col-5">
-								 <c:forEach var="rtn_list" items="${ rtnVO.findBy_vendor('V000002')}">
-
+								 <c:forEach var="rtn_list" items="${ rtnVO.findBy_vendor('V000001')}">
+														<input type="hidden" name="rtn_no" value="${rtn_list.rtn_no}" >
 									<br>兩人桌數量：<input type="number" class="res_num" name="rtbl_o_num1" value="${rtn_list.rtbl_o_num1}" required>
 									
 									<br>四人桌數量：<input type="number" class="res_num" name="rtbl_o_num2" value="${rtn_list.rtbl_o_num2}"  required>
@@ -252,7 +256,9 @@ to {
 <!-- 								<div class="col-8"> -->
 <!-- 								</div> -->
 <!-- 							</div> -->
-<input type="hidden" name="action"	value="get_vendor_update">
+
+<input type="hidden" name="action"	value="update_open_time">
+
 <%-- <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"> --%>
 							<div>
 								<button type="submit" class="btn btn-primary col-12">修改</button>

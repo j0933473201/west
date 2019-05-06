@@ -21,7 +21,7 @@
 
 
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>新增廠商營業資訊</title>
 </head>
 <style>
 body {

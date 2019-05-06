@@ -374,12 +374,13 @@ body {
 			<div class="col-md-12">
 				<ul class="nav nav-tabs justify-content-center" id="myTab"
 					role="tablist">
-					<li class="nav-item"><a class="nav-link active" id="home-tab"
-						data-toggle="tab" href="#home" role="tab" aria-controls="home"
-						aria-selected="true">訂位</a></li>
-					<li class="nav-item"><a class="nav-link" id="profile-tab"
+					
+					<li class="nav-item"><a class="nav-link active" id="profile-tab"
 						data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-						aria-selected="false">資訊</a></li>
+						aria-selected="true">資訊</a></li>
+					<li class="nav-item"><a class="nav-link " id="home-tab"
+						data-toggle="tab" href="#home" role="tab" aria-controls="home"
+						aria-selected="false">訂位</a></li>
 					<li class="nav-item"><a class="nav-link" id="contact-tab"
 						data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
 						aria-selected="false">評論</a></li>
@@ -411,7 +412,7 @@ body {
 			<div class="col-md-12">
 	
 				<div class="tab-content" id="myTabContent">
-				  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...
+				  <div class="tab-pane fade  " id="home" role="tabpanel" aria-labelledby="home-tab">...
 				  	<c:if test="${not empty errorMsgs}">
 							<font style="color: red">請修正以下錯誤:</font>
 							<ul>
@@ -554,10 +555,10 @@ body {
 				  
 				  
 				  </div>
-				  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...\
+				  <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">...\
 				  	<div class="container">
 						<div class="row justify-content-center">
-							<div class="col-md-6">
+							<div class="col-md-8">
 								<div class="find-place-img_wrap">
 									<div class="grid">
 										<figure class="effect-ruby">
@@ -577,7 +578,7 @@ body {
 								<dd data-v-2ee1f21e="">${vendorVO.v_address1}${vendorVO.v_address2}${vendorVO.v_address3}</dd>
 								<hr>
 									<input type="hidden" id="addr" value=" ${vendorVO.v_address1}${vendorVO.v_address2}${vendorVO.v_address3}">
-									      <div id="map" style="width:700px; height:400px; margin:0px auto;" ></div>
+									      <div id="map" style="width:850px; height:400px; margin:0px auto;" ></div>
 								<hr>
 								<dt data-v-2ee1f21e="">餐廳E-mail</dt>
 								<hr>

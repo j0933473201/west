@@ -29,6 +29,8 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 			"UPDATE comments set ord_no=?, vendor_no=?, score=?, cmnt=?, time=?, cmnt_status=? where cmnt_no = ?";
 	private static final String GET_ONE_VENDOR = 
 			"SELECT * FROM comments where vendor_no = ?";
+	private static final String GET_BY_ORD_NO=
+			"SELECT cmnt_no, ord_no, vendor_no, score, cmnt, time, cmnt_status FROM comments where cmnt_no = ?";
 	
 	
 	@Override
@@ -398,6 +400,12 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 		}
 		
 		return list;
+	}
+
+	@Override
+	public CommentsVO findByord_no(String ord_no) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
