@@ -18,7 +18,9 @@ import com.reservation_time.model.Reservation_TimeVO;
 public class Restaurant_MenuJDBCDAO implements Restaurant_MenuDAO_interface {
 	
 	String driver = "oracle.jdbc.driver.OracleDriver";
-//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	final static String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	final static String userid = "CA107G3";
+//	final static String passwd = "123456";
 	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WEST";
 	String passwd = "800627";

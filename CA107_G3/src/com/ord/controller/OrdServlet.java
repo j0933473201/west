@@ -7,9 +7,13 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.OptionalDouble;
 import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
@@ -20,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.comment.model.CommentsService;
+import com.comment.model.CommentsVO;
 import com.exception_date.model.Exception_DateService;
 import com.exception_date.model.Exception_DateVO;
 import com.friend_list.model.Friend_ListVO;
@@ -71,7 +77,7 @@ public class OrdServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = 
-					req.getRequestDispatcher("/ord/ord/select_page.jsp");
+					req.getRequestDispatcher("/front-end/ord/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -85,7 +91,7 @@ public class OrdServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = 
-					req.getRequestDispatcher("/ord/ord/select_page.jsp");
+					req.getRequestDispatcher("/front-end/ord/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -99,7 +105,7 @@ public class OrdServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ord/ord/select_page.jsp");
+							.getRequestDispatcher("/front-end/ord/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -114,10 +120,16 @@ public class OrdServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("can not find ord_no detail:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/ord/ord/select_page.jsp");
+						.getRequestDispatcher("/front-end/ord/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
+		
+		
+		
+		
+		
+		
 		
 		//會員瀏覽所有訂單
 		if ("getMem_For_Display".equals(action)) { 
@@ -165,7 +177,7 @@ public class OrdServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ord/ord/select_page.jsp");//導向首頁
+							.getRequestDispatcher("/front-end/ord/select_page.jsp");//導向首頁
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -233,7 +245,7 @@ public class OrdServlet extends HttpServlet {
 						// Send the use back to the form, if there were errors
 						if (!errorMsgs.isEmpty()) {
 							RequestDispatcher failureView = req
-									.getRequestDispatcher("/ord/ord/select_page.jsp");//導向首頁
+									.getRequestDispatcher("/front-end/ord/select_page.jsp");//導向首頁
 							failureView.forward(req, res);
 							return;//程式中斷
 						}
@@ -248,7 +260,7 @@ public class OrdServlet extends HttpServlet {
 					} catch (Exception e) {
 						errorMsgs.add("can not find ord_no detail:" + e.getMessage());
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/ord/ord/select_page.jsp");//倒回首頁
+								.getRequestDispatcher("/front-end/ord/select_page.jsp");//倒回首頁
 						failureView.forward(req, res);
 					}
 				}
@@ -281,7 +293,7 @@ public class OrdServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/ord/ord/listAllOrd.jsp");
+						.getRequestDispatcher("/front-end/ord/listAllOrd.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -293,7 +305,7 @@ public class OrdServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-//			try {
+			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String ord_no = new String(req.getParameter("ord_no").trim());
 				String mem_no = req.getParameter("mem_no");
@@ -371,7 +383,7 @@ public class OrdServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("ordVO", ordVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/ord/ord/update_ord_input.jsp");
+							.getRequestDispatcher("/front-end/ord/update_ord_input.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -382,17 +394,17 @@ public class OrdServlet extends HttpServlet {
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("ordVO", ordVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/ord/ord/listOneOrd.jsp";
+				String url = "/front-end/ord/listOneOrd.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
-////				/***************************其他可能的錯誤處理*************************************/
-//			} catch (Exception e) {
-//				errorMsgs.add("修改資料失敗:"+e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/ord/ord/update_ord_input.jsp");
-//				failureView.forward(req, res);
-//			}
+//				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/ord/ord/update_ord_input.jsp");
+				failureView.forward(req, res);
+			}
 		}
 
         
@@ -414,15 +426,57 @@ public class OrdServlet extends HttpServlet {
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/ord/ord/select_page.jsp");
+						.getRequestDispatcher("/front-end/ord/select_page.jsp");
 				failureView.forward(req, res);
 				return;//程式中斷
 			}
+						
+			CommentsService C_Svc=new CommentsService();
+			
+			//拿到這家廠商的所有評論
+			List<CommentsVO>C_list=C_Svc.getVendor(vendor_no);
+			//拿到這家廠商的所有評論裡面的每一比訂單
+			
+				OrdService ordSvc=new OrdService();
+				MemberService mSvc=new MemberService();
+				CommentsService cSvc=new CommentsService();
+				Map<MemberVO, CommentsVO> cMap = new LinkedHashMap<>();
+				//拿到這家廠商所有訂單ＶＯ
+				List<OrdVO> olist = ordSvc.findByvendor_no(vendor_no);
+				//拿到每一筆訂單的會員編號
+				//娶到每個會員的ＶＯ
+				//拿到每筆評論的ＶＯ
+//				全部放在ＭＡＰ裡面
+				for ( OrdVO oVO : olist) {
+					
+					String mmm = oVO.getMem_no();
+					MemberVO mVO = mSvc.getOneMember(mmm);
+					CommentsVO cVO = cSvc.findByord_no(oVO.getOrd_no());
+					
+					cMap.put(mVO, cVO);
+				}
+//				以java8的串流搭配濾器拿到某一家廠商的所有評論,並且取出所有評分做平均
+			List<CommentsVO> ALlccomment=	cSvc.getAll();
+			OptionalDouble avgscore=ALlccomment.stream()
+					.filter(v -> v.getVendor_no().equals(vendor_no))
+					.mapToDouble(v->v.getScore())
+					.average();
+			
+			String result=null;
+			if(avgscore.isPresent()) {
+				result=String.format("%.1f", avgscore.getAsDouble());
+				
+			}
+				
+				List<OrdVO> vendorordList=ordSvc.findByvendor_no(vendor_no);	
 			
 			/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 			req.setAttribute("vVO", vVO); // 資料庫取出的empVO物件,存入req
+//			req.setAttribute("memlist", memlist);
+			req.setAttribute("cMap", cMap);
+			req.setAttribute("avgscore", result);
 			req.setAttribute("vendor_no",vendor_no);
-			String url = "/ord/ord/addOrd2.jsp";
+			String url = "/front-end/ord/addOrd2.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
 
@@ -430,7 +484,7 @@ public class OrdServlet extends HttpServlet {
 		} catch (Exception e) {
 			errorMsgs.add("can not find ord_no detail:" + e.getMessage());
 			RequestDispatcher failureView = req
-					.getRequestDispatcher("/ord/ord/select_page.jsp");
+					.getRequestDispatcher("/front-end/ord/select_page.jsp");
 			failureView.forward(req, res);
 		}
         	
@@ -455,7 +509,7 @@ public class OrdServlet extends HttpServlet {
 				ordSvc.deleteOrd(ord_no);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/ord/ord/listAllOrd.jsp";
+				String url = "/front-end/ord/listAllOrd.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -465,10 +519,12 @@ public class OrdServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/ord/listAllOrd.jsp");
+						.getRequestDispatcher("front-end/ord/listAllOrd.jsp");
 				failureView.forward(req, res);
 			}
 		}
+		
+		
 		
 		HttpSession session = req.getSession();
 			
@@ -494,12 +550,12 @@ public class OrdServlet extends HttpServlet {
 		
 		//訂位日期
 		java.sql.Date booking_date=null;
-//		try {
+		try {
 			booking_date=java.sql.Date.valueOf(req.getParameter("booking_date").trim());
-//		}catch (IllegalArgumentException e) {
-//			booking_date=new java.sql.Date(System.currentTimeMillis());
-//			errorMsgs.add("please choose date!");
-//		}
+		}catch (IllegalArgumentException e) {
+			booking_date=new java.sql.Date(System.currentTimeMillis());
+			errorMsgs.add("please choose date!");
+		}
 		//已訂位時段剩餘數量------------
 		
 		Reservation_Table_OrderedService RtoSvc =new Reservation_Table_OrderedService();
@@ -587,6 +643,7 @@ public class OrdServlet extends HttpServlet {
 		req.setAttribute("lhs5", lhs5);
 		
 		req.setAttribute("booking_date", booking_date);
+		req.setAttribute("party_size", party_size);
 		req.setAttribute("rtlist",rtlist);
 		req.setAttribute("vVO", vVO);
 		req.setAttribute("exclist", exclist);
@@ -597,12 +654,10 @@ public class OrdServlet extends HttpServlet {
 		
 		 // 資料庫取出的empVO物件,存入req
 		
-		String url = "/ord/ord/addOrd2.jsp";
+		String url = "/front-end/ord/addOrd2.jsp";
 		RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 		successView.forward(req, res);
 		
-		
-//	}	
 	
 		}
 		
@@ -613,7 +668,6 @@ public class OrdServlet extends HttpServlet {
 			String vendor_no=req.getParameter("vendor_no");
 			String mem_no =req.getParameter("mem_no");
 			System.out.println("mem_no======"+mem_no);
-//			String tbl_no = req.getParameter("tbl_no");
 			java.sql.Timestamp ord_time =java.sql.Timestamp.valueOf(req.getParameter("ord_time"));
 			java.sql.Date booking_date = java.sql.Date.valueOf(req.getParameter("booking_date").trim());
 			req.getParameter("booking_time");
@@ -640,7 +694,7 @@ public class OrdServlet extends HttpServlet {
 			session.setAttribute("status", status);
 			System.out.println("status======"+status);
 			System.out.println("party_size===="+party_size);
-			String url = "/ord/ord/ordfood.jsp";
+			String url = "/front-end/ord/ordfood.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
 			
@@ -721,7 +775,7 @@ public class OrdServlet extends HttpServlet {
 				
 			String vendro_no=(String) session.getAttribute("vendor_no");
 			System.out.println(vendro_no);
-				String url = "/ord/ord/ordfood.jsp";
+				String url = "/front-end/ord/ordfood.jsp";
 				RequestDispatcher rd = req.getRequestDispatcher(url);
 				rd.forward(req, res);
 
@@ -750,7 +804,7 @@ public class OrdServlet extends HttpServlet {
 					session.setAttribute("date", date);
 					session.setAttribute("total", total);
 					System.out.println("total000000000"+total);
-					String url = "/ord/ord/check.jsp";
+					String url = "/front-end/ord/check.jsp";
 					RequestDispatcher rd = req.getRequestDispatcher(url);
 					rd.forward(req, res);
 					
@@ -763,7 +817,7 @@ public class OrdServlet extends HttpServlet {
 					
 					 session.setAttribute("share1234", share1234);
 					
-						String url = "/ord/ord/check.jsp";
+						String url = "/front-end/ord/check.jsp";
 						RequestDispatcher rd = req.getRequestDispatcher(url);
 						rd.forward(req, res);
 					}
@@ -792,7 +846,7 @@ public class OrdServlet extends HttpServlet {
 							}
 							if (!errorMsgs.isEmpty()) {
 								RequestDispatcher failureView = 
-								req.getRequestDispatcher("/ord/ord/check.jsp");
+								req.getRequestDispatcher("/front-end/ord/check.jsp");
 								failureView.forward(req, res);
 								return;//程式中斷
 							}
@@ -818,7 +872,7 @@ public class OrdServlet extends HttpServlet {
 				 }
 					 if (!errorMsgs.isEmpty()) {
 							RequestDispatcher failureView = 
-							req.getRequestDispatcher("/ord/ord/check.jsp");
+							req.getRequestDispatcher("/front-end/ord/check.jsp");
 							failureView.forward(req, res);
 							return;//程式中斷
 						}
@@ -910,7 +964,7 @@ public class OrdServlet extends HttpServlet {
 				 } catch (Exception e) {
 						errorMsgs.add("請輸入正確資訊:" + e.getMessage());
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/ord/ord/check.jsp");
+								.getRequestDispatcher("/front-end/ord/check.jsp");
 						failureView.forward(req, res);
 					}
 			 }
@@ -932,7 +986,7 @@ public class OrdServlet extends HttpServlet {
 						Integer total =(int)amount;
 						System.out.println("total55555"+total);
 						session.setAttribute("total", total);
-						String url = "/ord/ord/credit.jsp";
+						String url = "/front-end/ord/credit.jsp";
 						RequestDispatcher rd = req.getRequestDispatcher(url);
 						rd.forward(req, res);
 					 }
@@ -1077,7 +1131,7 @@ public class OrdServlet extends HttpServlet {
 					      mailService.sendMail(to, subject, messageText);
 				
 						/***************************3.新增完成,準備轉交(Send the Success view)***********/
-						String url = "/ord/ord/listAllOrd.jsp";
+						String url = "/frond-end/ord/listAllOrd.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 						successView.forward(req, res);	
 //						 
@@ -1181,7 +1235,9 @@ public class OrdServlet extends HttpServlet {
 								testList.add(Order_DetailVO);
 							}
 							
-							dao.insertWithOrd_detail(ordVO,testList);
+							OrdVO ordVO2=dao.insertWithOrd_detail(ordVO,testList);
+									ordVO.setOrd_no(ordVO2.getOrd_no());
+							System.out.println("ordVO2.getOrd_no()==="+ordVO2.getOrd_no());
 //							System.out.println("cominginging");
 //							
 //								String menu_no = (String) session.getAttribute("menu_no");
@@ -1195,34 +1251,38 @@ public class OrdServlet extends HttpServlet {
 							
 							//傳送信件
 							
-							 String to = "ji394z06z06@yahoo.com.tw";
-						      
-						      String subject = "成功訂位";
-						      
-						      String ch_name = m_name;
-						  
-						      String messageText =
-						      "Hello! " + ch_name + " 恭喜你已經完成訂位,請於"+booking_date  +"\r\n"+
-						      "當日"+booking_time+"攜帶愉快的心情於"  +"\r\n"
-						      +v_name+"餐廳"+"\r\n"+
-						      "享受美好的一餐"+"\r\n"+
-						      "切記出示驗證碼"+verif_code+"或是"+"QRcode進行驗證"
-						      ; 
-						       
-						      MailService mailService = new MailService();
-						      mailService.sendMail(to, subject, messageText);
+//							 String to = "ji394z06z06@yahoo.com.tw";
+//						      
+//						      String subject = "成功訂位";
+//						      
+//						      String ch_name = m_name;
+//						  
+//						      String messageText =
+//						      "Hello! " + ch_name + " 恭喜你已經完成訂位,請於"+booking_date  +"\r\n"+
+//						      "當日"+booking_time+"攜帶愉快的心情於"  +"\r\n"
+//						      +v_name+"餐廳"+"\r\n"+
+//						      "享受美好的一餐"+"\r\n"+
+//						      "切記出示驗證碼"+verif_code+"或是"+"QRcode進行驗證"
+//						      ; 
+//						       
+//						      MailService mailService = new MailService();
+//						      mailService.sendMail(to, subject, messageText);
 							
 							// Send the use back to the form, if there were errors
 							if (!errorMsgs.isEmpty()) {
 								req.setAttribute("ordVO", ordVO); 
 								RequestDispatcher failureView = req
-										.getRequestDispatcher("/ord/ord/addOrd2.jsp");
+										.getRequestDispatcher("/frond-end/ord/addOrd2.jsp");
 								failureView.forward(req, res);
 								return;
 							}
+							
+							
+							
 						
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-							String url = "/ord/ord/listAllOrd.jsp";
+							req.setAttribute("OrdVO",ordVO);
+							String url = "/front-end/ord/list_one_ord.jsp";
 							RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 							successView.forward(req, res);				
 							
@@ -1230,7 +1290,7 @@ public class OrdServlet extends HttpServlet {
 						} catch (Exception e) {
 							errorMsgs.add(e.getMessage());
 							RequestDispatcher failureView = req
-									.getRequestDispatcher("/ord/addOrd2.jsp");
+									.getRequestDispatcher("/frond-end/ord/addOrd2.jsp");
 							failureView.forward(req, res);
 						}
 					}

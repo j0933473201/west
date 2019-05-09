@@ -13,8 +13,11 @@ import java.util.Map;
 
 
 
-public  class RES_Transaction_ListDAO implements RES_Transaction_ListDAO_Interface {
+public  class RES_Transaction_ListJDBCDAO implements RES_Transaction_ListDAO_Interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
+//	final static String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	final static String userid = "CA107G3";
+//	final static String passwd = "123456";
 	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WEST";
 	String passwd = "800627";
@@ -312,7 +315,7 @@ public  class RES_Transaction_ListDAO implements RES_Transaction_ListDAO_Interfa
 	}
 
 	public static void main(String[] args) {
-		RES_Transaction_ListDAO dao = new RES_Transaction_ListDAO();
+		RES_Transaction_ListJDBCDAO dao = new RES_Transaction_ListJDBCDAO();
 //		RES_transaction_listVO resVO1 = new RES_transaction_listVO();
 		
 		//insert

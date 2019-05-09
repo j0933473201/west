@@ -12,7 +12,7 @@
 
 <%
 	Order_DetailService O_detailSvc = new Order_DetailService();
-	List<Order_DetailVO> list = O_detailSvc.findbyOrd_no("20190506-000005");
+	List<Order_DetailVO> list = O_detailSvc.findbyOrd_no("20190507-000009");
 // 	List<Order_DetailVO> list = O_detailSvc.findbyOrd_no("20190416-000005");
 	pageContext.setAttribute("list",list);
 %>
@@ -100,7 +100,7 @@
                             ${(O_detailVO.price)*(O_detailVO.qty)}
                         </td>
                         <td>
-	                	<a href="<%=request.getContextPath()%>/ord/ord/listAllOrd.jsp" >
+	                	<a href="<%=request.getContextPath()%>/front-end/ord/listAllOrd.jsp" >
 							<button class="btn btn-success " >查看其他訂單<span class="glyphicon glyphicon-shopping-cart"></span></button>
 						</a>
 					</td>

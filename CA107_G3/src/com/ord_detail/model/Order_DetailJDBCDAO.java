@@ -13,7 +13,10 @@ public class Order_DetailJDBCDAO implements Order_DetailDAO_interface {
 	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WEST";
 	String passwd = "800627";
-
+//	final static String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	final static String userid = "CA107G3";
+//	final static String passwd = "123456";
+//
 	private static final String INSERT_STMT = 
 			"INSERT INTO order_detail (ord_no, menu_no, qty, price)" + 
 			" VALUES (?, ?, ?, ?)";

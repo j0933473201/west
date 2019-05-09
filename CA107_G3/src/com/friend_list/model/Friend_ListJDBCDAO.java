@@ -13,6 +13,9 @@ import java.util.Set;
 
 public class Friend_ListJDBCDAO implements Friend_ListDAO_interface{
 	String driver = "oracle.jdbc.driver.OracleDriver";
+//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String userid = "CA107G3";
+//	String passwd = "123456";
 	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WEST";
 	String passwd ="800627";

@@ -58,7 +58,7 @@ public class ShowImg extends HttpServlet {
 		
 		// 抓會員圖
 				if (req.getParameter("mem_no") != null) {
-					picName = "M_PIC";
+					picName = "mem_pic";
 					SQL = "SELECT M_PIC FROM MEMBER WHERE MEM_NO = " + req.getParameter("mem_no");
 				}
 

@@ -15,11 +15,13 @@ import com.restaurant_transaction_list.model.RES_Transaction_ListVO;
 
 
 
-public class Reservation_Table_OrderedDAO implements Reservation_Table_OrderedDAO_interface {
+public class Reservation_Table_OrderedJDBCDAO implements Reservation_Table_OrderedDAO_interface {
 		
 	
 	String driver = "oracle.jdbc.driver.OracleDriver";
-//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	final static String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	final static String userid = "CA107G3";
+//	final static String passwd = "123456";
 	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WEST";
 	String passwd = "800627";
@@ -358,7 +360,7 @@ public class Reservation_Table_OrderedDAO implements Reservation_Table_OrderedDA
 	public static void main(String[] args) {
 
 
-		Reservation_Table_OrderedDAO dao = new Reservation_Table_OrderedDAO();
+		Reservation_Table_OrderedJDBCDAO dao = new Reservation_Table_OrderedJDBCDAO();
 		Reservation_Table_OrderedVO resVO1 = new Reservation_Table_OrderedVO();
 		
 		//insert

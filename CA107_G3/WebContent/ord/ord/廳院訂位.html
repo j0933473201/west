@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>廳院訂位 - Booking.jsp</title>
+<link rel="stylesheet" href="/IBM_WebSocket3_Booking/css/Booking.css" />
+</head>
+
+<body onLoad="document.form1.hall_name.focus(); connect();"	onunload="disconnect();">
+    <div id="myID" class="WebSocket"></div>
+    <span id="output" class="WebSocket"></span>
+    <br>
+	<img id='img_SC' width='60%' height='170px' src='images/screen.gif' />
+	<br>
+	<br>
+	<form method="post" action="Booking_receive.jsp" name="form1">
+
+		<!------------------------------------------------------------------------------------------------->
+		<table class="wwFormTable">
+			<tr>
+				<td><b>廳院名稱:</b> <input type="text" name="hall_name" value="金龍廳" class="text-field"></td>
+			</tr>
+		</table>
+		<table class="wwFormTable">
+			
+				<tr>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG1-1" class='css-checkbox1-blue' name="seats" value="1-1" 
+						           onclick="sendMessage('1-1');" > 
+							<label id="1-1" for="checkboxG1-1" class='css-label1-blue'>1-1</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG1-2" class='css-checkbox1-blue' name="seats" value="1-2" 
+						           onclick="sendMessage('1-2');" > 
+							<label id="1-2" for="checkboxG1-2" class='css-label1-blue'>1-2</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG1-3" class='css-checkbox1-blue' name="seats" value="1-3" 
+						           onclick="sendMessage('1-3');" > 
+							<label id="1-3" for="checkboxG1-3" class='css-label1-blue'>1-3</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG1-4" class='css-checkbox1-blue' name="seats" value="1-4" 
+						           onclick="sendMessage('1-4');" > 
+							<label id="1-4" for="checkboxG1-4" class='css-label1-blue'>1-4</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG1-5" class='css-checkbox1-blue' name="seats" value="1-5" 
+						           onclick="sendMessage('1-5');" > 
+							<label id="1-5" for="checkboxG1-5" class='css-label1-blue'>1-5</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG1-6" class='css-checkbox1-blue' name="seats" value="1-6" 
+						           onclick="sendMessage('1-6');" > 
+							<label id="1-6" for="checkboxG1-6" class='css-label1-blue'>1-6</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG1-7" class='css-checkbox1-blue' name="seats" value="1-7" 
+						           onclick="sendMessage('1-7');" > 
+							<label id="1-7" for="checkboxG1-7" class='css-label1-blue'>1-7</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG1-8" class='css-checkbox1-blue' name="seats" value="1-8" 
+						           onclick="sendMessage('1-8');" > 
+							<label id="1-8" for="checkboxG1-8" class='css-label1-blue'>1-8</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG1-9" class='css-checkbox1-blue' name="seats" value="1-9" 
+						           onclick="sendMessage('1-9');" > 
+							<label id="1-9" for="checkboxG1-9" class='css-label1-blue'>1-9</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG1-10" class='css-checkbox1-blue' name="seats" value="1-10" 
+						           onclick="sendMessage('1-10');" > 
+							<label id="1-10" for="checkboxG1-10" class='css-label1-blue'>1-10</label>
+						</td>
+					 
+				</tr>
+			
+				<tr>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG2-1" class='css-checkbox1-blue' name="seats" value="2-1" 
+						           onclick="sendMessage('2-1');" > 
+							<label id="2-1" for="checkboxG2-1" class='css-label1-blue'>2-1</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG2-2" class='css-checkbox1-blue' name="seats" value="2-2" 
+						           onclick="sendMessage('2-2');" > 
+							<label id="2-2" for="checkboxG2-2" class='css-label1-blue'>2-2</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG2-3" class='css-checkbox1-blue' name="seats" value="2-3" 
+						           onclick="sendMessage('2-3');" > 
+							<label id="2-3" for="checkboxG2-3" class='css-label1-blue'>2-3</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG2-4" class='css-checkbox1-blue' name="seats" value="2-4" 
+						           onclick="sendMessage('2-4');" > 
+							<label id="2-4" for="checkboxG2-4" class='css-label1-blue'>2-4</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG2-5" class='css-checkbox1-blue' name="seats" value="2-5" 
+						           onclick="sendMessage('2-5');" > 
+							<label id="2-5" for="checkboxG2-5" class='css-label1-blue'>2-5</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG2-6" class='css-checkbox1-blue' name="seats" value="2-6" 
+						           onclick="sendMessage('2-6');" > 
+							<label id="2-6" for="checkboxG2-6" class='css-label1-blue'>2-6</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG2-7" class='css-checkbox1-blue' name="seats" value="2-7" 
+						           onclick="sendMessage('2-7');" > 
+							<label id="2-7" for="checkboxG2-7" class='css-label1-blue'>2-7</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG2-8" class='css-checkbox1-blue' name="seats" value="2-8" 
+						           onclick="sendMessage('2-8');" > 
+							<label id="2-8" for="checkboxG2-8" class='css-label1-blue'>2-8</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG2-9" class='css-checkbox1-blue' name="seats" value="2-9" 
+						           onclick="sendMessage('2-9');" > 
+							<label id="2-9" for="checkboxG2-9" class='css-label1-blue'>2-9</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG2-10" class='css-checkbox1-blue' name="seats" value="2-10" 
+						           onclick="sendMessage('2-10');" > 
+							<label id="2-10" for="checkboxG2-10" class='css-label1-blue'>2-10</label>
+						</td>
+					 
+				</tr>
+			
+				<tr>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG3-1" class='css-checkbox1-blue' name="seats" value="3-1" 
+						           onclick="sendMessage('3-1');" > 
+							<label id="3-1" for="checkboxG3-1" class='css-label1-blue'>3-1</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG3-2" class='css-checkbox1-blue' name="seats" value="3-2" 
+						           onclick="sendMessage('3-2');" > 
+							<label id="3-2" for="checkboxG3-2" class='css-label1-blue'>3-2</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG3-3" class='css-checkbox1-blue' name="seats" value="3-3" 
+						           onclick="sendMessage('3-3');" > 
+							<label id="3-3" for="checkboxG3-3" class='css-label1-blue'>3-3</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG3-4" class='css-checkbox1-blue' name="seats" value="3-4" 
+						           onclick="sendMessage('3-4');" > 
+							<label id="3-4" for="checkboxG3-4" class='css-label1-blue'>3-4</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG3-5" class='css-checkbox1-blue' name="seats" value="3-5" 
+						           onclick="sendMessage('3-5');" > 
+							<label id="3-5" for="checkboxG3-5" class='css-label1-blue'>3-5</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG3-6" class='css-checkbox1-blue' name="seats" value="3-6" 
+						           onclick="sendMessage('3-6');" > 
+							<label id="3-6" for="checkboxG3-6" class='css-label1-blue'>3-6</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG3-7" class='css-checkbox1-blue' name="seats" value="3-7" 
+						           onclick="sendMessage('3-7');" > 
+							<label id="3-7" for="checkboxG3-7" class='css-label1-blue'>3-7</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG3-8" class='css-checkbox1-blue' name="seats" value="3-8" 
+						           onclick="sendMessage('3-8');" > 
+							<label id="3-8" for="checkboxG3-8" class='css-label1-blue'>3-8</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG3-9" class='css-checkbox1-blue' name="seats" value="3-9" 
+						           onclick="sendMessage('3-9');" > 
+							<label id="3-9" for="checkboxG3-9" class='css-label1-blue'>3-9</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG3-10" class='css-checkbox1-blue' name="seats" value="3-10" 
+						           onclick="sendMessage('3-10');" > 
+							<label id="3-10" for="checkboxG3-10" class='css-label1-blue'>3-10</label>
+						</td>
+					 
+				</tr>
+			
+				<tr>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG4-1" class='css-checkbox1-blue' name="seats" value="4-1" 
+						           onclick="sendMessage('4-1');" > 
+							<label id="4-1" for="checkboxG4-1" class='css-label1-blue'>4-1</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG4-2" class='css-checkbox1-blue' name="seats" value="4-2" 
+						           onclick="sendMessage('4-2');" > 
+							<label id="4-2" for="checkboxG4-2" class='css-label1-blue'>4-2</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG4-3" class='css-checkbox1-blue' name="seats" value="4-3" 
+						           onclick="sendMessage('4-3');" > 
+							<label id="4-3" for="checkboxG4-3" class='css-label1-blue'>4-3</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG4-4" class='css-checkbox1-blue' name="seats" value="4-4" 
+						           onclick="sendMessage('4-4');" > 
+							<label id="4-4" for="checkboxG4-4" class='css-label1-blue'>4-4</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG4-5" class='css-checkbox1-blue' name="seats" value="4-5" 
+						           onclick="sendMessage('4-5');" > 
+							<label id="4-5" for="checkboxG4-5" class='css-label1-blue'>4-5</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG4-6" class='css-checkbox1-blue' name="seats" value="4-6" 
+						           onclick="sendMessage('4-6');" > 
+							<label id="4-6" for="checkboxG4-6" class='css-label1-blue'>4-6</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG4-7" class='css-checkbox1-blue' name="seats" value="4-7" 
+						           onclick="sendMessage('4-7');" > 
+							<label id="4-7" for="checkboxG4-7" class='css-label1-blue'>4-7</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG4-8" class='css-checkbox1-blue' name="seats" value="4-8" 
+						           onclick="sendMessage('4-8');" > 
+							<label id="4-8" for="checkboxG4-8" class='css-label1-blue'>4-8</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG4-9" class='css-checkbox1-blue' name="seats" value="4-9" 
+						           onclick="sendMessage('4-9');" > 
+							<label id="4-9" for="checkboxG4-9" class='css-label1-blue'>4-9</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG4-10" class='css-checkbox1-blue' name="seats" value="4-10" 
+						           onclick="sendMessage('4-10');" > 
+							<label id="4-10" for="checkboxG4-10" class='css-label1-blue'>4-10</label>
+						</td>
+					 
+				</tr>
+			
+				<tr>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG5-1" class='css-checkbox1-blue' name="seats" value="5-1" 
+						           onclick="sendMessage('5-1');" > 
+							<label id="5-1" for="checkboxG5-1" class='css-label1-blue'>5-1</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG5-2" class='css-checkbox1-blue' name="seats" value="5-2" 
+						           onclick="sendMessage('5-2');" > 
+							<label id="5-2" for="checkboxG5-2" class='css-label1-blue'>5-2</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG5-3" class='css-checkbox1-blue' name="seats" value="5-3" 
+						           onclick="sendMessage('5-3');" > 
+							<label id="5-3" for="checkboxG5-3" class='css-label1-blue'>5-3</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG5-4" class='css-checkbox1-blue' name="seats" value="5-4" 
+						           onclick="sendMessage('5-4');" > 
+							<label id="5-4" for="checkboxG5-4" class='css-label1-blue'>5-4</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG5-5" class='css-checkbox1-blue' name="seats" value="5-5" 
+						           onclick="sendMessage('5-5');" > 
+							<label id="5-5" for="checkboxG5-5" class='css-label1-blue'>5-5</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG5-6" class='css-checkbox1-blue' name="seats" value="5-6" 
+						           onclick="sendMessage('5-6');" > 
+							<label id="5-6" for="checkboxG5-6" class='css-label1-blue'>5-6</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG5-7" class='css-checkbox1-blue' name="seats" value="5-7" 
+						           onclick="sendMessage('5-7');" > 
+							<label id="5-7" for="checkboxG5-7" class='css-label1-blue'>5-7</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG5-8" class='css-checkbox1-blue' name="seats" value="5-8" 
+						           onclick="sendMessage('5-8');" > 
+							<label id="5-8" for="checkboxG5-8" class='css-label1-blue'>5-8</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG5-9" class='css-checkbox1-blue' name="seats" value="5-9" 
+						           onclick="sendMessage('5-9');" > 
+							<label id="5-9" for="checkboxG5-9" class='css-label1-blue'>5-9</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG5-10" class='css-checkbox1-blue' name="seats" value="5-10" 
+						           onclick="sendMessage('5-10');" > 
+							<label id="5-10" for="checkboxG5-10" class='css-label1-blue'>5-10</label>
+						</td>
+					 
+				</tr>
+			
+				<tr>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG6-1" class='css-checkbox1-blue' name="seats" value="6-1" 
+						           onclick="sendMessage('6-1');" > 
+							<label id="6-1" for="checkboxG6-1" class='css-label1-blue'>6-1</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG6-2" class='css-checkbox1-blue' name="seats" value="6-2" 
+						           onclick="sendMessage('6-2');" > 
+							<label id="6-2" for="checkboxG6-2" class='css-label1-blue'>6-2</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG6-3" class='css-checkbox1-blue' name="seats" value="6-3" 
+						           onclick="sendMessage('6-3');" > 
+							<label id="6-3" for="checkboxG6-3" class='css-label1-blue'>6-3</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG6-4" class='css-checkbox1-blue' name="seats" value="6-4" 
+						           onclick="sendMessage('6-4');" > 
+							<label id="6-4" for="checkboxG6-4" class='css-label1-blue'>6-4</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG6-5" class='css-checkbox1-blue' name="seats" value="6-5" 
+						           onclick="sendMessage('6-5');" > 
+							<label id="6-5" for="checkboxG6-5" class='css-label1-blue'>6-5</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG6-6" class='css-checkbox1-blue' name="seats" value="6-6" 
+						           onclick="sendMessage('6-6');" > 
+							<label id="6-6" for="checkboxG6-6" class='css-label1-blue'>6-6</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG6-7" class='css-checkbox1-blue' name="seats" value="6-7" 
+						           onclick="sendMessage('6-7');" > 
+							<label id="6-7" for="checkboxG6-7" class='css-label1-blue'>6-7</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG6-8" class='css-checkbox1-blue' name="seats" value="6-8" 
+						           onclick="sendMessage('6-8');" > 
+							<label id="6-8" for="checkboxG6-8" class='css-label1-blue'>6-8</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG6-9" class='css-checkbox1-blue' name="seats" value="6-9" 
+						           onclick="sendMessage('6-9');" > 
+							<label id="6-9" for="checkboxG6-9" class='css-label1-blue'>6-9</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG6-10" class='css-checkbox1-blue' name="seats" value="6-10" 
+						           onclick="sendMessage('6-10');" > 
+							<label id="6-10" for="checkboxG6-10" class='css-label1-blue'>6-10</label>
+						</td>
+					 
+				</tr>
+			
+				<tr>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG7-1" class='css-checkbox1-blue' name="seats" value="7-1" 
+						           onclick="sendMessage('7-1');" > 
+							<label id="7-1" for="checkboxG7-1" class='css-label1-blue'>7-1</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG7-2" class='css-checkbox1-blue' name="seats" value="7-2" 
+						           onclick="sendMessage('7-2');" > 
+							<label id="7-2" for="checkboxG7-2" class='css-label1-blue'>7-2</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG7-3" class='css-checkbox1-blue' name="seats" value="7-3" 
+						           onclick="sendMessage('7-3');" > 
+							<label id="7-3" for="checkboxG7-3" class='css-label1-blue'>7-3</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG7-4" class='css-checkbox1-blue' name="seats" value="7-4" 
+						           onclick="sendMessage('7-4');" > 
+							<label id="7-4" for="checkboxG7-4" class='css-label1-blue'>7-4</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG7-5" class='css-checkbox1-blue' name="seats" value="7-5" 
+						           onclick="sendMessage('7-5');" > 
+							<label id="7-5" for="checkboxG7-5" class='css-label1-blue'>7-5</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG7-6" class='css-checkbox1-blue' name="seats" value="7-6" 
+						           onclick="sendMessage('7-6');" > 
+							<label id="7-6" for="checkboxG7-6" class='css-label1-blue'>7-6</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG7-7" class='css-checkbox1-blue' name="seats" value="7-7" 
+						           onclick="sendMessage('7-7');" > 
+							<label id="7-7" for="checkboxG7-7" class='css-label1-blue'>7-7</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG7-8" class='css-checkbox1-blue' name="seats" value="7-8" 
+						           onclick="sendMessage('7-8');" > 
+							<label id="7-8" for="checkboxG7-8" class='css-label1-blue'>7-8</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG7-9" class='css-checkbox1-blue' name="seats" value="7-9" 
+						           onclick="sendMessage('7-9');" > 
+							<label id="7-9" for="checkboxG7-9" class='css-label1-blue'>7-9</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG7-10" class='css-checkbox1-blue' name="seats" value="7-10" 
+						           onclick="sendMessage('7-10');" > 
+							<label id="7-10" for="checkboxG7-10" class='css-label1-blue'>7-10</label>
+						</td>
+					 
+				</tr>
+			
+				<tr>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG8-1" class='css-checkbox1-blue' name="seats" value="8-1" 
+						           onclick="sendMessage('8-1');" > 
+							<label id="8-1" for="checkboxG8-1" class='css-label1-blue'>8-1</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG8-2" class='css-checkbox1-blue' name="seats" value="8-2" 
+						           onclick="sendMessage('8-2');" > 
+							<label id="8-2" for="checkboxG8-2" class='css-label1-blue'>8-2</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG8-3" class='css-checkbox1-blue' name="seats" value="8-3" 
+						           onclick="sendMessage('8-3');" > 
+							<label id="8-3" for="checkboxG8-3" class='css-label1-blue'>8-3</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG8-4" class='css-checkbox1-blue' name="seats" value="8-4" 
+						           onclick="sendMessage('8-4');" > 
+							<label id="8-4" for="checkboxG8-4" class='css-label1-blue'>8-4</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG8-5" class='css-checkbox1-blue' name="seats" value="8-5" 
+						           onclick="sendMessage('8-5');" > 
+							<label id="8-5" for="checkboxG8-5" class='css-label1-blue'>8-5</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG8-6" class='css-checkbox1-blue' name="seats" value="8-6" 
+						           onclick="sendMessage('8-6');" > 
+							<label id="8-6" for="checkboxG8-6" class='css-label1-blue'>8-6</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG8-7" class='css-checkbox1-blue' name="seats" value="8-7" 
+						           onclick="sendMessage('8-7');" > 
+							<label id="8-7" for="checkboxG8-7" class='css-label1-blue'>8-7</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG8-8" class='css-checkbox1-blue' name="seats" value="8-8" 
+						           onclick="sendMessage('8-8');" > 
+							<label id="8-8" for="checkboxG8-8" class='css-label1-blue'>8-8</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG8-9" class='css-checkbox1-blue' name="seats" value="8-9" 
+						           onclick="sendMessage('8-9');" > 
+							<label id="8-9" for="checkboxG8-9" class='css-label1-blue'>8-9</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG8-10" class='css-checkbox1-blue' name="seats" value="8-10" 
+						           onclick="sendMessage('8-10');" > 
+							<label id="8-10" for="checkboxG8-10" class='css-label1-blue'>8-10</label>
+						</td>
+					 
+				</tr>
+			
+				<tr>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG9-1" class='css-checkbox1-blue' name="seats" value="9-1" 
+						           onclick="sendMessage('9-1');" > 
+							<label id="9-1" for="checkboxG9-1" class='css-label1-blue'>9-1</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG9-2" class='css-checkbox1-blue' name="seats" value="9-2" 
+						           onclick="sendMessage('9-2');" > 
+							<label id="9-2" for="checkboxG9-2" class='css-label1-blue'>9-2</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG9-3" class='css-checkbox1-blue' name="seats" value="9-3" 
+						           onclick="sendMessage('9-3');" > 
+							<label id="9-3" for="checkboxG9-3" class='css-label1-blue'>9-3</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG9-4" class='css-checkbox1-blue' name="seats" value="9-4" 
+						           onclick="sendMessage('9-4');" > 
+							<label id="9-4" for="checkboxG9-4" class='css-label1-blue'>9-4</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG9-5" class='css-checkbox1-blue' name="seats" value="9-5" 
+						           onclick="sendMessage('9-5');" > 
+							<label id="9-5" for="checkboxG9-5" class='css-label1-blue'>9-5</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG9-6" class='css-checkbox1-blue' name="seats" value="9-6" 
+						           onclick="sendMessage('9-6');" > 
+							<label id="9-6" for="checkboxG9-6" class='css-label1-blue'>9-6</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG9-7" class='css-checkbox1-blue' name="seats" value="9-7" 
+						           onclick="sendMessage('9-7');" > 
+							<label id="9-7" for="checkboxG9-7" class='css-label1-blue'>9-7</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG9-8" class='css-checkbox1-blue' name="seats" value="9-8" 
+						           onclick="sendMessage('9-8');" > 
+							<label id="9-8" for="checkboxG9-8" class='css-label1-blue'>9-8</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG9-9" class='css-checkbox1-blue' name="seats" value="9-9" 
+						           onclick="sendMessage('9-9');" > 
+							<label id="9-9" for="checkboxG9-9" class='css-label1-blue'>9-9</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG9-10" class='css-checkbox1-blue' name="seats" value="9-10" 
+						           onclick="sendMessage('9-10');" > 
+							<label id="9-10" for="checkboxG9-10" class='css-label1-blue'>9-10</label>
+						</td>
+					 
+				</tr>
+			
+				<tr>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG10-1" class='css-checkbox1-blue' name="seats" value="10-1" 
+						           onclick="sendMessage('10-1');" > 
+							<label id="10-1" for="checkboxG10-1" class='css-label1-blue'>10-1</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG10-2" class='css-checkbox1-blue' name="seats" value="10-2" 
+						           onclick="sendMessage('10-2');" > 
+							<label id="10-2" for="checkboxG10-2" class='css-label1-blue'>10-2</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG10-3" class='css-checkbox1-blue' name="seats" value="10-3" 
+						           onclick="sendMessage('10-3');" > 
+							<label id="10-3" for="checkboxG10-3" class='css-label1-blue'>10-3</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG10-4" class='css-checkbox1-blue' name="seats" value="10-4" 
+						           onclick="sendMessage('10-4');" > 
+							<label id="10-4" for="checkboxG10-4" class='css-label1-blue'>10-4</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG10-5" class='css-checkbox1-blue' name="seats" value="10-5" 
+						           onclick="sendMessage('10-5');" > 
+							<label id="10-5" for="checkboxG10-5" class='css-label1-blue'>10-5</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG10-6" class='css-checkbox1-blue' name="seats" value="10-6" 
+						           onclick="sendMessage('10-6');" > 
+							<label id="10-6" for="checkboxG10-6" class='css-label1-blue'>10-6</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG10-7" class='css-checkbox1-blue' name="seats" value="10-7" 
+						           onclick="sendMessage('10-7');" > 
+							<label id="10-7" for="checkboxG10-7" class='css-label1-blue'>10-7</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG10-8" class='css-checkbox1-blue' name="seats" value="10-8" 
+						           onclick="sendMessage('10-8');" > 
+							<label id="10-8" for="checkboxG10-8" class='css-label1-blue'>10-8</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG10-9" class='css-checkbox1-blue' name="seats" value="10-9" 
+						           onclick="sendMessage('10-9');" > 
+							<label id="10-9" for="checkboxG10-9" class='css-label1-blue'>10-9</label>
+						</td>
+					
+					   
+					     
+						<td class="left1">
+						    <input type="checkbox" id="checkboxG10-10" class='css-checkbox1-blue' name="seats" value="10-10" 
+						           onclick="sendMessage('10-10');" > 
+							<label id="10-10" for="checkboxG10-10" class='css-label1-blue'>10-10</label>
+						</td>
+					 
+				</tr>
+			
+		</table>
+
+
+
+		<hr>
+		<input class="myButton" type="button" value="送出新增" onClick="checkup()">
+	</form>
+
+
+	<script>
+		var MyPoint = "/MyBookingServer";
+		var host = window.location.host;
+		var path = window.location.pathname;
+		var webCtx = path.substring(0, path.indexOf('/', 1));
+		var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+
+		var webSocket;
+		var myID;
+
+		function connect() {
+			// 建立 websocket 物件
+			webSocket = new WebSocket(endPointURL);
+
+			webSocket.onmessage = function(event) {
+				var data = event.data;
+
+				if (event.data.indexOf('myID=') == 0) {
+					myID = event.data.substring(5);
+					document.getElementById("myID").innerHTML = event.data;
+				} else if ((event.data).substring(0, 1) == '@') {
+					check_WebSocket(event.data);
+				} else {
+					var mySpan = document.getElementById("output");
+					mySpan.innerHTML = event.data;
+				}
+			};
+
+			webSocket.onerror = function(event) {
+				console.log("Error ", event);
+			}
+
+			webSocket.onclose = function(event) {
+				var mySpan = document.getElementById("output");
+				mySpan.innerHTML = "WebSocket連線已關閉";
+			};
+		}
+
+		function sendMessage(seat) {
+			var b = document.getElementById('checkboxG' + seat).checked;
+			webSocket.send('@'+b+'@'+seat+'@'+myID);
+		}
+
+		function disconnect() {
+			webSocket.close();
+		}
+	</script>
+
+
+	<script>
+		function check_WebSocket(booking) {
+			var str = booking.split('@');
+			var b = str[1];
+			var seat = str[2];
+			var id = str[3];
+
+			if (b == 'true')
+				document.getElementById('checkboxG' + seat).checked = true;
+			else
+				document.getElementById('checkboxG' + seat).checked = false;
+
+			if (myID != id) {
+				if (b == 'true')
+				document.getElementById('checkboxG' + seat).disabled = true;
+				else 
+				document.getElementById('checkboxG' + seat).disabled = false;
+				
+				document.getElementById('checkboxG' + seat).className = 'css-checkbox2-red';
+				document.getElementById(seat).className = 'css-label2-red';
+			} else {
+				document.getElementById('checkboxG' + seat).className = 'css-checkbox1-blue';
+				document.getElementById(seat).className = 'css-label1-blue';
+			}
+		}
+		//********************************** 設定群組權限 **********************************
+
+		// 送出前的檢查
+		function checkup() {
+			if (form1.hall_name.value == "") {
+				window.alert("請輸入廳院名稱");
+				document.form1.elements(0).focus();
+				return;
+			}
+
+			var num = 0;
+			var seats = document.getElementsByName("seats");
+			for (var i = 0; i < seats.length; i++) {
+				if (seats[i].checked && !seats[i].disabled)
+					num++;
+			}
+			if (num == 0) {
+				window.alert("請至少選擇一個座位");
+				return;
+			}
+
+			form1.submit(); //送出表單中的資料
+		}
+	</script>
+
+</body>
+</html>
+

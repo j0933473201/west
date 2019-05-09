@@ -25,7 +25,7 @@ height:1px
 
 <jsp:useBean id="c_Svc" scope="page" class="com.comment.model.CommentsService" />
 <jsp:useBean id="v_Svc" scope="page" class="com.vendor.model.VendorService" />
-<jsp:useBean id="_Svc" scope="page" class="com.vendor.model.VendorService" />
+
 
 <c:set var="c_list" value="${c_VOlist}"></c:set>
 <body>
@@ -59,7 +59,7 @@ height:1px
 <%-- 			<%@ include file="page1.file" %> --%>
 			<c:forEach var="c_VO" items="${c_VOlist}" >
                <c:set var="vendor" value="${v_Svc.findByPK(c_VO.vendor_no)}"></c:set>
-							${vendor.v_name }
+							
                      <tr class="warning">
                        
 					

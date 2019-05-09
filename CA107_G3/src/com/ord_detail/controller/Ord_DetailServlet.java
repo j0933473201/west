@@ -58,6 +58,9 @@ public class Ord_DetailServlet extends HttpServlet {
 			}
 		}
 		
+		
+		
+		
 		//從訂單編號及菜單編號查詢該筆訂單明細
 		if ("getOne_ord_detail_display".equals(action)) { 
 
@@ -100,7 +103,7 @@ public class Ord_DetailServlet extends HttpServlet {
 				Order_DetailService o_detailSvc = new Order_DetailService();
 				Order_DetailVO o_detailVO = o_detailSvc.getOneOrder_Detail(ord_no, menu_no);
 				req.setAttribute("o_detailVO", o_detailVO);         // 資料庫取出的empVO物件,存入req
-				String url = "/order_detail/All_ord_detail.jsp";
+				String url = "/front-end/order_detail/All_ord_detail.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.reservation_time.model.Reservation_TimeVO;
-import com.restaurant_transaction_list.model.RES_Transaction_ListDAO;
+import com.restaurant_transaction_list.model.RES_Transaction_ListJDBCDAO;
 import com.restaurant_transaction_list.model.RES_Transaction_ListVO;
 
 public class Exception_DateDAO implements Exception_DateDAO_Interface {
@@ -18,8 +18,9 @@ public class Exception_DateDAO implements Exception_DateDAO_Interface {
 	
 	String driver = "oracle.jdbc.driver.OracleDriver";
 //	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String userid = "CA107G3";
+//	String passwd = "123456";
 	String url = "jdbc:oracle:thin:@localhost:49161:XE";
-	
 	String userid = "WEST";
 	String passwd = "800627";
 	

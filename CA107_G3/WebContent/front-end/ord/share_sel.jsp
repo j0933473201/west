@@ -11,7 +11,7 @@
 <!-- <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script> -->
 <!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>選擇分攤付款好友</title>
 
 <style>
 .table-sortable tbody tr {
@@ -59,7 +59,7 @@
 					      <td><span class="label pull-right">分攤金額</span></td>
 					      <td><input type="number" name="share_amount" ></td>
 					     
-					      <td><strong>11:23 PM</strong></td>
+					      <td><strong><fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"/></strong></td>
 					    </tr>
 					      </c:forEach>
 					      
@@ -72,7 +72,7 @@
 		<div class="row justify-content-center">
 			<div class="col-md-5">	
 		<input type="hidden" name="action" value="share_pick"> 
-		<button class="btn btn-success btn-lg btn2-block" type="submit">傳送</button>   
+		<button class="btn btn-success btn-lg btn2-block" type="submit" >送出</button>   
 			</form>
 			</div>
 			</div>

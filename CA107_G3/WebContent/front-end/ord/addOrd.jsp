@@ -110,8 +110,17 @@
 	href="<%=request.getContextPath()%>/ord/css/style.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 
+ <!-- 星星圖庫來源樣式 -->
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../front-end/css/starrr.css">
+<!-- 評論區樣式 -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/> -->
 
-<title>SeekFoodTable</title>
+
+<title>餐廳首頁</title>
 <jsp:useBean id="res_tboSvc" scope="page" class="com.reservation_table_ordered.model.Reservation_Table_OrderedService" />
 <jsp:useBean id="rev_tSvc" scope="page" class="com.reservation_time.model.Reservation_TimeService" />
 <jsp:useBean id="now" scope="page" class="java.util.Date" />
@@ -290,7 +299,8 @@ body {
     margin-right: 100px;
 }
 </style>
-<body>
+<body onload="connect();" onunload="disconnect();">
+
 	<!--============================= HEADER =============================-->
 	${ordVO}
 
@@ -375,7 +385,7 @@ body {
 				<ul class="nav nav-tabs justify-content-center" id="myTab"
 					role="tablist">
 					
-					<li class="nav-item"><a class="nav-link active" id="profile-tab"
+					<li class="nav-item"><a class="nav-link" id="profile-tab"
 						data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
 						aria-selected="true">資訊</a></li>
 					<li class="nav-item"><a class="nav-link " id="home-tab"
@@ -461,7 +471,7 @@ body {
 				</form>
 <!-- 				自動提交結束 -->
 		</div>
-		<div class="container">
+		<div class="container" >
 			<div class="row justify-content-center">
 				<div class="col-md-8">
 					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/ord/ord.do" id="form2">
@@ -485,7 +495,7 @@ body {
 						<div class=" btn-group-toggle" data-toggle="buttons" id="btngp">
 									
 										<c:forEach var="exc" items="${lhs}">	
-										<input class="btn2 btn-primary" type="button" id="xx${exc.booking_time}"  value="${exc.booking_time}" >
+										<input class="btn2 btn-primary" type="button" id="xx${exc.booking_time}"  value="${exc.booking_time}" onclick="sendMessage();" >
 
 										</c:forEach>	
 								</div>
@@ -555,7 +565,7 @@ body {
 				  
 				  
 				  </div>
-				  <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">...\
+				  <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">...\
 				  	<div class="container">
 						<div class="row justify-content-center">
 							<div class="col-md-8">
@@ -613,90 +623,9 @@ body {
 				
 					<div class="container">
 						<div class="row justify-content-center">
-							<div class="col-8 ">
+							<div class="col-12 ">
 	
-								<div class="col-md-12 ">
-									<h1 class="rating-num">4.0</h1>
-									<div class="rating">
-										<span class="glyphicon glyphicon-star"></span> 
-										<span class="glyphicon glyphicon-star"></span> 
-										<span class="glyphicon glyphicon-star"></span> 
-										<span class="glyphicon glyphicon-star"></span> 
-										<span class="glyphicon glyphicon-star-empty"></span>
-									</div>
-									<div>
-										<span class="glyphicon glyphicon-user"></span>1,050,008 total
-									</div>
-	
-									<div class="col-md-6" style="margin-top: 100px">
-										<div class="row rating-desc">
-											<div class="col-xs-3 col-md-3 text-right">
-												<span class="glyphicon glyphicon-star"></span>5
-											</div>
-											<div class="col-xs-8 col-md-9">
-												<div class="progress progress-striped">
-													<div class="progress-bar progress-bar-success"
-														role="progressbar" aria-valuenow="20" aria-valuemin="0"
-														aria-valuemax="100" style="width: 80%">
-														<span class="sr-only">80%</span>
-													</div>
-												</div>
-											</div>
-											<!-- end 5 -->
-											<div class="col-xs-3 col-md-3 text-right">
-												<span class="glyphicon glyphicon-star"></span>4
-											</div>
-											<div class="col-xs-8 col-md-9">
-												<div class="progress">
-													<div class="progress-bar progress-bar-success"
-														role="progressbar" aria-valuenow="20" aria-valuemin="0"
-														aria-valuemax="100" style="width: 60%">
-														<span class="sr-only">60%</span>
-													</div>
-												</div>
-											</div>
-											<!-- end 4 -->
-											<div class="col-xs-3 col-md-3 text-right">
-												<span class="glyphicon glyphicon-star"></span>3
-											</div>
-											<div class="col-xs-8 col-md-9">
-												<div class="progress">
-													<div class="progress-bar progress-bar-info"
-														role="progressbar" aria-valuenow="20" aria-valuemin="0"
-														aria-valuemax="100" style="width: 40%">
-														<span class="sr-only">40%</span>
-													</div>
-												</div>
-											</div>
-											<!-- end 3 -->
-											<div class="col-xs-3 col-md-3 text-right">
-												<span class="glyphicon glyphicon-star"></span>2
-											</div>
-											<div class="col-xs-8 col-md-9">
-												<div class="progress">
-													<div class="progress-bar progress-bar-warning"
-														role="progressbar" aria-valuenow="20" aria-valuemin="0"
-														aria-valuemax="100" style="width: 20%">
-														<span class="sr-only">20%</span>
-													</div>
-												</div>
-											</div>
-											<!-- end 2 -->
-											<div class="col-xs-3 col-md-3 text-right">
-												<span class="glyphicon glyphicon-star"></span>1
-											</div>
-											<div class="col-xs-8 col-md-9">
-												<div class="progress">
-													<div class="progress-bar progress-bar-danger"
-														role="progressbar" aria-valuenow="80" aria-valuemin="0"
-														aria-valuemax="100" style="width: 15%">
-														<span class="sr-only">15%</span>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+								
 									<div id="score" class="p20">
 										<div class="tit clearfix"></div>
 										<ul class="p20">
@@ -713,24 +642,47 @@ body {
 	
 										</ul>
 									</div>
-								
-								
-								
-									<ul class="list-unstyled">
-									 <c:forEach var="comment" items="${commentSvc.getVendor(param.vendor_no)}">
-										<li class="media">
-										
-										<img src="images/4809.jpg" class="mr-3"alt="...">
-										
-											<div class="media-body">
-												<h5 class="mt-0 mb-1"></h5>
-												${comment.cmnt}
-											</div></li>
-										<hr>
-										</c:forEach>
-										
-									</ul>
-	
+									
+									
+									
+					<div class="container">
+					${avgscore}
+					<c:forEach var="cmapVO" items="${cMap}">
+					  <div class="well">
+					      <div class="media">
+					      	<a class="pull-left" href="#">
+					  <img src="<%= request.getContextPath()%>/ShowImg.do?mem_no='${cmapVO.key.mem_no}'"class="mr-3 memshow" alt="...">
+					 
+					  		</a>
+					  		<div class="media-body">
+					    		<h4 class="media-heading">標題</h4>
+					          <h4><p class="text-left">${cmapVO.key.mem_name}</p></h4>
+					         <h4> <p>${cmapVO.value.cmnt}</p></h4>
+					          <ul class="list-inline list-unstyled">
+					           <li>
+					             <div class='starrr' id="s${cmapVO.value.cmnt_no}"></div>
+					            </li>
+					            <li>|</li>
+					  			<li><span><i class="glyphicon glyphicon-calendar"></i> 
+					  			<fmt:formatDate type="both"  value="${cmapVO.value.time}" /> </span></li>
+					            <li>|</li>
+					            <span><i class="glyphicon glyphicon-comment"></i> 2 comments</span>
+					            <li>|</li>
+					           
+					            <li>
+					            <!-- Use Font Awesome http://fortawesome.github.io/Font-Awesome/ -->
+					              <span> <a href="https://www.facebook.com/search/top/?q=wang%20lee&epa=SEARCH_BOX" ><i class="fa fa-facebook-square"></i></a></span>	
+					              <span><a href="https://www.instagram.com/?hl=zh-tw"><i class="fa fa-twitter-square"></i></a></span>
+					              <span><a href="https://drive.google.com/drive/my-drive"><i class="fa fa-google-plus-square"></i></a></span>
+					              
+					            </li>
+								</ul>
+					       </div>
+					    </div>
+					  </div>
+					  </c:forEach>
+					  </div>
+  
 								</div>
 							</div>
 						</div>
@@ -741,37 +693,6 @@ body {
 		</div>
 	</div>
 </div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-<!-- 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	<!--============================= FOOTER =============================-->
 	<!--//END FOOTER -->
@@ -864,7 +785,8 @@ body {
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script
 		src="http://www.5imoban.net/download/jquery/jquery-1.8.3.min.js"></script>
-
+	<!-- 星星 -->
+    <script src="../front-end/js/starrr.js"></script>
 	
 	<script>
 		$(function() {
@@ -902,17 +824,75 @@ $("#xx${exc.booking_time}").click(async function(event){
 			$('#form2').submit();
 		})
 })
-  
+ 
+
 
 </script>
 
 </c:forEach>
+<c:forEach var="exc" items="${lhs}">
+<script>
 
 
+var MyPoint = "/MyEchoServer/${booking_date}/${party_size}";
+var host = window.location.host;
+var path = window.location.pathname;
+var webCtx = path.substring(0, path.indexOf('/', 1));
+var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+
+var webSocket;
+var myID;
 
 
+function connect() {
+	// 建立 websocket 物件
+	webSocket = new WebSocket(endPointURL);
+	webSocket.onopen = function(event) {
+// 		updateStatus("WebSocket 成功連線");
+	}
+	
+	webSocket.onclose = function(event) {
+// 		updateStatus("WebSocket 已離線");
+	};
+		
+	webSocket.onmessage = function(event) {
+		var data=event.data
+		if(data=='open'){
+			document.getElementById("xx${exc.booking_time}").disabled = true;
+			document.getElementById("xx${exc.booking_time}").style.color="#ff0000";
+			alert("${exc.booking_time}");
+		}
+		
 
+	};
+	};
+	
+	function sendMessage() {
+		webSocket.send("open");
+		
+		
+ 	}
+	function disconnect () {
+		webSocket.close();
+		
+	}
+	
 
-
+</script>
+</c:forEach>
+<c:forEach var="cmapVO" items="${cMap}">
+    <script type="text/javascript">
+    $('#s${cmapVO.value.cmnt_no}').starrr({
+    	
+    	max: 5,
+    	rating:${cmapVO.value.score},
+    	readOnly: true,
+    	emptyClass: 'fa fa-star-o',
+        fullClass: 'fa fa-star'
+        
+      });
+    
+    </script>
+</c:forEach>
 </body>
 </html>

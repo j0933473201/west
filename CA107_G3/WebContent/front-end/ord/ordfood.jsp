@@ -34,7 +34,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>訂餐</title>
 </head>
 <body>
 
@@ -43,7 +43,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row ">
       <div class="col-md-12">
       <c:forEach var="menu_n" items="${res_menuSvc.getVendor('V000001')}">
       <form name="shopping" action="<%=request.getContextPath()%>/ord/ord.do" method="get">
@@ -122,8 +122,8 @@
             
         </div> 
    <%--      <jsp:include page="/ord/ord/shopcart.jsp" flush="true" /> --%>
- <div class="col-7">
-   <%@ include file="/ord/ord/shopcart.jsp"%>
+ <div class="col-12">
+   <%@ include file="/front-end/ord/shopcart.jsp"%>
 </div>
   </div>
   

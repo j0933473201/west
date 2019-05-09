@@ -14,7 +14,9 @@ import com.ord_detail.model.Order_DetailVO;
 
 public class OrdJDBCDAO implements OrdDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
-//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	final static String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	final static String userid = "CA107G3";
+//	final static String passwd = "123456";
 	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WEST";
 	String passwd = "800627";
@@ -482,7 +484,7 @@ public class OrdJDBCDAO implements OrdDAO_interface {
 	}
 
 	@Override
-	public void insertWithOrd_detail(OrdVO ordVO, List<Order_DetailVO> list) {
+	public OrdVO insertWithOrd_detail(OrdVO ordVO, List<Order_DetailVO> list) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -576,6 +578,7 @@ public class OrdJDBCDAO implements OrdDAO_interface {
     					}
     					con.commit();
     					con.setAutoCommit(true);
+    					ordVO.setOrd_no(next_ord_no);
     					System.out.println("list.size()-B="+list.size());
     					System.out.println("新增訂單編號" + next_ord_no + "時,共有訂單明細" + list.size()
     							+ "筆同時被新增");
@@ -616,6 +619,7 @@ public class OrdJDBCDAO implements OrdDAO_interface {
     						}
     					}
     				}
+		return ordVO;
 
 		
 	}

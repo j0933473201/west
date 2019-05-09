@@ -7,46 +7,30 @@
 
 <%
 	OrdService ordSvc = new OrdService();
-    List<OrdVO> list = ordSvc.findBymem_no("M000004");
+    List<OrdVO> list = ordSvc.getAll();
     OrdVO ordVO = new OrdVO();
     pageContext.setAttribute("list",list);
 %>
 
-
-
-<html>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-
-<!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
-<!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script> -->
-
-<head>
 <style>
 .hrr {
 border:0;
 background-color:#ff999;
 height:1px
-
-@media screen and (min-width:1025px){   
-  .modal-dialog {
-    
-    left: auto;
-    width: auto;
-    padding-top: 30px;
-    padding-bottom: 30px;
-}
 }
 
 </style>
 
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<html>
+<head>
+
+
 
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>所有訂單查詢</title>
 </head>
 <body>
 
@@ -116,20 +100,18 @@ height:1px
 						</c:if>
 						
                     
-			 
+			  <td> 
+			  <FORM METHOD="get" ACTION="<%=request.getContextPath()%>/ord/ord.do" style="margin-bottom: 0px;">
+			     <input type="submit" value="修改">
+			     <input type="hidden" name="ord_no"  value="${ordVO.ord_no}">
+			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+			</td>
 			<td>
 			 <FORM METHOD="get" ACTION="<%=request.getContextPath()%>/o_detail/o_detail.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="查看訂單明細">
 			     <input type="hidden" name="ord_no"  value="${ordVO.ord_no}">
 			      <input type="hidden" name="menu_no" value="${O_detailVO.menu_no}">
 			     <input type="hidden" name="action"	value="getOne_ord_detail_display"></FORM>
-			     
-			     <A href="<%=request.getContextPath()%>/comment/comment.do?ord_no=${ordVO.ord_no}&action=insert_comments">發表評論</a>
-<%-- 			      <FORM METHOD="get" ACTION="<%=request.getContextPath()%>/o_detail/o_detail.do" style="margin-bottom: 0px;"> --%>
-<!-- 			     <input type="submit" value="評論"> -->
-<%-- 			     <input type="hidden" name="ord_no"  value="${ordVO.ord_no}"> --%>
-<%-- 			      <input type="hidden" name="vendor_no" value="${ordVO.vendor_no}"> --%>
-<!-- 			     <input type="hidden" name="action"	value="insert_comments"></FORM> -->
 			</td>
 			</tr>
                     </c:forEach>
@@ -143,36 +125,7 @@ height:1px
     </div>
 </div>
 
-<c:if test="${openModal!=null}">
 
-<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-				
-			<div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3 class="modal-title" id="myModalLabel"></h3>
-            </div>
-			
-			<div class="modal-body">
-<!-- =========================================以下為原listOneEmp.jsp的內容========================================== -->
-               <jsp:include page="/comments/insert_comments.jsp" />
-<!-- =========================================以上為原listOneEmp.jsp的內容========================================== -->
-			</div>
-			
-			<div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-		
-		</div>
-	</div>
-</div>
-
-          <script>
-          $("#basicModal").modal({show: true});
-        </script>
- </c:if>
 
 
 

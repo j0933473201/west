@@ -9,17 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.restaurant_transaction_list.model.RES_Transaction_ListDAO;
+import com.restaurant_transaction_list.model.RES_Transaction_ListJDBCDAO;
 import com.restaurant_transaction_list.model.RES_Transaction_ListVO;
 
-public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
+public class Reservation_TimeJDBCDAO implements Reservation_TimeDAO_Interface {
 
 	String driver = "oracle.jdbc.driver.OracleDriver";
-//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	final static String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	final static String userid = "CA107G3";
+//	final static String passwd = "123456";
 	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WEST";
 	String passwd = "800627";
-	
+
 	
 	private static final String INSERT_STMT = "INSERT INTO RESERVATION_TIME VALUES('RT'||LPAD(to_char(RESERVATION_T_SEQ.NEXTVAL), 8, '0'),?,?)";
 	
@@ -367,7 +369,7 @@ public class Reservation_TimeDAO implements Reservation_TimeDAO_Interface {
 
 	public static void main(String[] args) {
 		
-		Reservation_TimeDAO dao = new Reservation_TimeDAO();
+		Reservation_TimeJDBCDAO dao = new Reservation_TimeJDBCDAO();
 		
 		//insert
 //		resVO1.setVendor_no("V000003");

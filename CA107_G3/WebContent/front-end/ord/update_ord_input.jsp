@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>員工資料修改 - update_ord_input.jsp</title>
+<title>訂單更改 </title>
 
 <style>
   table#table-1 {

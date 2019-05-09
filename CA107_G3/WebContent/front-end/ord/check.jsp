@@ -15,7 +15,7 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>分攤或付款選擇</title>
 
 <jsp:useBean id="vendorSvc" scope="page" class="com.vendor.model.VendorService" />
 <style>
@@ -109,7 +109,7 @@ body {
                 </table>
                 <tr>
                 	<td>
-	                	<a href="<%=request.getContextPath()%>/ord/ord/ordfood.jsp" >
+	                	<a href="<%=request.getContextPath()%>/front-end/ord/ordfood.jsp" >
 							<button class="btn btn-success btn-lg btn-block" >繼續點餐<span class="glyphicon glyphicon-shopping-cart"></span></button>
 						</a>
 					</td>
@@ -142,7 +142,7 @@ body {
 						</c:if>	
    
      <c:if test="${(share1234)!=null}">
-     <jsp:include page="/ord/ord/share_sel.jsp" flush="true" />
+     <jsp:include page="/front-end/ord/share_sel.jsp" flush="true" />
   	</c:if>
 </div>
 </body>

@@ -11,10 +11,9 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>好友連結付款頁</title>
 </head>
 <style>
-
 
 body { margin-top:20px; }
 
@@ -59,16 +58,10 @@ body { margin-top:20px; }
 .credit-card-box .panel-heading img {
     min-width: 180px;
 }
-.swal2-popup {
-    width: 80em;
-    background: #fff;
-    font-family: inherit;
-    font-size: 1.5rem;
-    }
 
 </style>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
 <div class="container">
@@ -93,6 +86,8 @@ body { margin-top:20px; }
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
+                                <h2>${param.name}您好,請完成付款</h2>
+                               <input  type="hidden"  name="share_mem_no" value="${param.mem_no}">
                                     <label for="cardNumber">CARD NUMBER</label>
                                     <div class="input-group">
                                         <input 
@@ -138,13 +133,13 @@ body { margin-top:20px; }
                             <div class="col-xs-5 col-md-5 pull-right">
                                 <div class="form-group">
                                     <label for="cardCVC">AMOUNT</label>
+                                    <input  type="hidden"  name="AMOUNT" value="${param.amount}">
                                     <input 
-                                        type="tel" 
+                                        type="text" 
                                         class="form-control"
                                         name="AMOUNT"
-<%--                                         placeholder="${total}" --%>
-                                        value="${total}"
-                                       disabled
+                                         value ="${param.amount}"
+                                         disabled
                                     />
                                 </div>
                             </div>
@@ -152,14 +147,14 @@ body { margin-top:20px; }
                              <div class="col-xs-7 col-md-8">
                                 <div class="form-group">
                                     <label for="cardCVC"></label>
-                                  	<button class="btn btn-success btn-lg btn2-block" type="submit" id="pay">刷一波</button>
+                                  	<button class="btn btn-success btn-lg btn2-block" type="submit">刷一波</button>
                                 </div>
                             </div>
                         
                       
                         
                         </div>
-                        <input type="hidden" name="action"  value="insert">
+                        <input type="hidden" name="action"  value="share_pay">
                        
                         <div class="row" style="display:none;">
                             <div class="col-xs-12">
@@ -309,16 +304,4 @@ var readyInterval = setInterval(function() {
 }, 250);
 
 </script>
-<script type="text/javascript">
-$("#pay").click(async function(event){
-	
-	const {value: file} = Swal.fire({
-	  position: 'center',
-	  type: 'success',
-	  title: '您的預訂程序已完成,請留意信箱',
-	  showConfirmButton: false,
-	  timer: 100000
-	})
-	})
-	</script>
 </html>

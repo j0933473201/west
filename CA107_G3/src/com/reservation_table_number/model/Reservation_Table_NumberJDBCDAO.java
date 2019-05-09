@@ -9,12 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.restaurant_transaction_list.model.RES_Transaction_ListDAO;
+import com.restaurant_transaction_list.model.RES_Transaction_ListJDBCDAO;
 import com.restaurant_transaction_list.model.RES_Transaction_ListVO;
 
-public class Reservation_Table_NumberDAO implements Reservation_Table_NumberDAO_interface {
+public class Reservation_Table_NumberJDBCDAO implements Reservation_Table_NumberDAO_interface {
 	
 	String driver = "oracle.jdbc.driver.OracleDriver";
+//	final static String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	final static String userid = "CA107G3";
+//	final static String passwd = "123456";
 	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WEST";
 	String passwd = "800627";
@@ -323,7 +326,7 @@ public class Reservation_Table_NumberDAO implements Reservation_Table_NumberDAO_
 	public static void main(String[] args) {
 		
 
-		Reservation_Table_NumberDAO dao = new Reservation_Table_NumberDAO();
+		Reservation_Table_NumberJDBCDAO dao = new Reservation_Table_NumberJDBCDAO();
 		Reservation_Table_NumberVO resVO1 = new Reservation_Table_NumberVO();
 		
 		//insert

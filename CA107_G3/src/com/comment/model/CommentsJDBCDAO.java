@@ -12,6 +12,10 @@ import com.restaurant_menu.model.Restaurant_MenuVO;
 
 public class CommentsJDBCDAO implements CommentsDAO_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
+
+//	String url = "jdbc:oracle:thin:@localhost:1521:XE";
+//	String userid = "CA107G3";
+//	String passwd = "123456";
 	String url = "jdbc:oracle:thin:@localhost:49161:XE";
 	String userid = "WEST";
 	String passwd = "800627";
@@ -404,8 +408,8 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 	}
 
 	@Override
-	public List<CommentsVO> findByord_no(String ord_no) {
-		List<CommentsVO> list = new ArrayList<CommentsVO>();
+	public CommentsVO findByord_no(String ord_no) {
+		
 			CommentsVO commentsVO = null;
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -432,7 +436,7 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 					commentsVO.setTime(rs.getTimestamp("time"));
 					commentsVO.setCmnt_status(rs.getInt("cmnt_status"));			
 				}
-					list.add(commentsVO);
+			
 				// Handle any driver errors
 			} catch (ClassNotFoundException e) {
 				throw new RuntimeException("Couldn't load database driver. "
@@ -465,7 +469,7 @@ public class CommentsJDBCDAO implements CommentsDAO_interface {
 					}
 				}
 			}
-			return list;
+			return commentsVO;
 		}
 	
 

@@ -50,7 +50,7 @@ public class CommentsService {
 	public List<CommentsVO> getVendor(String vendor_no) {
 		return dao.getVendor(vendor_no);
 	}
-	public List<CommentsVO> findByord_no(String ord_no) {
+	public CommentsVO findByord_no(String ord_no) {
 		return dao.findByord_no(ord_no);
 		
 	}

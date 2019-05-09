@@ -17,5 +17,5 @@ public interface OrdDAO_interface {
     
     
     
-    public void insertWithOrd_detail(OrdVO OrdVO , List<Order_DetailVO> list);
+    public OrdVO insertWithOrd_detail(OrdVO OrdVO , List<Order_DetailVO> list);
 }

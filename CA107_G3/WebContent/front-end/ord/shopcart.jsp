@@ -12,7 +12,7 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>購物車內容檢視</title>
 <jsp:useBean id="res_memuSvc" scope="page" class="com.restaurant_menu.model.Restaurant_MenuService" />
 <style>
 body {
@@ -88,18 +88,7 @@ body {
 					<hr>
 					<%}%>
 					
-					<div class="row">
-						<div class="text-center">
-							<div class="col-xs-9">
-								<h6 class="text-right">Added items?</h6>
-							</div>
-							<div class="col-xs-3">
-								<button type="button" class="btn btn-default btn-sm btn-block">
-									Update cart
-								</button>
-							</div>
-						</div>
-					</div>
+					
 				</div>
 				<div class="panel-footer">
 					<div class="row text-center">

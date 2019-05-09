@@ -6,10 +6,10 @@ import java.util.List;
 
 
 public class RES_Transaction_ListService {
-	private RES_Transaction_ListDAO dao;
+	private RES_Transaction_ListJDBCDAO dao;
 
 	public RES_Transaction_ListService() {
-		dao = new RES_Transaction_ListDAO();
+		dao = new RES_Transaction_ListJDBCDAO();
 	}
 
 	public RES_Transaction_ListVO addRES_Transaction_List(String vendor_no, Double amount, Timestamp pay_date,
